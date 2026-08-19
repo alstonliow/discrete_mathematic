@@ -1,0 +1,493 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{FIT1058 --- Chapter 3: Proofs\\ \large Exercise Solutions}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{1}
+    Recall the Collatz function
+    \[
+        \Collatz(x) =
+        \begin{cases}
+            3x+1 & \text{if } x \text{ is odd} \\
+            \dfrac{x}{2} & \text{if } x \text{ is even}
+        \end{cases}
+    \]
+    Prove by cases that, for all positive integers $n$,
+    \[
+        \Collatz^{(2)}(n) \le \tfrac{3}{2}n + 1.
+    \]
+\end{exercise}
+\begin{proof}
+    Proof by cases.
+    \begin{align*}
+        \begin{cases}
+            x \text{ is odd, }  x=2n+1\\
+            x \text{ is even, } x=2m
+        \end{cases}
+    \end{align*}
+    \begin{enumerate}[label=(\Roman*)]
+        \item $x$ is odd,
+    \end{enumerate}
+\end{proof}
+
+% ======================================================================
+\begin{exercise}{2}
+    A set of strings $L$ is called \emph{hereditary} if it has the
+    following property: for every nonempty string $x$ in $L$, there is
+    a character in $x$ which can be deleted from $x$ to give another
+    string in $L$.
+
+    Prove by contradiction that every nonempty hereditary set of
+    strings contains the empty string.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{5}
+    Let $E$ be a finite set and let $\I$ be a collection of subsets of
+    $E$ that satisfies the following three properties:
+    \begin{description}
+        \item[(I1)] $\emptyset \in \I$.
+        \item[(I2)] Whenever $X \subseteq Y$ and $Y \in \I$, we also
+            have $X \in \I$. This is called the \emph{hereditary
+            property}.
+        \item[(I3)] Whenever $X, Y \in \I$ and $|X| < |Y|$, there
+            exists $y \in Y \setminus X$ such that $X \cup \{y\} \in
+            \I$. In other words, given two different-sized sets in
+            $\I$, you can always enlarge the smaller set, using some
+            new member from the larger set, to get another set in
+            $\I$. This is called the \emph{independence augmentation
+            property}.
+    \end{description}
+    The sets in $\I$ are called \emph{independent}.
+
+    For example, if $E = \{a,b,c\}$, then each of the following
+    collections satisfies all three properties (I1)--(I3):
+    \begin{itemize}
+        \item $\I = \{\emptyset, \{a\}, \{b\}, \{a,b\}\}$
+        \item $\I = \{\emptyset, \{a\}, \{b\}, \{c\}\}$
+        \item $\I = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,c\},\{b,c\}\}$
+        \item $\I = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\},\{a,c\},\{b,c\}\}$
+        \item $\I = \{\emptyset\}$
+    \end{itemize}
+    By way of counterexample, using the same $E$, each of the
+    following collections fails to satisfy all three properties
+    (I1)--(I3):
+    \begin{itemize}
+        \item $\I = \{\{a\}, \{b\}, \{a,b\}\}$. This fails (I1) and
+            (I2).
+        \item $\I = \{\emptyset, \{a\}, \{a,b\}\}$. This fails (I2).
+        \item $\I = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}\}$. This
+            satisfies (I1) and (I2) but fails (I3).
+        \item $\I = \emptyset$. This fails (I1).
+    \end{itemize}
+
+    \begin{enumerate}[label=(\alph*)]
+        \item For each counterexample above that fails (I2) and/or
+            (I3), give specific sets $X$ and $Y$ for which the
+            property fails.
+
+        \item Prove that, for a social network, the set of cliques
+            satisfies (I1) and (I2) but not, in general, (I3).
+
+        \item Prove by contradiction that all maximal independent
+            sets have the same size.
+
+            Suppose that each member $e \in E$ has a nonnegative real
+            weight $w(e)$, so $w: E \to \R_0^+$. We use this weight
+            function to also give weights to subsets of $E$, by
+            defining the weight of a set to be the sum of the weights
+            of its elements: for all $X \subseteq E$, define
+            \[
+                w(X) := \sum_{e \in X} w(e).
+            \]
+            Suppose we seek an independent set of maximum weight.
+            Consider the following \emph{greedy algorithm}, so called
+            because it always makes the choice that gives biggest
+            immediate gain:
+
+            \begin{algorithm}[H]
+                \DontPrintSemicolon
+                \KwIn{a finite set $E$, a function $w: E \to \R_0^+$, a collection $\I$ of subsets of $E$}
+                \KwOut{an independent set $X$}
+                $X \gets \emptyset$\;
+                $i \gets 1$\;
+                \While{$\exists\, y \in E \setminus X$ such that $X \cup \{y\} \in \I$}{
+                    choose $y$ with largest weight $w(y)$ among all such candidates\;
+                    $e_i \gets y$\;
+                    $X \gets X \cup \{e_i\}$\;
+                    $i \gets i + 1$\;
+                }
+                \Return $X$\;
+                \caption{Greedy algorithm for maximum weight independent set}
+            \end{algorithm}
+
+        \item Construct a simple social network, and give a
+            nonnegative real weight to each person, such that the
+            greedy algorithm, with $\I$ being the set of all cliques,
+            does not find the maximum weight clique.
+
+            Now suppose $\I$ satisfies (I1)--(I3). The greedy
+            algorithm chooses elements of $E$ in a specific order,
+            represented as $e_1, e_2, \dots, e_r$.
+
+        \item Prove by contradiction that the weights of the chosen
+            elements are decreasing, i.e.,
+            \[
+                w(e_1) \ge w(e_2) \ge \cdots \ge w(e_r).
+            \]
+            (``Decreasing'' allows the possibility that some weights
+            stay the same; we don't require strictly decreasing.)
+
+        \item Prove that the greedy algorithm finds a maximum weight
+            independent set.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}[(a)]
+
+\end{solution}
+\begin{solution}[(b)]
+
+\end{solution}
+\begin{solution}[(c)]
+
+\end{solution}
+\begin{solution}[(d)]
+
+\end{solution}
+\begin{solution}[(e)]
+
+\end{solution}
+\begin{solution}[(f)]
+
+\end{solution}
+\FloatBarrier
+% ======================================================================
+\begin{exercise}{10}
+    Consider the following algorithm:
+
+    \begin{algorithm}[H]
+        \DontPrintSemicolon
+        \KwIn{a finite set $E$, a function $w: E \to \R_0^+$, a collection $\I$ of subsets of $E$}
+        \KwOut{an independent set $X$}
+        $X \gets \emptyset$\;
+        $i \gets 1$\;
+        \While{$\exists\, y \in E \setminus X$ such that $X \cup \{y\} \in \I$}{
+            choose $y$ with largest weight $w(y)$ among all such candidates\;
+            $e_i \gets y$\;
+            $X \gets X \cup \{e_i\}$\;
+            $i \gets i + 1$\;
+        }
+        \Return $X$\;
+        \caption{Greedy algorithm for maximum weight independent set}
+    \end{algorithm}
+    \begin{enumerate}[label=(\alph*)]
+        \item For each pair $i,j$, how many times is the action
+            inside the innermost loop performed? Express this in
+            terms of $i$ or $j$ or both.
+        \item For each $i$, how many times is the action inside the
+            innermost loop performed? Write this as both a sum of
+            some number of terms, and (using a theorem in this
+            chapter) a simple algebraic expression, both in terms of
+            $i$.
+        \item Now write a sum of some number of terms, in terms of
+            $n$, for the total number of times the action is
+            performed.
+        \item Work out this expression for $n = 1,2,3,4,5$, and for as
+            many further values of $n$ as you like.
+        \item Explore how these numbers behave.
+        \item Conjecture a simple algebraic expression, in terms of
+            $n$, for the total number of times the action is
+            performed.
+        \item Prove, by induction on $n$, that your expression is
+            correct.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{11}
+    The $n$-th harmonic number $H_n$ is defined by
+    \[
+        H_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}.
+    \]
+    In this exercise we prove by induction that $H_n \ge \ln(n+1)$.
+    (It follows that the harmonic numbers increase without bound, even
+    though $H_n$ grows more and more slowly as $n$ increases.)
+    \begin{enumerate}[label=(\roman*)]
+        \item \textbf{Inductive basis:} prove that $H_1 \ge \ln(1+1)$.
+        \item Let $n \ge 1$. Assume $H_n \ge \ln(n+1)$ (inductive
+            hypothesis). Consider $H_{n+1}$; write it recursively
+            using $H_n$. Use the inductive hypothesis to obtain
+            $H_{n+1} \ge \dots$, then use the fact that $\ln(1+x) \le
+            x$, and a property of logarithms, to show
+            $H_{n+1} \ge \ln(n+2)$.
+        \item What can you now conclude, and why?
+    \end{enumerate}
+    \textbf{Advanced afterthoughts.}
+    \begin{itemize}
+        \item The inequality implies $H_n \ge \ln n$, since
+            $\ln(n+1) \ge \ln n$. It is instructive to try to prove
+            this directly by induction --- you will probably run into
+            a snag, illustrating that induction sometimes requires
+            proving something stronger than what you set out to
+            prove.
+        \item Would your proof work for logarithms to other bases,
+            apart from $e$? Where does the proof use base $e$?
+        \item It is known that $H_n \le (\ln n) + 1$. Can you prove
+            this?
+    \end{itemize}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{12}
+    (Challenge) Let $E$ be a finite set, and let $\mathcal{S}$ be a
+    set of subsets of $E$. We say $\mathcal{S}$ is \emph{linear under
+    $\triangle$} if, for every two sets $X, Y \in \mathcal{S}$, we
+    have $X \triangle Y \in \mathcal{S}$.
+
+    The \emph{span} of $\mathcal{S}$, written $\mathrm{span}(\mathcal{S})$,
+    is the set of all symmetric differences of any number of members
+    of $\mathcal{S}$:
+    \[
+        \mathrm{span}(\mathcal{S}) := \{X_1 \triangle X_2 \triangle
+        \cdots \triangle X_k : X_1,\dots,X_k \in \mathcal{S},\ k \in
+        \N\}.
+    \]
+    By convention, the symmetric difference of zero sets is
+    $\emptyset$, so $\mathrm{span}(\mathcal{S})$ always contains
+    $\emptyset$.
+
+    $\mathcal{S}$ is \emph{dependent under $\triangle$} if, for some
+    distinct $X_1,\dots,X_k \in \mathcal{S}$ (i.e.\ $X_i \ne X_j$ for
+    $i \ne j$), $X_1 \triangle \cdots \triangle X_k = \emptyset$. If
+    $\mathcal{S}$ is not dependent under $\triangle$, it is
+    \emph{independent under $\triangle$}.
+
+    $\mathcal{S}$ is a \emph{circuit under $\triangle$} if it is
+    dependent under $\triangle$ and also minimal with respect to that
+    property. $\mathcal{S}$ is a \emph{base under $\triangle$} if it
+    is independent under $\triangle$ and also maximal with respect to
+    that property.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $\mathcal{S}$ be linear under $\triangle$. Prove, by
+            induction on $k$, that for all $k$ and all $X_1,\dots,X_k
+            \in \mathcal{S}$, $X_1 \triangle \cdots \triangle X_k \in
+            \mathcal{S}$.
+        \item Prove that, for every set $\mathcal{S}$ of subsets of
+            $E$, $\mathcal{S}$ is linear under $\triangle$ if and only
+            if $\mathcal{S} = \mathrm{span}(\mathcal{S})$.
+        \item Prove by induction on $k$ that for all $k$ and all
+            $X_1,\dots,X_k \in \mathcal{S}$, either
+            $X_1\triangle\cdots\triangle X_k = \emptyset$, or there
+            exist distinct $Y_1,\dots,Y_n \in \mathcal{S}$ with $n \le
+            k$ such that $X_1\triangle\cdots\triangle X_k =
+            Y_1\triangle\cdots\triangle Y_n$.
+        \item Prove that $\mathcal{S}$ is dependent under $\triangle$
+            if and only if there exists $X \in \mathcal{S}$ such that
+            $X \in \mathrm{span}(\mathcal{S}\setminus\{X\})$.
+        \item Prove that if $\mathcal{S}$ is a minimal dependent set
+            under $\triangle$, then for every $X \in \mathcal{S}$ we
+            have $X \in \mathrm{span}(\mathcal{S}\setminus\{X\})$.
+        \item Prove that every minimal spanning set under $\triangle$
+            is independent under $\triangle$.
+        \item Prove that every minimal spanning set under $\triangle$
+            is a maximal independent set under $\triangle$.
+        \item Prove that every maximal independent set under
+            $\triangle$ is also a spanning set under $\triangle$.
+        \item Prove that every maximal independent set under
+            $\triangle$ is also a minimal spanning set under
+            $\triangle$.
+        \item Prove that $\mathcal{S}$ is a minimal spanning set under
+            $\triangle$ if and only if it is a maximal independent set
+            under $\triangle$.
+        \item Prove that, if $\mathcal{S}$ is independent under
+            $\triangle$ then $|\mathrm{span}(\mathcal{S})| =
+            2^{|\mathcal{S}|}$.
+        \item Prove the independence augmentation property: if
+            $\mathcal{S}$ and $\mathcal{T}$ are independent under
+            $\triangle$ and $|\mathcal{T}| = |\mathcal{S}|+1$, then
+            there exists $X \in \mathcal{T}\setminus\mathcal{S}$ such
+            that $\mathcal{S}\cup\{X\}$ is independent under
+            $\triangle$.
+        \item Prove that all bases under $\triangle$ have the same
+            size.
+        \item Do all minimal dependent sets under $\triangle$ have the
+            same size? Give a proof of your claim.
+        \item Prove that, for every base $\mathcal{B}$ of $\mathcal{S}$
+            under $\triangle$, and every $X \in \mathcal{S}$, there is
+            a unique way to write $X$ as a symmetric difference of
+            members of $\mathcal{B}$, using each element of
+            $\mathcal{B}$ at most once.
+    \end{enumerate}
+    For each previous part (a)--(o), state what type of proof you have
+    used.
+
+    Finally: design a simple algorithm for the following problem ---
+    given a collection $\mathcal{S}$ of subsets of $E$ with a
+    nonnegative real weight for each member, output a subset
+    $\mathcal{X}$ of $\mathcal{S}$ that is independent under
+    $\triangle$ such that the sum of the weights of all members of
+    $\mathcal{X}$ is maximum. Does this algorithm always find the best
+    possible solution? Justify your answer, using a previous exercise.
+\end{exercise}
+\begin{solution}[(a)]
+
+\end{solution}
+\begin{solution}[(b)]
+
+\end{solution}
+\begin{solution}[(c)]
+
+\end{solution}
+\begin{solution}[(d)]
+
+\end{solution}
+\begin{solution}[(e)]
+
+\end{solution}
+\begin{solution}[(f)]
+
+\end{solution}
+\begin{solution}[(g)]
+
+\end{solution}
+\begin{solution}[(h)]
+
+\end{solution}
+\begin{solution}[(i)]
+
+\end{solution}
+\begin{solution}[(j)]
+
+\end{solution}
+\begin{solution}[(k)]
+
+\end{solution}
+\begin{solution}[(l)]
+
+\end{solution}
+\begin{solution}[(m)]
+
+\end{solution}
+\begin{solution}[(n)]
+
+\end{solution}
+\begin{solution}[(o)]
+
+\end{solution}
+\begin{solution}[Algorithm \& justification]
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{13}
+    Identify the errors in the following ``theorem'' and ``proof'',
+    which are both incorrect. The steps in the ``proof'' are numbered
+    for convenience.
+
+    \medskip
+    \textbf{``Theorem.''} For all $n \in \N$, a circular disc can be
+    cut into $2^n$ pieces by $n$ straight lines.
+
+    \textbf{``Proof.''}
+    \begin{enumerate}
+        \item Consider $n=0$. The disc is not cut at all, so it is
+            still in one piece. So the number of pieces is $2^0=1$.
+            So the claim is true for $n=0$.
+        \item Consider $n=1$. A single line across a disc cuts it
+            into two pieces, so the number of pieces is $2^1$. So the
+            claim is true for $n=1$.
+        \item Now consider $n=2$. If the circle is cut by one line
+            into two pieces, then we can cut it again by a line that
+            crosses the first line. Such a line must cut right across
+            both of the pieces created by the first cut. Therefore
+            each of those pieces is divided in two, so the total
+            number of pieces is $2\times 2 = 2^2$, so the claim is
+            true for $n=2$.
+        \item It is clear from the cases considered so far that, once
+            the circle is cut by some number of lines, then another
+            line can be used to divide every piece into two pieces,
+            thereby doubling the number of pieces.
+        \item So, if we use $n$ lines, then the repeated doubling
+            gives $2^n$ pieces. Therefore the claim is true for all
+            $n$. \hfill ``$\square$''
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{14}
+    Identify the errors in the following ``theorem'' and ``proof'',
+    which are both incorrect.
+
+    \medskip
+    \textbf{``Theorem.''} Every rational number is an integer.
+
+    \textbf{``Proof.''}
+    \begin{enumerate}
+        \item We need to show that the sets $\Z$ and $\Q$ are equal.
+        \item To prove that two sets are equal, we can prove the
+            appropriate subset and superset relations between the two
+            sets.
+        \item We first prove the subset relation between these two
+            sets, $\Z \subseteq \Q$.
+        \item Let $x \in \Z$.
+        \item Since $x$ is an integer, we have $x = \dfrac{x}{1}$.
+        \item So $x$ is a quotient of integers.
+        \item Therefore $x$ is rational, i.e., $x \in \Q$.
+        \item So we have proved that $\Z \subseteq \Q$.
+        \item Now we need to prove the superset relation, which is
+            the reverse of subset.
+        \item So we will prove that $\Q \supseteq \Z$.
+        \item Let $x \notin \Q$.
+        \item Then $x$ cannot be written in the form $\dfrac{p}{q}$
+            where $p$ and $q$ are integers.
+        \item So it certainly cannot be written in this form with
+            $q=1$.
+        \item Therefore $x$ is not an integer, i.e., $x \notin \Z$.
+        \item So we have proved that $\Q \supseteq \Z$.
+        \item It follows from our subset and superset relations
+            between the two sets that $\Z = \Q$. \hfill ``$\square$''
+    \end{enumerate}
+    \begin{quote}
+        \emph{``God made the integers; all else is the work of man.''}
+        \hfill --- Leopold Kronecker (1823--1891)
+    \end{quote}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{15}
+    Let $G$ be the cryptosystem obtained from Caesar slide by
+    restricting the keyspace to the first half of the alphabet (see
+    Exercise 2.15 for definitions relating to the Caesar slide
+    cryptosystem). So the keyspace $K_G$ is
+    \[
+        \{\mathrm{a,b,c,d,e,f,g,h,i,j,k,l,m}\}.
+    \]
+    Prove that $G$ is not idempotent.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+\end{document}
