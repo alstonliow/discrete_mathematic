@@ -23,29 +23,36 @@
         \Collatz^{(2)}(n) \le \tfrac{3}{2}n + 1.
     \]
 \end{exercise}
-\begin{proof}
+\begin{proof}[Proof (by cases)]
     Let $\Collatz(x) = C(x)$.
 
-    \textbf{Case 1: $x$ is odd, $x = 2n+1$.}
+    \textbf{Case 1: $x$ is odd, $x=2n+1$.}
     \begin{align*}
         C(x) &= 3(2n+1)+1 = 6n+4 = 2(3n+2) \quad \text{(even)} \\
         C^{(2)}(x) &= 3n+2 = 3\left(\frac{x-1}{2}\right)+2
-            = \frac{3x-3}{2}+2 = \frac{3}{2}x + \frac{1}{2}
+            = \frac{3x-3}{2}+2 = \frac{3}{2}x+\frac12
     \end{align*}
     \[
-        \implies C^{(2)}(x) < \frac{3}{2}x + 1.
+        \implies C^{(2)}(x) < \frac32 x+1. \tag{1}
     \]
 
-    \textbf{Case 2: $x$ is even, $x = 2m$.}
-    \begin{align*}
-        C(x) &= m, \quad \text{($m$ is odd)} \\
-        C^{(2)}(x) &= 3m+1 = 3\left(\frac{x}{2}\right)+1 = \frac{3}{2}x+1
-    \end{align*}
+    \textbf{Case 2: $x$ is even, $x=2m$.} Then $C(x)=m$.
+
+    \textbf{Case 2a: $m$ is odd.}
     \[
-        \implies C^{(2)}(x) = \frac{3}{2}x + 1.
+        C^{(2)}(x) = 3m+1 = \frac32 x+1. \tag{2}
     \]
 
-    So, $C^{(2)}(x) \le \dfrac{3}{2}x + 1$.
+    \textbf{Case 2b: $m$ is even.}
+    \[
+        C^{(2)}(x) = \frac{m}{2} = \frac{x}{4}
+            < \frac32 x < \frac32 x+1. \tag{3}
+    \]
+
+    By (1), (2), (3), in all cases,
+    \[
+        C^{(2)}(x) \le \frac32 x+1.
+    \]
 \end{proof}
 
 % ======================================================================
@@ -192,133 +199,225 @@
             independent set.
     \end{enumerate}
 \end{exercise}
-\begin{solution}[(a)]
 
+\begin{solution}[(a)]
+    % TODO: give specific $X,Y$ for each counterexample that fails
+    % (I2) and/or (I3).
 \end{solution}
+
 \begin{solution}[(b)]
-    \begin{proof}[Proof of (b)]
+\begin{proof}[Proof of (b)]
     Let $E$ = vertices of a social network, and let $\I$ = the set of
     all cliques.
 
+    \medskip
     \textbf{(I1).} Let $X$ be a clique, and consider $X = \emptyset$.
     Since $\emptyset$ contains no elements, there do not exist
-    $u,v\in\emptyset$ with $u\ne v$. Hence the implication
-    ``$u\ne v \implies (u,v)$ is edge'' holds vacuously for all
-    $u,v\in\emptyset$. So $\emptyset$ is a clique, i.e.\
-    $\emptyset\in\I$.
+    $u,v\in\emptyset$ with $u\ne v$.
+    \[
+        \text{So the implication ``}u\ne v \implies (u,v)\text{ is
+        edge''}
+    \]
+    holds vacuously for all $u,v\in\emptyset$. So $\emptyset$ is a
+    clique, i.e.
+    \[
+        \emptyset\in\I.
+    \]
 
+    \medskip
     \textbf{(I2).} Need to prove: if $X\subseteq Y$ and $Y$ is a
     clique, then $X$ is a clique.
 
-    For all $u,v\in X$ with $u\ne v$: since $X\subseteq Y$, we have
-    $u,v\in Y$ with $u\ne v$. Since $Y$ is a clique, $(u,v)$ is an
-    edge. Hence $X$ is also a clique.
+    For all $u,v\in X$ with $u\ne v$: since $X\subseteq Y$,
+    \[
+        u,v\in Y \quad \text{with } u\ne v.
+    \]
+    Since $Y$ is a clique, $(u,v)$ is an edge. Hence $X$ is also a
+    clique.
 
+    \medskip
     \textbf{(I3) fails in general.} Consider the graph with vertices
-    $\{a,b,c,d\}$ and a single edge $(b,c)$. Let $X=\{a\}$ and
-    $Y=\{b,c\}$.
-
-    $X$ and $Y$ are cliques. $Y\setminus X = \{b,c\}$:
-    \begin{itemize}
-        \item $X\cup\{b\} = \{a,b\}$ is not a clique, since $(a,b)$
-            is not an edge.
-        \item $X\cup\{c\} = \{a,c\}$ is not a clique, since $(a,c)$
-            is not an edge.
-    \end{itemize}
+    $\{a,b,c,d\}$ and a single edge $(b,c)$. Let
+    \[
+        X=\{a\}, \qquad Y=\{b,c\}.
+    \]
+    $X$ and $Y$ are cliques, and $Y\setminus X = \{b,c\}$. Checking
+    each candidate:
+    \[
+        X\cup\{b\} = \{a,b\} \text{ is not a clique, since } (a,b)
+        \text{ is not an edge.}
+    \]
+    \[
+        X\cup\{c\} = \{a,c\} \text{ is not a clique, since } (a,c)
+        \text{ is not an edge.}
+    \]
+    So no valid $y\in Y\setminus X$ exists, and (I3) fails.
 \end{proof}
 
+\begin{remark}
+    This is the key place where the ``clique matroid'' fails to be a
+    genuine matroid: in the vector-space analogy, (I3) is the
+    exchange axiom that guarantees any linearly independent set can
+    be extended toward a larger independent set. Cliques do not have
+    this exchange property in general, which is exactly why the
+    greedy algorithm can fail on them (part (d)).
+\end{remark}
 \end{solution}
-\begin{solution}[(c)]
-    \begin{proof}[Proof of (c)]
-    An independent set $X\in\I$ is \emph{maximal} if
-    $\nexists\, Y\in\I$ such that $X\subsetneq Y$.
 
-    We need to prove: $\forall X,Y\in\I$, if $X$ maximal and $Y$
-    maximal, then $|X|=|Y|$.
+\begin{solution}[(c)]
+\begin{proof}[Proof of (c)]
+    An independent set $X\in\I$ is \emph{maximal} if
+    \[
+        \nexists\, Y\in\I \text{ such that } X\subsetneq Y.
+    \]
+
+    We need to prove:
+    \[
+        \forall X,Y\in\I,\quad X \text{ maximal} \wedge Y \text{
+        maximal} \implies |X|=|Y|.
+    \]
 
     Assume, for contradiction, there exist two maximal independent
-    sets $X,Y\in\I$ with $|X|\ne|Y|$. WLOG, assume $|X|<|Y|$.
+    sets $X,Y\in\I$ with $|X|\ne|Y|$. WLOG, assume
+    \[
+        |X|<|Y|.
+    \]
 
-    Since $X,Y\in\I$ and $|X|<|Y|$, there exists $y\in Y\setminus X$
-    such that $X\cup\{y\}\in\I$.
+    Since $X,Y\in\I$ and $|X|<|Y|$, by (I3) there exists
+    $y\in Y\setminus X$ such that
+    \[
+        X\cup\{y\}\in\I.
+    \]
 
-    Since $y\notin X$, we have $X\subsetneq X\cup\{y\}$, and
-    $X\cup\{y\}\in\I$. This contradicts the assumption that $X$ is
-    maximal.
+    Since $y\notin X$, we have
+    \[
+        X\subsetneq X\cup\{y\}, \qquad X\cup\{y\}\in\I.
+    \]
+    This contradicts the assumption that $X$ is maximal.
 
     Therefore, the assumption is false: all maximal independent sets
     have the same size.
 \end{proof}
 
+\begin{remark}
+    This is the exact analogue of the fact that any two bases of a
+    vector space have the same size (i.e.\ dimension is well
+    defined). There, the argument uses the Steinitz exchange lemma;
+    here (I3) plays precisely that role.
+\end{remark}
 \end{solution}
-\begin{solution}[(d)]
 
+\begin{solution}[(d)]
+    % TODO: construct a concrete social network graph and weights
+    % where greedy fails to find the maximum weight clique.
 \end{solution}
+
 \begin{solution}[(e)]
-    \begin{proof}[Proof of (e)]
+\begin{proof}[Proof of (e)]
     When $\I$ satisfies (I1)--(I3), the greedy algorithm chooses
     elements of $E$ in a specific order $e_1,e_2,\dots,e_r$. We prove
-    $w(e_i) \ge w(e_{i+1})$ for all $1\le i<r$.
-
-    Note that $e_i$ is the maximum-weight element among all
-    $y\in E\setminus X_{i-1}$ satisfying $X_{i-1}\cup\{y\}\in\I$,
-    i.e.\
     \[
-        X_{i-1}\cup\{e_i\}\in\I, \qquad
-        \forall y \text{ with } X_{i-1}\cup\{y\}\in\I,\ w(e_i)\ge w(y).
+        w(e_i) \ge w(e_{i+1}) \qquad \text{for all } 1\le i<r.
     \]
 
-    Assume, for contradiction, that $w(e_i) < w(e_{i+1})$ for some
-    $1\le i<r$.
+    Recall $e_i$ is the maximum-weight element among all
+    $y\in E\setminus X_{i-1}$ satisfying $X_{i-1}\cup\{y\}\in\I$:
+    \[
+        X_{i-1}\cup\{e_i\}\in\I,
+    \]
+    \[
+        \forall y \text{ with } X_{i-1}\cup\{y\}\in\I,\quad
+        w(e_i)\ge w(y).
+    \]
+
+    Assume, for contradiction, that
+    \[
+        w(e_i) < w(e_{i+1}) \qquad \text{for some } 1\le i<r.
+    \]
 
     Since $e_{i+1}$ was chosen by the algorithm at round $i+1$,
     \[
         X_i \cup \{e_{i+1}\} \in \I.
     \]
-    Since $X_{i-1}\subseteq X_i$, we have
-    $X_{i-1}\cup\{e_{i+1}\} \subseteq X_i\cup\{e_{i+1}\}$.
+    Since $X_{i-1}\subseteq X_i$,
+    \[
+        X_{i-1}\cup\{e_{i+1}\} \subseteq X_i\cup\{e_{i+1}\}.
+    \]
     Since $X_i\cup\{e_{i+1}\}\in\I$, by (I2),
     \[
         X_{i-1}\cup\{e_{i+1}\}\in\I.
     \]
+
     This means $e_{i+1}$ is one of the candidates $y$ satisfying
     $X_{i-1}\cup\{y\}\in\I$ at round $i$. Since $e_i$ was chosen at
     round $i$ as the maximum-weight element among all such
-    candidates, we must have
+    candidates,
     \[
         w(e_i) \ge w(e_{i+1}),
     \]
     which contradicts the assumption $w(e_i) < w(e_{i+1})$.
 
-    Therefore, the assumption is false, and $w(e_i)\ge w(e_{i+1})$
-    for all $1\le i<r$.
+    Therefore the assumption is false, and
+    \[
+        w(e_i)\ge w(e_{i+1}) \qquad \text{for all } 1\le i<r.
+    \]
 \end{proof}
 
+\begin{remark}
+    This mirrors a standard fact from linear algebra: if you build up
+    an independent set greedily by always adding the ``largest''
+    remaining valid candidate, the sequence of choices is
+    automatically monotone --- the exchange property (I2) is what
+    lets you ``pull'' a later candidate back to an earlier round
+    without breaking independence.
+\end{remark}
 \end{solution}
+
 \begin{solution}[(f)]
-    \begin{proof}[Proof of (f)]
+\begin{proof}[Proof of (f)]
     Let $Y$ be a maximum weight independent set. By the stopping
     condition of the greedy algorithm, when $X=\{e_1,\dots,e_r\}$,
-    there is no $y\in E\setminus X$ such that $X\cup\{y\}\in\I$. So
-    $X$ is a maximal independent set.
+    there is no $y\in E\setminus X$ such that
+    \[
+        X\cup\{y\}\in\I.
+    \]
+    So $X$ is a maximal independent set.
 
-    By part (c), we know $|X|=|Y|=r$. Write $Y=\{f_1,\dots,f_r\}$
-    with $w(f_i)\ge w(f_{i+1})$ for $1\le i\le r$.
+    By part (c), we know
+    \[
+        |X|=|Y|=r.
+    \]
+    Write $Y=\{f_1,\dots,f_r\}$ with
+    \[
+        w(f_1)\ge w(f_2) \ge \cdots \ge w(f_r).
+    \]
 
-    We need to prove that for each $i=1,\dots,r$,
-    $w(e_i)\ge w(f_i)$.
+    \medskip
+    \textbf{Main claim.} For each $i=1,\dots,r$,
+    \[
+        w(e_i)\ge w(f_i).
+    \]
 
     By contradiction (minimal counterexample): assume there exists a
-    minimum $i$ such that $w(e_i) < w(f_i)$. By minimality of $i$, we
-    have $w(e_k)\ge w(f_k)$ for all $k<i$.
+    minimum $i$ such that $w(e_i) < w(f_i)$. By minimality of $i$,
+    \[
+        w(e_k)\ge w(f_k) \qquad \text{for all } k<i.
+    \]
 
-    Let $X_{i-1}=\{e_1,\dots,e_{i-1}\}$ and $F_i=\{f_1,\dots,f_i\}$.
+    Let
+    \[
+        X_{i-1}=\{e_1,\dots,e_{i-1}\}, \qquad F_i=\{f_1,\dots,f_i\}.
+    \]
     Since $X_{i-1}\subseteq X\in\I$, by (I2), $X_{i-1}\in\I$. Since
     $F_i\subseteq Y\in\I$, by (I2), $F_i\in\I$. Also
-    $|X_{i-1}|=i-1 < i = |F_i|$.
+    \[
+        |X_{i-1}|=i-1 < i = |F_i|.
+    \]
 
     By (I3), there exists $y\in F_i\setminus X_{i-1}$ such that
-    $X_{i-1}\cup\{y\}\in\I$.
+    \[
+        X_{i-1}\cup\{y\}\in\I.
+    \]
 
     Since $y\in F_i = \{f_1,\dots,f_i\}$, and these are sorted in
     decreasing order of weight, $f_i$ has the smallest weight among
@@ -335,23 +434,38 @@
         w(e_i) \ge w(y) \ge w(f_i).
     \]
     This contradicts the assumption $w(e_i) < w(f_i)$. Hence no such
-    $i$ exists, and $w(e_i)\ge w(f_i)$ for all $i=1,\dots,r$.
+    $i$ exists, and
+    \[
+        w(e_i)\ge w(f_i) \qquad \text{for all } i=1,\dots,r.
+    \]
 
+    \medskip
     Summing over $i$:
     \[
         w(X) = \sum_{i=1}^r w(e_i) \ge \sum_{i=1}^r w(f_i) = w(Y).
     \]
     Since $Y$ was assumed to be a maximum weight independent set,
-    $w(X)\ge w(Y)$ forces $w(X)=w(Y)$. Therefore $X$ is also a
-    maximum weight independent set.
-
+    $w(X)\ge w(Y)$ forces
+    \[
+        w(X)=w(Y).
+    \]
+    Therefore $X$ is also a maximum weight independent set.
     \[
         \therefore \text{Greedy algorithm finds a maximum weight
         independent set.}
     \]
 \end{proof}
 
+\begin{remark}
+    This whole argument is the discrete, combinatorial analogue of
+    the Matroid Greedy Theorem, itself a generalisation of the fact
+    that Gaussian elimination / the Gram--Schmidt-style greedy basis
+    selection process finds an optimal basis with respect to any
+    linear weighting --- the same ``minimal counterexample +
+    exchange'' technique (Steinitz exchange lemma) underlies both.
+\end{remark}
 \end{solution}
+
 \FloatBarrier
 % ======================================================================
 \begin{exercise}{10}
@@ -359,18 +473,14 @@
 
     \begin{algorithm}[H]
         \DontPrintSemicolon
-        \KwIn{a finite set $E$, a function $w: E \to \R_0^+$, a collection $\I$ of subsets of $E$}
-        \KwOut{an independent set $X$}
-        $X \gets \emptyset$\;
-        $i \gets 1$\;
-        \While{$\exists\, y \in E \setminus X$ such that $X \cup \{y\} \in \I$}{
-            choose $y$ with largest weight $w(y)$ among all such candidates\;
-            $e_i \gets y$\;
-            $X \gets X \cup \{e_i\}$\;
-            $i \gets i + 1$\;
+        \For{$i \gets 1$ \KwTo $n$}{
+            \For{$j \gets 1$ \KwTo $i$}{
+                \For{$k \gets 1$ \KwTo $j$}{
+                    [some action]\;
+                }
+            }
         }
-        \Return $X$\;
-        \caption{Greedy algorithm for maximum weight independent set}
+        \caption{Triple-loop counting}
     \end{algorithm}
     \begin{enumerate}[label=(\alph*)]
         \item For each pair $i,j$, how many times is the action
@@ -395,7 +505,83 @@
     \end{enumerate}
 \end{exercise}
 \begin{solution}
+    \begin{enumerate}[label=(\alph*)]
+    \item For fixed $i,j$: $j$ loop from $1$ to $i$, $k$ loop from $1$ to
+        $j$. Observe that for each pair $(i,j)$, the innermost action is
+        performed $j$ times.
 
+    \item For fixed $i$: $j$ loops from $1$ to $i$, and for each $j$ the
+        inner loop runs $j$ times. So the number of times the action is
+        performed is
+        \[
+            \sum_{j=1}^{i} j = \frac{i(i+1)}{2}.
+        \]
+
+    \item Summing over $i$ from $1$ to $n$:
+        \[
+            \text{num of action} = \sum_{i=1}^{n}\sum_{j=1}^{i} j
+            = \sum_{i=1}^{n} \frac{i(i+1)}{2}.
+        \]
+
+    \item Evaluating $\displaystyle\sum_{i=1}^{n}\frac{i(i+1)}{2}$ for
+        small $n$:
+        \[
+            n=1: 1, \quad n=2: 4, \quad n=3: 10, \quad n=4: 20, \quad
+            n=5: 35.
+        \]
+
+    \item The sequence $1,4,10,20,35,\dots$ is the sequence of
+        \emph{tetrahedral numbers}. Each term is obtained from the
+        previous by adding the next triangular number
+        ($1,3,6,10,15,\dots$), and the values grow roughly cubically in
+        $n$.
+
+    \item Conjecture:
+        \[
+            \sum_{i=1}^{n}\frac{i(i+1)}{2} = \frac{n(n+1)(n+2)}{6}.
+        \]
+        \emph{Derivation:} using $\displaystyle\sum_{i=1}^n i^2 =
+        \frac{n(n+1)(2n+1)}{6}$ and $\displaystyle\sum_{i=1}^n i =
+        \frac{n(n+1)}{2}$,
+        \begin{align*}
+            \sum_{i=1}^n \frac{i^2+i}{2}
+            &= \frac12\left[\frac{n(n+1)(2n+1)}{6}
+                + \frac{n(n+1)}{2}\right] \\
+            &= \frac{1}{12}\left[n(n+1)(2n+1) + 3n(n+1)\right] \\
+            &= \frac{1}{12}\,n(n+1)\big[(2n+1)+3\big]
+                = \frac{1}{12}\,n(n+1)(2n+4) \\
+            &= \frac{1}{6}\,n(n+1)(n+2).
+        \end{align*}
+        This matches the numerical values in part (d): $n=5$ gives
+        $\frac{5\cdot6\cdot7}{6}=35$.\ \checkmark
+
+    \item \textbf{Proof (by induction on $n$).}
+
+        \emph{Base case ($n=1$).} LHS $=\dfrac{1\cdot2}{2}=1$.
+        RHS $=\dfrac{1\cdot2\cdot3}{6}=1$. Equal, so the base case holds.
+
+        \emph{Inductive hypothesis.} Assume for some $n\ge1$,
+        \[
+            \sum_{i=1}^{n}\frac{i(i+1)}{2} = \frac{n(n+1)(n+2)}{6}.
+        \]
+
+        \emph{Inductive step.} We show the formula holds for $n+1$:
+        \begin{align*}
+            \sum_{i=1}^{n+1}\frac{i(i+1)}{2}
+            &= \sum_{i=1}^{n}\frac{i(i+1)}{2} + \frac{(n+1)(n+2)}{2} \\
+            &= \frac{n(n+1)(n+2)}{6} + \frac{(n+1)(n+2)}{2}
+                \qquad \text{(by inductive hypothesis)} \\
+            &= \frac{n(n+1)(n+2) + 3(n+1)(n+2)}{6} \\
+            &= \frac{(n+1)(n+2)(n+3)}{6}.
+        \end{align*}
+        This matches the conjectured formula with $n$ replaced by $n+1$.
+
+        By the Principle of Mathematical Induction, the formula
+        \[
+            \sum_{i=1}^{n}\frac{i(i+1)}{2} = \frac{n(n+1)(n+2)}{6}
+        \]
+        holds for all $n\ge1$. \qed
+    \end{enumerate}
 \end{solution}
 
 % ======================================================================
@@ -432,7 +618,111 @@
     \end{itemize}
 \end{exercise}
 \begin{solution}
+    The $n$-th harmonic number $H_n$ is defined by
+\[
+    H_n = 1+\frac12+\frac13+\cdots+\frac1n.
+\]
 
+\section*{Main result: $H_n \ge \ln(n+1)$}
+
+\begin{proof}[Proof (by induction on $n$)]
+    \textbf{Base case ($n=1$).} $H_1=1$, and $\ln(1+1)=\ln2<1$. So
+    $H_1 \ge \ln(1+1)$.
+
+    \textbf{Inductive hypothesis.} Assume $H_n \ge \ln(n+1)$ for some
+    $n\ge1$.
+
+    \textbf{Inductive step.} We show $H_{n+1}\ge\ln(n+2)$.
+
+    By definition,
+    \[
+        H_{n+1} = H_n+\frac{1}{n+1} \ge \ln(n+1)+\frac{1}{n+1}.
+    \]
+    We claim $\ln(n+1)+\dfrac{1}{n+1} \ge \ln(n+2)$. Observe that
+    \[
+        \ln(n+2)-\ln(n+1) = \ln\left(\frac{n+2}{n+1}\right)
+        = \ln\left(1+\frac{1}{n+1}\right) \le \frac{1}{n+1},
+    \]
+    using $\ln(1+x)\le x$ (with $x=\frac{1}{n+1}$). Rearranging,
+    \[
+        \ln(n+1)+\frac{1}{n+1} \ge \ln(n+2).
+    \]
+    Combining the two inequalities,
+    \[
+        H_{n+1} \ge \ln(n+1)+\frac{1}{n+1} \ge \ln(n+2).
+    \]
+    So the statement holds for $n+1$.
+
+    \textbf{Conclusion.} By the Principle of Mathematical Induction,
+    $H_n \ge \ln(n+1)$ for all $n\ge1$.
+\end{proof}
+
+\section*{Advanced afterthoughts}
+
+\begin{enumerate}
+\item The inequality $H_n\ge\ln(n+1)$ implies $H_n\ge\ln n$, since
+    $\ln(n+1)\ge\ln n$. Trying to prove $H_n\ge\ln n$ \emph{directly}
+    by induction runs into a snag: in the inductive step, one would
+    need
+    \[
+        \ln(n+1)-\ln n = \ln\left(1+\frac1n\right) \le \frac{1}{n+1},
+    \]
+    but $\ln(1+x)\le x$ only gives the weaker bound
+    $\ln(1+\frac1n)\le\frac1n$, which is not tight enough (since
+    $\frac1n > \frac{1}{n+1}$). This illustrates that induction
+    sometimes requires proving something \emph{stronger} than what
+    one set out to prove --- the extra ``room'' in $\ln(n+1)$
+    compared to $\ln n$ is exactly what makes the induction go
+    through.
+
+\item The proof relies on the inequality $\ln(1+x)\le x$, which is a
+    property specific to the natural logarithm (it comes from
+    $\ln(1+x)$ being concave with tangent line $y=x$ at $x=0$). For a
+    logarithm to another base $b\ne e$, the analogous inequality
+    $\log_b(1+x)\le x$ does not hold in general, so the proof does
+    not transfer directly to other bases without first converting
+    back to $\ln$ via the change-of-base formula.
+
+\item \textbf{Claim: $H_n \le \ln n+1$.}
+    \begin{proof}[Proof (by induction on $n$)]
+        \textbf{Base case ($n=1$).} $H_1=1$. RHS $=\ln1+1=0+1=1$.
+        So $H_1\le\ln1+1$.
+
+        \textbf{Inductive hypothesis.} Assume $H_n\le\ln n+1$ for
+        some $n\ge1$.
+
+        \textbf{Inductive step.} We show $H_{n+1}\le\ln(n+1)+1$.
+
+        By definition, $H_{n+1}=H_n+\dfrac{1}{n+1}$. By the
+        inductive hypothesis,
+        \[
+            H_{n+1} \le \ln n+1+\frac{1}{n+1}.
+        \]
+        It remains to show $\ln n+\dfrac{1}{n+1}\le\ln(n+1)$, i.e.
+        \[
+            \ln(n+1)-\ln n \ge \frac{1}{n+1}.
+        \]
+        Using the inequality $\ln x \ge 1-\dfrac1x$ for $x>0$, take
+        $x=\dfrac{n+1}{n}$:
+        \[
+            \ln\left(\frac{n+1}{n}\right) \ge 1-\frac{n}{n+1}
+            = \frac{1}{n+1}.
+        \]
+        Since $\ln\left(\dfrac{n+1}{n}\right)=\ln(n+1)-\ln n$, this
+        gives
+        \[
+            \ln(n+1)-\ln n \ge \frac{1}{n+1}.
+        \]
+        Combining:
+        \[
+            H_{n+1} \le \ln n+1+\frac{1}{n+1} \le \ln(n+1)+1.
+        \]
+        So the statement holds for $n+1$.
+
+        \textbf{Conclusion.} By the Principle of Mathematical
+        Induction, $H_n \le \ln n+1$ for all $n\ge1$.
+    \end{proof}
+\end{enumerate}
 \end{solution}
 
 % ======================================================================
@@ -672,5 +962,178 @@
 \begin{solution}
 
 \end{solution}
+
+
+\appendix
+\section{Vector spaces, independence, and dimension}
+
+This appendix collects the background from linear algebra used
+throughout Exercise~5: the idea of a vector space, what it means for
+a set of vectors to be independent, and why every basis of a given
+space has exactly the same number of vectors. The matroid axioms
+(I1)--(I3) used in Exercise~5 are, in a precise sense, what remains
+of this theory once the vectors themselves are stripped away and
+only the combinatorics of independence is kept.
+
+\subsection{Vector spaces}
+
+A \emph{vector space} $V$ is a set of objects, called vectors, that
+can be added together and multiplied (``scaled'') by numbers, in
+such a way that the usual rules of algebra hold: addition is
+commutative and associative, there is a zero vector $\mathbf 0$ with
+$v+\mathbf 0=v$ for every $v$, every $v$ has a negative $-v$ with
+$v+(-v)=\mathbf 0$, and scaling distributes over addition in the
+expected way. The space $\R^n$ of columns of $n$ real numbers is the
+prototypical example, but the same rules govern spaces of
+polynomials, spaces of matrices, and spaces of functions.
+
+A \emph{subspace} of $V$ is a subset $W\subseteq V$ that is itself a
+vector space using the same addition and scaling. Concretely, $W$ is
+a subspace precisely when it contains $\mathbf 0$ and is closed under
+addition and scaling: if $u,w\in W$ and $c$ is a scalar, then $u+w\in
+W$ and $cu\in W$. Lines and planes through the origin in $\R^3$ are
+subspaces; a line or plane that misses the origin is not, since it
+fails to contain $\mathbf 0$.
+
+\subsection{Linear combinations and span}
+
+Given vectors $v_1,\dots,v_k\in V$ and scalars $c_1,\dots,c_k$, the
+vector
+\[
+    c_1v_1+c_2v_2+\cdots+c_kv_k
+\]
+is called a \emph{linear combination} of $v_1,\dots,v_k$. The set of
+\emph{all} linear combinations of $v_1,\dots,v_k$ is called their
+\emph{span}, written $\operatorname{span}(v_1,\dots,v_k)$. The span
+is always a subspace of $V$: it is closed under addition (adding two
+linear combinations gives another linear combination) and under
+scaling. Geometrically, the span of a single nonzero vector in
+$\R^3$ is a line through the origin; the span of two vectors that do
+not lie on a common line is a plane through the origin.
+
+\subsection{Linear independence}
+
+The vectors $v_1,\dots,v_k$ are \emph{linearly independent} if the
+only way to combine them to produce the zero vector is trivially:
+\[
+    c_1v_1+c_2v_2+\cdots+c_kv_k=\mathbf 0
+    \quad\Longrightarrow\quad c_1=c_2=\cdots=c_k=0.
+\]
+If some nontrivial combination (not all $c_i$ equal to zero) does
+produce $\mathbf 0$, the vectors are \emph{linearly dependent}. A
+dependent set always contains a redundant vector: if
+$c_1v_1+\cdots+c_kv_k=\mathbf 0$ with, say, $c_1\ne0$, then
+\[
+    v_1 = -\frac{c_2}{c_1}v_2-\cdots-\frac{c_k}{c_1}v_k,
+\]
+so $v_1$ can be discarded without shrinking the span. Independence is
+therefore best understood as the absence of such redundancy: an
+independent set is one in which every vector contributes something
+that the others cannot already produce.
+
+\begin{example}
+    In $\R^2$, the vectors $(1,0)$ and $(0,1)$ are independent: if
+    $c_1(1,0)+c_2(0,1)=(0,0)$, then $c_1=c_2=0$. The vectors
+    $(1,1)$, $(2,2)$ are dependent, since $2(1,1)-(2,2)=(0,0)$ is a
+    nontrivial combination equal to zero; indeed $(2,2)$ is simply
+    twice $(1,1)$ and contributes nothing new.
+\end{example}
+
+An elementary but important fact is that any set of vectors
+containing $\mathbf 0$ is automatically dependent: taking $c_1=1$ for
+the zero vector and $c_i=0$ for all others gives a nontrivial
+combination summing to $\mathbf 0$.
+
+\subsection{Basis}
+
+A \emph{basis} of a vector space $V$ is a set of vectors that is
+simultaneously:
+\begin{enumerate}[label=(\roman*)]
+    \item linearly independent, and
+    \item spanning, meaning every vector in $V$ is a linear
+        combination of the basis vectors.
+\end{enumerate}
+Independence guarantees there is no redundancy in the basis; spanning
+guarantees nothing is missing. Together, these two conditions mean
+that every vector in $V$ can be written as a linear combination of
+the basis vectors in \emph{exactly one} way --- this is the
+coordinate representation of a vector relative to that basis.
+
+\begin{example}
+    The \emph{standard basis} of $\R^n$ consists of the vectors
+    $e_1,\dots,e_n$, where $e_i$ has a $1$ in position $i$ and $0$
+    elsewhere. Every vector $(a_1,\dots,a_n)\in\R^n$ is uniquely
+    $a_1e_1+\cdots+a_ne_n$.
+\end{example}
+
+A given space almost always has infinitely many different bases ---
+for example, $\{(1,0),(1,1)\}$ is also a basis of $\R^2$, distinct
+from the standard basis $\{(1,0),(0,1)\}$. What is remarkable, and
+what makes the notion of dimension possible, is that no matter which
+basis is chosen, it always has the same number of vectors.
+
+\subsection{Dimension}
+
+\begin{theorem}[Invariance of basis size]
+    Any two bases of a vector space $V$ have the same number of
+    vectors.
+\end{theorem}
+
+The proof rests on a single combinatorial fact, the \emph{exchange
+lemma}: if $A$ is a linearly independent set and every vector in $A$
+can be written as a linear combination of the vectors in a set $B$,
+then $A$ cannot have more vectors than $B$. Briefly, one exchanges
+vectors of $B$ for vectors of $A$ one at a time --- each exchange is
+justified because some vector of $B$ appears with a nonzero
+coefficient in the expression for the next vector of $A$, so that
+vector of $B$ can be solved for and replaced. If $A$ had more
+vectors than $B$, this process would run out of vectors in $B$ to
+exchange before all of $A$ had been used, forcing some later vector
+of $A$ to be a combination of earlier vectors of $A$ --- contradicting
+the independence of $A$.
+
+Applying the exchange lemma twice --- once with $A$ and $B$ playing
+the roles of two different bases, and once with their roles
+reversed, since each basis spans $V$ and so can express every vector
+of the other --- shows that neither basis can have more vectors than
+the other, so they must have exactly the same number of vectors.
+This common number is called the \emph{dimension} of $V$, written
+$\dim V$.
+
+\begin{example}
+    $\dim \R^n = n$, witnessed by the standard basis
+    $\{e_1,\dots,e_n\}$. A plane through the origin in $\R^3$ has
+    dimension $2$; a line through the origin has dimension $1$; the
+    space $\{\mathbf 0\}$ containing only the zero vector has
+    dimension $0$, since its only basis is the empty set.
+\end{example}
+
+\subsection{From vector spaces to matroids}
+
+The theory above depends, at first sight, essentially on the
+algebraic structure of a vector space: addition, scalar
+multiplication, and the ability to solve $c_1v_1+\cdots=\mathbf0$ for
+one vector in terms of the others. Yet inspecting the proof of the
+invariance of basis size shows that only two facts about
+independence were actually used:
+\begin{enumerate}[label=(\roman*)]
+    \item every subset of an independent set is independent, and
+    \item the exchange property: given two independent sets of
+        different sizes, some element of the larger one can be added
+        to the smaller one while preserving independence.
+\end{enumerate}
+No reference to vectors, scalars, or linear combinations survives in
+the final argument. This observation --- that the essential content
+of ``independence'' and ``dimension'' can be isolated from the
+vector-space setting entirely --- is what led Whitney (1935) to
+define a \emph{matroid}: a finite set $E$ together with a collection
+$\I$ of ``independent'' subsets satisfying exactly properties (I1),
+(I2), and (I3) of Exercise~5. Under this abstraction, a basis becomes
+a maximal independent set, dimension becomes the common size of all
+maximal independent sets, and the exchange lemma becomes axiom (I3)
+itself, assumed outright rather than derived. Exercise~5 develops
+this abstract theory directly from the axioms, and Part~(c) in
+particular is the matroid-theoretic proof of the invariance of basis
+size given above, with every reference to vectors removed.
 
 \end{document}

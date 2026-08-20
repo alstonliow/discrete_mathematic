@@ -1,0 +1,395 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{FIT1058 --- Chapter 2: Functions\\ \large Exercise Solutions}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{1}
+    Let $A$ be a finite set. How many indicator functions with domain
+    $A$ are there?
+\end{exercise}
+\begin{solution}
+    An indicator function is defined by
+    \[
+        \chi_A(x) = \begin{cases} 1 & \text{if } x\in A \\
+            0 & \text{if } x\notin A \end{cases}
+    \]
+
+    Let $|A|=n$. The number of functions $\chi: A\to\{0,1\}$ equals
+    the number of ways to independently assign each of the $n$
+    elements of $A$ a value in $\{0,1\}$, which is $2^n$.
+
+    Equivalently, each such function corresponds to exactly one
+    subset $X\subseteq A$ (namely $X=\{x\in A : \chi(x)=1\}$), so the
+    number of indicator functions equals $|\mathcal P(A)| = 2^n$.
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{2}
+    Let $A$ and $B$ be any sets. Express the indicator functions of
+    each of the following in terms of the indicator functions
+    $\chi_A$ and $\chi_B$.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\overline{A}$
+        \item $A\cap B$
+        \item $A\setminus B$
+        \item $A\triangle B$
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{5}
+    Functions can be viewed as sets of ordered pairs, so we can
+    combine functions using set operations. The result will be a
+    binary relation but, depending on the operation, it may or may
+    not be another function.
+
+    Suppose $f: A\to B$ and $g: C\to D$ are functions. Which of the
+    following is always a function?
+    \[
+        f\cap g;\quad f\cup g;\quad f\setminus g;\quad g\setminus f;
+        \quad f\triangle g;\quad f\times g.
+    \]
+    For each that is always a function, give its definition in the
+    usual form, including showing how the rule depends on $f$ and
+    $g$. For each that is not necessarily a function, explain why
+    this is the case (e.g., with the help of examples for $f$ and
+    $g$ under which the operation does not give a function).
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{6}
+    Suppose that $f: A\to B$ and $g: C\to D$ are functions with
+    disjoint domains: $A\cap C=\emptyset$. Is the disjoint union
+    $f\sqcup g$ always a function? If so, give its definition in
+    terms of $f$ and $g$. If not, why not?
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{7}
+    Give an example of a function $f:\N\times\N\to\N$ which is an
+    injection. Even better, give one which is a bijection.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{8}
+    A bitstring is a string over the binary alphabet $\{0,1\}$; in
+    other words, it is a member of $\{0,1\}^*$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Give a bijection from $\{0,1\}^*$ to $\N$.
+
+        Now let $\{0,1\}^{*+}$ denote the set of all finite nonempty
+        tuples (or sequences) of bitstrings. Examples of members of
+        $\{0,1\}^{*+}$ include:
+        \[
+            (011,1,10001),\quad (10,10,10,10),\quad (\varepsilon,
+            1011),\quad (1010010001).
+        \]
+        \item (Challenge) Give a bijection from $\{0,1\}^{*+}$ to
+        $\{0,1\}^*$.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}[(a)]
+
+\end{solution}
+\begin{solution}[(b)]
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{9}
+    Let $A$ be a set of $n$ elements and let $x\in A$. We say that a
+    function $f: A\to A$ \emph{fixes} $x$ if $f(x)=x$. We also say in
+    this case that $x$ is a \emph{fixed point} of $f$.
+
+    This says nothing about what $f$ does to other elements of $A$;
+    it is possible that some other elements are fixed by $f$ too, or
+    that none are. All this definition requires is that $f$ sends
+    $x$ to itself.
+
+    Now let $X\subseteq A$. The function $f$ \emph{fixes} $X$ if it
+    fixes all elements of $X$. So, for all $x\in X$, we have
+    $f(x)=x$. In other words, the restriction of $f$ to $X$ is just
+    the identity function on $X$:
+    \[
+        f|_X = i_X.
+    \]
+    Members of $A\setminus X$ may or may not be fixed by $f$.
+
+    Let $\mathrm{Fix}(X)$ be the set of bijections on $A$ that fix
+    $X$, and let $F$ be the set of all bijections on $A$ that fix at
+    least one element of $A$.
+
+    Using Exercise 1.13 (i.e., Exercise 13 in Chapter 1), express
+    $|F|$ in terms of the set sizes $|\mathrm{Fix}(X)|$ using all
+    $X\subseteq A$.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{10}
+    For each $k\in\{1,\dots,n\}$ and any subset $X\subseteq A$ with
+    $|X|=k$, write $f_k$ for the number of bijections on $A$ that fix
+    $X$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Why don't we include $X$ in the notation $f_k$, given
+            that its definition refers to $X$?
+        \item Give an expression for $f_k$.
+        \item Express $|F|$ in terms of $f_1,f_2,\dots,f_n$, and then
+            use your expression for $f_k$ to give an expression for
+            $|F|$.
+        \item Hence express the number of fixed-point-free
+            bijections on $A$ in terms of $f_1,f_2,\dots,f_n$. A
+            function is fixed-point-free if it has no fixed points.
+        \item For each of the following sets, what proportion of all
+            bijections on the set are fixed-point-free?
+            $\{0,1\}$; $\{\spadesuit,\clubsuit,\diamondsuit,
+            \heartsuit\}$; the set of ten decimal digits; the
+            26-letter English alphabet.
+        \item What is the largest set for which you can determine
+            this proportion, and what is the value of the proportion
+            for that set?
+    \end{enumerate}
+\end{exercise}
+\begin{solution}[(a)]
+
+\end{solution}
+\begin{solution}[(b)]
+
+\end{solution}
+\begin{solution}[(c)]
+
+\end{solution}
+\begin{solution}[(d)]
+
+\end{solution}
+\begin{solution}[(e)]
+
+\end{solution}
+\begin{solution}[(f)]
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{11}
+    \begin{enumerate}[label=(\alph*)]
+        \item Write down all surjections from $\{1,2,3,4\}$ to
+            $\{a,b,c\}$. Compare your answer with Exercise 1.20.
+        \item Define a surjection from
+        \[
+            \{\text{surjections from } \{1,2,3,4\} \text{ to }
+            \{a,b,c\}\}
+        \]
+        to
+        \[
+            \{\text{partitions of } \{1,2,3,4\} \text{ into three
+            parts}\}.
+        \]
+        \item What sizes can the preimages of members of its image
+            be?
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{12}
+    Suppose $f:A\to B$ and $g:C\to D$ are bijections, $A\cap
+    C=\emptyset$ and $B\cap D=\emptyset$. Since $A\cap C=\emptyset$,
+    the disjoint union $f\sqcup g$ exists. Show that $f\sqcup g$ is a
+    bijection and express the inverse of $f\sqcup g$ in terms of the
+    inverses of $f$ and $g$.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{13}
+    If the function $f$ has an inverse function, which of its
+    iterated compositions $f^{(k)}$ have inverse functions (where
+    $k\in\N$)?
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{14}
+    Determine all functions from $\{1,2,3\}$ to itself whose
+    indefinitely iterated composition is a constant function (i.e.,
+    $f^{(k)}$ is a constant function if $k$ is large enough).
+
+    For a challenge: investigate when this happens in general. Try
+    to characterise those functions $f:\{1,2,\dots,n\}\to
+    \{1,2,\dots,n\}$ such that, for large enough $k$, the iterated
+    composition $f^{(k)}$ is constant.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{15}
+    This exercise is about the Caesar slide cryptosystem, one of the
+    oldest and simplest cryptosystems. It is not secure, but its core
+    operation is used in many stronger and more complex
+    cryptosystems.
+
+    Caesar slide encrypts a message by sliding each letter along the
+    alphabet, rightwards, by some fixed number of steps. This fixed
+    number is the key, $k$, and the same amount of sliding is done to
+    each letter of the message, with wrap-around.
+
+    Formal definition: the message space $M$ is the set of all
+    strings of English lower case letters. The key space $K$ is the
+    English lower-case alphabet $\{a,\dots,z\}$. The cypher space $C$
+    equals $M$. Letter addition $\alpha+\beta$ slides $\alpha$
+    rightwards by $\beta$ steps, with wrap-around (and letter
+    subtraction slides leftwards).
+
+    The encryption function $e: M\times K\to M$ is defined for
+    $m=m_1m_2\cdots m_n\in M$ and $k\in K$ by
+    \[
+        e(m,k) = c_1c_2\cdots c_n, \qquad c_i = m_i+k.
+    \]
+    The decryption function $d: M\times K\to M$ is defined for
+    $c=c_1c_2\cdots c_n\in M$ and $k\in K$ by
+    \[
+        d(c,k) = m_1m_2\cdots m_n, \qquad m_i = c_i-k.
+    \]
+
+    Referring to the definitions of \emph{embeddable}, \emph{
+    equivalent} and \emph{idempotent} given in Assignment 1: prove
+    that the Caesar slide cryptosystem is idempotent.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{16}
+    If $f$ is an injection and $f^{-1}$ is its inverse relation, what
+    can you say about $f\circ f^{-1}$ and $f^{-1}\circ f$? What kinds
+    of functions or relations are they, and what are their domains
+    and codomains?
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{18}
+    Recall the Parent relation from \S2.13. Suggest a good name for
+    its transitive closure. Then use that relation (i.e., the
+    transitive closure) to define formally the relation that links
+    two people that are related to each other (however distantly).
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{19}
+    Rephrase the Collatz Conjecture as a statement about the
+    transitive closure of the Collatz function.
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{20}
+    Below are some binary relations on the set of all Python
+    programs, denoted $P,Q$, with relations $\simeq_1,\dots,
+    \simeq_{10}$. For each relation, determine whether or not it is
+    an equivalence relation, and give reasons.
+    \begin{center}
+    \begin{tabular}{ll}
+        $P\simeq_1 Q$ & $P$ and $Q$ have the same number of
+            characters \\
+        $P\simeq_2 Q$ & $P$ and $Q$ compute the same function \\
+        $P\simeq_3 Q$ & $P$ and $Q$ have the same set of variable
+            names \\
+        $P\simeq_4 Q$ & $P$ and $Q$ have at least one variable name
+            in common \\
+        $P\simeq_5 Q$ & $P$ and $Q$ have no variable names in
+            common \\
+        $P\simeq_6 Q$ & $P$ and $Q$ were written by the same set of
+            programmers \\
+        $P\simeq_7 Q$ & $P$ and $Q$ have at least one coauthor in
+            common \\
+        $P\simeq_8 Q$ & $P$ was completed before $Q$ \\
+        $P\simeq_9 Q$ & $P$ was completed on the same day as $Q$ \\
+        $P\simeq_{10} Q$ & $P$ was completed after $Q$ \\
+    \end{tabular}
+    \end{center}
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{22}
+    The anagram relation on the set of all English words is defined
+    as follows. Let $x_1x_2\cdots x_m$ and $y_1y_2\cdots y_n$ be two
+    English words of lengths $m$ and $n$ respectively. The ordered
+    pair $(x_1\cdots x_m, y_1\cdots y_n)$ belongs to the anagram
+    relation if and only if there exists a bijection
+    $f:\{1,\dots,m\}\to\{1,\dots,n\}$ such that, for all
+    $i\in\{1,\dots,m\}$, $x_i=y_{f(i)}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the largest set of three-letter words you can
+            that are all related to each other by the anagram
+            relation.
+        \item For each $k=1,2,3,4$, find an English word of length
+            $k$ that is not related to any other word by anagram.
+        \item Prove that anagram is an equivalence relation.
+    \end{enumerate}
+\end{exercise}
+\begin{solution}[(a)]
+
+\end{solution}
+\begin{solution}[(b)]
+
+\end{solution}
+\begin{solution}[(c)]
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{24}
+    Recall that when you have a table with $n$ columns, its rows
+    represent the $n$-tuples in an $n$-ary relation. For $1\le i\le
+    n$, let $A_i$ be a set containing all the entries in column $i$
+    (and possibly more elements), so that the columns of the table
+    define an $n$-ary relation on $A_1\times A_2\times\cdots\times
+    A_n$. Assuming the columns of this table are all distinct, how
+    many ternary relations can you construct by choosing columns from
+    this table of $n$ columns?
+\end{exercise}
+\begin{solution}
+
+\end{solution}
+
+\end{document}
