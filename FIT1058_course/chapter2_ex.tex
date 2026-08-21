@@ -42,8 +42,75 @@
     \end{enumerate}
 \end{exercise}
 \begin{solution}
+    \textbf{(a)}
+    \[
+        \chi_{\overline A}(x) = 1-\chi_A(x).
+    \]
 
+    \textbf{(b)} $x\in A\cap B \iff x\in A \wedge x\in B$, so
+    \[
+        \chi_{A\cap B} = \chi_A\cdot\chi_B.
+    \]
+
+    \textbf{(c)} $x\in A\setminus B \iff x\in A \wedge x\notin B$, so
+    \[
+        \chi_{A\setminus B} = \chi_A\cdot\chi_{\overline B}
+        = \chi_A\cdot(1-\chi_B) = \chi_A - \chi_A\chi_B.
+    \]
+
+    \textbf{(d)} Since $A\triangle B = (A\setminus B)\cup(B\setminus
+    A)$ is a disjoint union,
+    \[
+        \chi_{A\triangle B} = \chi_{A\setminus B}+\chi_{B\setminus A}
+        = (\chi_A-\chi_A\chi_B)+(\chi_B-\chi_A\chi_B)
+        = \chi_A+\chi_B-2\chi_A\chi_B.
+    \]
 \end{solution}
+
+\begin{exercise}{3}
+    If two functions $f:A\to\R$ and $g:A\to\R$ have the same domain
+    $A$ and give real numbers as their values, then their sum
+    $f+g:A\to\R$ is defined for all $x\in A$ by
+    \[
+        (f+g)(x) = f(x)+g(x).
+    \]
+    What is the sum of all the indicator functions of all the
+    subsets of a finite set?
+\end{exercise}
+\begin{proof}
+    Let $A$ be a finite set with $|A|=n$. Since function addition is
+    defined pointwise, for any $x_i\in A$,
+    \[
+        \left(\sum_{X\subseteq A}\chi_X\right)(x_i)
+        = \sum_{X\subseteq A}\chi_X(x_i).
+    \]
+
+    Since $\chi_X(x_i)=1$ if $x_i\in X$ and $0$ otherwise, this sum
+    counts the number of subsets $X\subseteq A$ containing $x_i$.
+
+    \textbf{Method 1 (direct count).} A subset containing $x_i$ is
+    formed by fixing $x_i$ to be included, and choosing freely,
+    independently, whether each of the remaining $n-1$ elements is
+    included. This gives $2^{n-1}$ such subsets.
+
+    \textbf{Method 2 (summing over subset sizes).} For each size
+    $k=1,\dots,n$, the number of size-$k$ subsets containing $x_i$ is
+    obtained by fixing $x_i$ as one member and choosing the
+    remaining $k-1$ members from the other $n-1$ elements:
+    $\binom{n-1}{k-1}$. Summing over all sizes,
+    \[
+        \sum_{X\subseteq A}\chi_X(x_i)
+        = \sum_{k=1}^{n}\binom{n-1}{k-1}
+        = \sum_{j=0}^{n-1}\binom{n-1}{j} = 2^{n-1},
+    \]
+    using the binomial identity $\sum_{j=0}^{m}\binom{m}{j}=2^m$
+    with $m=n-1$.
+
+    Both methods agree: $\left(\sum_{X\subseteq A}\chi_X\right)(x_i)
+    = 2^{n-1}$ for every $x_i\in A$, independent of which $x_i$ is
+    chosen. So $\sum_{X\subseteq A}\chi_X$ is the constant function
+    on $A$ with value $2^{n-1}$.
+\end{proof}
 
 % ======================================================================
 \begin{exercise}{5}
@@ -64,9 +131,81 @@
     this is the case (e.g., with the help of examples for $f$ and
     $g$ under which the operation does not give a function).
 \end{exercise}
-\begin{solution}
+\begin{proof}
+    Recall that $R\subseteq A\times B$ is a function if and only if
+    $R$ satisfies both:
+    \begin{itemize}
+        \item \textbf{Existence}: $\{x\in A : (x,y)\in R \text{ for
+            some } y\in B\} = A$;
+        \item \textbf{Uniqueness (well-definedness)}: for every
+            $x\in A$, the set $R(x)=\{y\in B : xRy\}$ contains
+            exactly one element.
+    \end{itemize}
 
-\end{solution}
+    \medskip
+    \textbf{(i) $f\cap g$.}
+    \[
+        (f\cap g)(x) = \{f(x)\}\cap\{g(x)\}.
+    \]
+    When $f(x)=g(x)$: $(f\cap g)(x) = \{f(x)\}$.
+    When $f(x)\ne g(x)$: $(f\cap g)(x) = \emptyset$ --- does not
+    exist. So $f\cap g$ is \emph{not necessarily} a function; it can
+    fail \textbf{existence}.
+
+    \medskip
+    \textbf{(ii) $f\cup g$.} \label{5ii}
+    \[
+        (f\cup g)(x) = \{f(x)\}\cup\{g(x)\}.
+    \]
+    When $f(x)=g(x)$: $|(f\cup g)(x)|=1$.
+    When $f(x)\ne g(x)$: $|(f\cup g)(x)|=2$. So $f\cup g$ is
+    \emph{not necessarily} a function; it can fail
+    \textbf{uniqueness}.
+
+    \medskip
+    \textbf{(iii) $f\setminus g$.}
+    \[
+        (f\setminus g)(x) = \{f(x)\}\setminus\{g(x)\}.
+    \]
+    When $f(x)=g(x)$: $|f\setminus g|=0$ --- does not exist.
+    When $f(x)\ne g(x)$: $|f\setminus g|=1$. So $f\setminus g$ is
+    \emph{not necessarily} a function; it can fail
+    \textbf{existence}.
+
+    \medskip
+    \textbf{(iv) $g\setminus f$.}
+    By the same argument as (iii) with the roles of $f,g$
+    interchanged, $g\setminus f$ is \emph{not necessarily} a
+    function.
+
+    \medskip
+    \textbf{(v) $f\triangle g$.}
+    \[
+        (f\triangle g)(x) = \{(f\setminus g)(x)\}
+        \cup \{(g\setminus f)(x)\}.
+    \]
+    When $f(x)=g(x)$: $|f\triangle g|=0$ --- does not exist.
+    When $f(x)\ne g(x)$: $|f\triangle g|=2$. So $f\triangle g$ is
+    \emph{not necessarily} a function; depending on $f,g$, it can
+    fail either \textbf{existence} or \textbf{uniqueness}.
+
+    \medskip
+    \textbf{(vi) $f\times g$.}
+    \[
+        f\times g = \{((a,b),(c,d)) : (a,b)\in f,\ (c,d)\in g\}.
+    \]
+    This defines a function
+    \[
+        f\times g : A\times C \to B\times D, \qquad
+        (f\times g)(x,y) = (f(x), g(y)).
+    \]
+    \textbf{Existence}: for all $(x,y)\in A\times C$, since $f$ and
+    $g$ are functions, $f(x)$ and $g(y)$ must exist, so
+    $(f(x),g(y))$ exists.
+    \textbf{Uniqueness}: since $f(x)$ and $g(y)$ are each unique,
+    the pair $(f(x),g(y))$ is unique.
+    So $f\times g$ is \emph{always} a function.
+\end{proof}
 
 % ======================================================================
 \begin{exercise}{6}
@@ -76,16 +215,7 @@
     terms of $f$ and $g$. If not, why not?
 \end{exercise}
 \begin{solution}
-
-\end{solution}
-
-% ======================================================================
-\begin{exercise}{7}
-    Give an example of a function $f:\N\times\N\to\N$ which is an
-    injection. Even better, give one which is a bijection.
-\end{exercise}
-\begin{solution}
-
+    By \hyperref[5ii]{5(ii)} $f \cup g $ is always a function.
 \end{solution}
 
 % ======================================================================
