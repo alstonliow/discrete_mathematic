@@ -367,7 +367,132 @@ in the group of the length):
 \end{proof}
 
 \end{solution}
-\begin{solution}[(b)]
+\textbf{First Attempt (injective but \textbf{not} surjective --- kept for reference):}
+
+\begin{solution}[(b), Attempt 1]
+
+\paragraph{Setup.} Let $x=(x_1,\dots,x_k)\in\{0,1\}^{*+}$ be a tuple of
+bitstrings, $x_i\in\{0,1\}^*$. Direct concatenation of the $x_i$ is not
+injective: e.g., $(01,1)$ and $(0,11)$ both concatenate to $011$. So each
+$x_i$ must be encoded in a self-delimiting way before concatenation.
+
+\paragraph{Encoding a single bitstring.} For $x_i = t_1t_2\cdots t_n$,
+define
+\[
+    \phi(x_i) = \underbrace{t_1t_1\,t_2t_2\,\cdots\,t_nt_n\,01}_{2n+2 \text{ characters}}.
+\]
+Each original bit is doubled (\texttt{0}$\to$\texttt{00}, \texttt{1}$\to$\texttt{11}),
+and the string is terminated with \texttt{01}, a pair that never occurs
+among the doubled bits.
+
+\paragraph{Encoding the tuple.} Define
+\[
+    g : \{0,1\}^{*+} \to \{0,1\}^*, \qquad
+    g(x_1,\dots,x_k) = \phi(x_1)\,\phi(x_2)\,\cdots\,\phi(x_k).
+\]
+
+\textbf{Pseudocode for $g$:}
+
+\begin{algorithm}[H]
+    \DontPrintSemicolon
+    \KwIn{a tuple $x = (x_1,\dots,x_k) \in \{0,1\}^{*+}$}
+    \KwOut{a bitstring $\mathrm{result} \in \{0,1\}^*$}
+    $\mathrm{result} \gets \varepsilon$\;
+    \ForEach{$x_i \in x$}{
+        \ForEach{$t \in x_i$}{
+            $\mathrm{result} \gets \mathrm{result} \cdot t\, t$\;
+        }
+        $\mathrm{result} \gets \mathrm{result} \cdot 01$\;
+    }
+    \Return $\mathrm{result}$\;
+    \caption{Encoding $g(x)$}
+\end{algorithm}
+
+\textbf{Pseudocode for the decoder $g^{-1}$:}
+
+\begin{algorithm}[H]
+    \DontPrintSemicolon
+    \KwIn{a bitstring $s \in \{0,1\}^*$}
+    \KwOut{a tuple $\mathrm{tuple}$}
+    $\mathrm{tuple} \gets ()$\;
+    $p \gets 0$\;
+    $n \gets |s|$\;
+    \While{$p < n$}{
+        $\mathrm{current} \gets \varepsilon$\;
+        \While{$\mathrm{true}$}{
+            $\mathrm{pair} \gets s[p]\,s[p+1]$\;
+            $p \gets p + 2$\;
+            \eIf{$\mathrm{pair} = 01$}{
+                \textbf{break}\;
+            }{
+                $\mathrm{current} \gets \mathrm{current} \cdot \mathrm{pair}[0]$ \tcp*{$00\to 0,\ 11\to 1$}
+            }
+        }
+        $\mathrm{tuple} \gets \mathrm{tuple} \cdot (\mathrm{current})$\;
+    }
+    \Return $\mathrm{tuple}$\;
+    \caption{Decoding $g^{-1}(s)$}
+\end{algorithm}
+
+Note that $|g(x)| = 2\sum_{i=1}^k |x_i| + 2k$, which is always even.
+
+\begin{claim}
+    $g$ is injective.
+\end{claim}
+\begin{proof}
+    We show $g^{-1}(g(x)) = x$ for all $x=(x_1,\dots,x_k)\in\{0,1\}^{*+}$,
+    by induction on $k$.
+
+    \textbf{Lemma.} After decoding $\phi(x_i)$, the position lands exactly
+    at the start of the next block. This is because each pair $t_jt_j \in
+    \{00,11\}$ is never equal to the terminator $01$, so decoding of a
+    block cannot stop early; it stops exactly at the appended $01$.
+
+    \textbf{Base case ($k=1$):} $g(x)=\phi(x_1)$, so by the Lemma,
+    $g^{-1}(g(x)) = (x_1) = x$.
+
+    \textbf{Inductive step:} Assume the statement holds for tuples of
+    length $k-1$. For $x=(x_1,\dots,x_k)$,
+    \[
+        g(x) = \phi(x_1)\cdot\big[\phi(x_2)\cdots\phi(x_k)\big].
+    \]
+    By the Lemma, decoding recovers $x_1$ and leaves the position at the
+    start of $\phi(x_2)\cdots\phi(x_k) = g(x_2,\dots,x_k)$. By the
+    inductive hypothesis, decoding this remainder recovers
+    $(x_2,\dots,x_k)$. Hence $g^{-1}(g(x)) = x$.
+
+    By induction, $g^{-1}(g(x))=x$ for all $x\in\{0,1\}^{*+}$.
+
+    Now suppose $x,y\in\{0,1\}^{*+}$, $x\ne y$, and $g(x)=g(y)$. Then
+    \[
+        x = g^{-1}(g(x)) = g^{-1}(g(y)) = y,
+    \]
+    a contradiction. So $g(x)\ne g(y)$, i.e., $g$ is injective.
+\end{proof}
+
+\begin{claim}
+    $g$ is \textbf{not} surjective.
+\end{claim}
+\begin{proof}
+    Since $\{0,1\}^{*+}$ requires nonempty tuples, the smallest possible
+    tuple is $(x_1)$ with $x_1=\varepsilon$, giving
+    \[
+        \min_{x\in\{0,1\}^{*+}} |g(x)| = 2|x_1|+2 = 2(0+1) = 2.
+    \]
+    More importantly, $|g(x)| = 2\sum_i|x_i|+2k$ is \emph{always even}, for
+    every $x\in\{0,1\}^{*+}$. So $g$ never outputs a string of odd length.
+
+    For example, no $x$ satisfies $g(x)=0$ or $g(x)=1$ (both length $1$,
+    odd). Hence there exist strings in $\{0,1\}^*$ not in the image of
+    $g$, so $g$ is not surjective.
+\end{proof}
+
+\textbf{Conclusion.} Since $g$ is injective but not surjective, $g$ is
+\textbf{not} a bijection. This encoding scheme (self-delimiting via bit
+doubling) fundamentally cannot reach odd-length strings, no matter how the
+terminator is chosen, since every encoded block contributes an even
+number of characters. A different construction is needed for a genuine
+bijection $\{0,1\}^{*+}\to\{0,1\}^*$.
 
 \end{solution}
 
