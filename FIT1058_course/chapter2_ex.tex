@@ -238,6 +238,134 @@
 \end{exercise}
 \begin{solution}[(a)]
 
+\paragraph{Setup: grouping by length.} For each $n\ge0$, there are $2^n$
+bitstrings of length $n$. We assign each bitstring a natural number
+(``index'') as follows:
+
+\begin{center}
+\begin{tabular}{c c c c}
+\hline
+length & bitstring & number of bitstrings & index $\in \N$ \\
+\hline
+$0$ & $\varepsilon$ & $1$ & $0$ \\
+$1$ & $0,1$ & $2=2^1$ & $1,2$ \\
+$2$ & $00,01,10,11$ & $2^2$ & $3,4,5,6$ \\
+$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
+$n$ & $\cdots$ & $2^n$ & $\cdots$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Defining $f_n$.} For $\{0,1\}^n$, the value of a string is a
+member of $\{0,1,\dots,2^n-1\}$. Define $f_n$ to be the value of
+$\{0,1\}^n$:
+\[
+    f_n : \{0,1\}^n \longrightarrow \{0,1,\dots,2^n-1\}, \qquad
+    f_n(s) = f_n(s_1 s_2 \cdots s_n) = \sum_{i=1}^n s_i\cdot 2^{n-i}.
+\]
+
+\begin{claim}
+    For every $n$, $f_n$ is a bijection.
+\end{claim}
+\begin{proof}
+    When $n=0$: $f_0:\{\varepsilon\}\to\{0\}$, $f_0(\varepsilon)=0$, is a
+    bijection.
+
+    Assume $f_{n-1}:\{0,1\}^{n-1}\to\{0,\dots,2^{n-1}-1\}$ is a bijection.
+
+    For $f_n$,
+    \[
+        f_n(s_1\cdots s_n) = s_1\cdot 2^{n-1} + \sum_{i=2}^n s_i\cdot 2^{n-i}
+        = s_1\cdot 2^{n-1} + f_{n-1}(s_2\cdots s_n).
+    \]
+
+    When $s_1=0$: $f_n(s_1\cdots s_n)\in\{0,\dots,2^{n-1}-1\}$.
+
+    When $s_1=1$: $f_n(s_1\cdots s_n) \in \{2^{n-1},\dots,2^{n-1}-1+2^{n-1}\}
+    = \{2^{n-1},\dots,2^n-1\}$.
+
+    We know that $f_n(s_1\cdots s_n)\in\{0,\dots,2^n-1\}$.
+
+    By induction, we know that $f_n$ is a bijection.
+\end{proof}
+
+\paragraph{Starting index of each length group.} Observe that, for
+length $=n$, the starting index is equal to the number of bitstrings of
+length $=0$ to length $=n-1$:
+\[
+    \text{starting index} = \sum_{k=0}^{n-1} |\{0,1\}^k| = \sum_{k=0}^{n-1} 2^k
+    = \frac{2^n-1}{2-1} = 2^n-1.
+\]
+
+So, $f : \{0,1\}^* \to \N$ is equal to $(2^n-1) + $ (position of bitstring
+in the group of the length):
+\[
+    f(s) = (2^n-1) + f_n(s), \qquad n = |s|.
+\]
+
+\begin{claim}
+    $f$ is a bijection.
+\end{claim}
+\begin{proof}
+    We know $f(s) \in \big[\,2^{|s|}-1,\ 2^{|s|+1}-2\,\big]$.
+
+    \textbf{First, we prove $f$ is injective.}
+
+    \emph{Case 1: $s\ne t$ and $|s|\ne|t|$.} Let $|s|<|t|$. Then
+    \[
+        f(s) \in \big[2^{|s|}-1,\ 2^{|s|+1}-2\big], \qquad
+        f(t) \in \big[2^{|t|}-1,\ 2^{|t|+1}-2\big].
+    \]
+    Since $|s|<|t|$ are integers, $|s|+1\le|t|$, so
+    \[
+        2^{|s|+1}-2 \le 2^{|t|}-2 < 2^{|t|}-1.
+    \]
+    So $\big[2^{|s|}-1,\ 2^{|s|+1}-2\big] \cap \big[2^{|t|}-1,\ 2^{|t|+1}-2\big]
+    = \varnothing$. Hence $f(t)\ne f(s)$.
+
+    \emph{Case 2: $s\ne t$ and $|s|=|t|$.}
+    \[
+        f_{|s|}(s) \ne f_{|t|}(t) \implies f(s) \ne f(t).
+    \]
+
+    By Case 1 and 2, $f$ is injective.
+
+    \textbf{Now we prove $f$ is surjective}, i.e.\ need to prove
+    $\forall m\in\N,\ \exists\, s\in\{0,1\}^*,\ f(s)=m$.
+
+    We know $f(s) \in \big[2^{|s|}-1,\ 2^{|s|+1}-2\big]$, so we need
+    \[
+        2^{|s|}-1 \le m \le 2^{|s|+1}-2
+        \iff
+        2^{|s|} \le m+1 \le 2^{|s|+1}-1
+        \iff
+        2^{|s|} \le m+1 < 2^{|s|+1}
+        \iff
+        |s| \le \log_2(m+1) < |s|+1.
+    \]
+
+    So let $n = \lfloor \log_2(m+1) \rfloor$. Then
+    \[
+        2^n \le m+1 < 2^{n+1}
+        \implies
+        0 \le m - 2^n + 1 < 2^n.
+    \]
+
+    So $m-2^n+1 \in [0,2^n) \subseteq [0,2^n-1]$, which is the domain of
+    $f_n^{-1}$ (i.e., $m-2^n+1$ is in the range of $f_n$).
+
+    $f_n$ is surjective, so $\exists\, s\in\{0,1\}^n$ such that
+    $f_n(s) = m-2^n+1$. Then
+    \[
+        f(s) = (2^n-1) + f_n(s) = (2^n-1) + (m-2^n+1) = m.
+    \]
+
+    We proved that $\forall m\in\N$, $\exists\, s\in\{0,1\}^*$, $f(s)=m$.
+    So, $f$ is surjective.
+
+    Hence, $f$ is a bijection.
+\end{proof}
+
 \end{solution}
 \begin{solution}[(b)]
 
