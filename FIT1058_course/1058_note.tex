@@ -99,6 +99,22 @@ $\{x \in \Z : x^2 < 9\} = \{-2,-1,0,1,2\}$.
 \]
 \end{definition}
 
+\begin{center}
+\setlength{\unitlength}{1cm}
+\begin{picture}(10,1.5)
+\thicklines
+\put(0,0.7){\line(1,0){10}}
+\multiput(0,0.4)(1,0){11}{\line(0,1){0.6}}
+\put(2,0.7){\circle*{0.15}}
+\put(7,0.7){\circle{0.15}}
+\put(1.85,0){$a$}
+\put(6.85,0){$b$}
+\end{picture}
+\end{center}
+\begin{center}
+\small $[a,b)$: filled dot at $a$ (included), open circle at $b$ (excluded)
+\end{center}
+
 \subsection{Cardinality}
 % CN 1.3 / Rosen 2.1
 \begin{definition}[Cardinality]
@@ -278,6 +294,15 @@ A - B = \{x : x \in A \wedge x \notin B\}, \qquad
 \]
 \end{definition}
 
+\begin{center}
+\begin{venndiagram2sets}[labelA=$A$,labelB=$B$]
+\fillOnlyA
+\end{venndiagram2sets}
+\end{center}
+\begin{center}
+\small $A\setminus B$ (shaded)
+\end{center}
+
 \begin{theorem}[De Morgan's laws]
 \[
 \overline{A \cup B} = \overline{A} \cap \overline{B}, \qquad
@@ -316,6 +341,20 @@ A \cup B = \{x : x \in A \vee x \in B\}, \qquad
 A \cap B = \{x : x \in A \wedge x \in B\}.
 \]
 \end{definition}
+
+\begin{center}
+\begin{venndiagram2sets}[labelA=$A$,labelB=$B$]
+\fillA
+\fillB
+\end{venndiagram2sets}
+\quad
+\begin{venndiagram2sets}[labelA=$A$,labelB=$B$]
+\fillACapB
+\end{venndiagram2sets}
+\end{center}
+\begin{center}
+\small $A\cup B$ (shaded) \hspace{3cm} $A\cap B$ (shaded)
+\end{center}
 
 \begin{definition}[Disjoint]
 $A \cap B = \emptyset$.
@@ -391,6 +430,16 @@ For finite $U = \{a_1,\dots,a_n\}$ with a fixed ordering, $A \subseteq U$ corres
 \begin{definition}[Symmetric difference]
 $A \triangle B = \{x : x \in A \text{ or } x \in B \text{ but not both}\}$ (exclusive or).
 \end{definition}
+
+\begin{center}
+\begin{venndiagram2sets}[labelA=$A$,labelB=$B$]
+\fillOnlyA
+\fillOnlyB
+\end{venndiagram2sets}
+\end{center}
+\begin{center}
+\small $A\triangle B$ (shaded)
+\end{center}
 
 \begin{theorem}[Equivalent forms]
 \[
@@ -480,6 +529,48 @@ For any $A$: the \emph{coarsest} partition is $\{A\}$ (one part, everything toge
 Partitions are closely tied to \emph{equivalence relations} (reflexive, symmetric, transitive relations -- CN \S2.16, Rosen \S9.5): every equivalence relation $R$ on $A$ partitions $A$ into \emph{equivalence classes} $[a]_R = \{x \in A : x\,R\,a\}$, and conversely every partition of $A$ arises this way from exactly one equivalence relation (namely, $x\,R\,y \iff x,y$ lie in the same part). We revisit this correspondence formally once binary relations are covered.
 \end{note}
 
+\subsection{Cardinality of infinite sets (Rosen \S2.5 -- extension, beyond CN syllabus)}
+
+\begin{definition}[Same cardinality]
+$A,B$ have the \emph{same cardinality}, $|A|=|B|$, iff there exists a bijection $A\to B$.
+\end{definition}
+
+\begin{definition}[Countable]
+$A$ is \emph{countable} if $A$ is finite, or $|A|=|\N|$ (a bijection $\N\to A$ exists -- $A$ can be listed $a_0,a_1,a_2,\dots$). Otherwise $A$ is \emph{uncountable}.
+\end{definition}
+
+\begin{theorem}
+$\Z$ is countable.
+\end{theorem}
+\begin{proof}
+$f:\N\to\Z$, $f(n) = n/2$ if $n$ even, $-(n+1)/2$ if $n$ odd, is a bijection: $0,1,2,3,4,\dots \mapsto 0,-1,1,-2,2,\dots$, hitting every integer exactly once.
+\end{proof}
+
+\begin{theorem}[Countability of $\Q$, Cantor's diagonal enumeration]
+$\Q$ is countable.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Arrange positive rationals $p/q$ in a grid, row $p$, column $q$. Traverse the grid along successive diagonals ($p+q=2,3,4,\dots$), skipping any $p/q$ already listed in lowest terms. This lists every positive rational exactly once; interleave with negatives and $0$ as in the $\Z$ proof above.
+\end{proof}
+
+\bigskip
+\begin{theorem}[Uncountability of $\R$, Cantor's diagonal argument -- harder]
+$\R$ (even just $(0,1)$) is uncountable.
+\end{theorem}
+\begin{proof}
+Suppose, for contradiction, $(0,1)$ were countable: list all its elements as $r_1,r_2,r_3,\dots$, each written as an infinite decimal $r_i = 0.d_{i1}d_{i2}d_{i3}\dots$.
+
+Construct $s = 0.s_1s_2s_3\dots$ by setting $s_i = 5$ if $d_{ii}\neq5$, else $s_i=6$ (any rule avoiding both $d_{ii}$ and decimal-expansion ambiguity works).
+
+Then $s \in (0,1)$, but $s\neq r_i$ for every $i$ (they differ in digit $i$), so $s$ is missing from the list -- contradicting that the list was exhaustive.
+
+So no such list exists: $(0,1)$ is uncountable.
+\end{proof}
+
+\begin{note}[Consequence]
+Since $\Q$ is countable but $\R$ is not, $|\Q|\neq|\R|$ -- there are strictly more reals than rationals, despite both being infinite. This is the first proof most students see that not all infinities are the same size.
+\end{note}
+
 
 % ============================================================
 % CHAPTER 2 --- FUNCTIONS  (CN Ch.2, \S2.1-2.19)
@@ -496,6 +587,17 @@ Partitions are closely tied to \emph{equivalence relations} (reflexive, symmetri
 \begin{definition}[Function]
 A function $f$ consists of: a set called the \emph{domain}; a set called the \emph{codomain}; and a rule assigning, to each $x$ in the domain, a unique value $f(x)$ in the codomain.
 \end{definition}
+
+\begin{center}
+\begin{tikzcd}[row sep=small, column sep=huge]
+1 \arrow[r, "f"] & p \\
+2 \arrow[r, "f"'] & q \\
+3 \arrow[r, "f"] & r
+\end{tikzcd}
+\end{center}
+\begin{center}
+\small A function $f:\{1,2,3\}\to\{p,q,r\}$, each argument pointing to its unique value
+\end{center}
 
 \begin{definition}[Rosen's phrasing]
 Let $A,B$ be nonempty sets. A \emph{function} $f$ from $A$ to $B$ is an assignment of exactly one element of $B$ to each element of $A$. We write $f(a)=b$ if $b$ is the element assigned to $a$, and $f: A \to B$.
@@ -645,6 +747,23 @@ For $x \in \R$:
 \lceil x \rceil = \min\{n \in \Z : n \ge x\}.
 \]
 \end{definition}
+
+\begin{definition}[Partial function]
+A \emph{partial function} $f$ from $A$ to $B$ assigns \emph{at most one} element of $B$ to each element of $A$; the subset of $A$ where $f$ is actually defined is $\dom(f)$ (possibly a proper subset of $A$).
+\end{definition}
+
+\begin{note}[Contrast with CN's \S2.1.1]
+CN's definition of a function already \emph{is} what Rosen calls a \emph{total} function: $\dom(f)$ equals the declared domain exactly, with no gaps. Rosen's ``partial function from $A$ to $B$'' allows $\dom(f)\subsetneq A$ -- a total function on the smaller set $\dom(f)\subseteq A$.
+\end{note}
+
+\begin{example}
+$f:\R\to\R$, $f(x)=1/x$ is a partial function on $\R$ (undefined at $0$); as a \emph{total} function it is $f:\R\setminus\{0\}\to\R$ -- same rule, different declared domain (CN's \S2.1.1 view of the domain as an exact promise).
+\end{example}
+
+\bigskip
+\begin{note}[Where partiality actually shows up -- harder]
+Partial functions are essential in computability theory: a program $P$ computing a function of its input may not halt on every input. The function $f_P(x) = $ ``output of $P$ on input $x$, if $P$ halts'' is a genuine partial function -- $\dom(f_P)$ is exactly the set of inputs on which $P$ halts, and this set can itself be uncomputable (the Halting Problem: no algorithm decides, for arbitrary $P,x$, whether $x\in\dom(f_P)$).
+\end{note}
 
 \subsection{Functions with multiple arguments and values}
 % CN 2.5
@@ -1019,6 +1138,44 @@ y R^{-1} x \iff x R y.
 When $R$ happens to be a function, this agrees with the inverse function of \S2.8 -- \emph{but only when that function is a bijection}. For a general function $f$, $f^{-1}$ as a \emph{relation} always exists (just reverse the pairs); it is only a \emph{function} in its own right when $f$ is bijective.
 \end{note}
 
+\begin{definition}[Zero-one matrix of a relation]
+For finite $A=\{a_1,\dots,a_m\}$, $B=\{b_1,\dots,b_n\}$ and $R\subseteq A\times B$: the matrix $M_R$ is $m\times n$ with
+\[
+(M_R)_{ij} = 1 \iff (a_i,b_j)\in R, \qquad (M_R)_{ij}=0 \text{ otherwise.}
+\]
+\end{definition}
+
+\begin{note}[Properties as matrix conditions, $R$ on $A$]
+Reflexive: diagonal all $1$s. Symmetric: $M_R = M_R^t$. Antisymmetric: $(M_R)_{ij}=1$ and $i\neq j$ $\implies (M_R)_{ji}=0$.
+\end{note}
+
+\begin{definition}[Directed graph of a relation]
+For $R$ on $A$: vertices $=A$; a directed edge $a\to b$ exactly when $(a,b)\in R$.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[node distance=2.5cm, every node/.style={draw,circle,inner sep=2pt,minimum size=7mm}, >={Stealth[length=2mm]}]
+\node (a) at (0,0) {$a$};
+\node (b) at (2.5,0) {$b$};
+\node (c) at (1.25,2) {$c$};
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (a) to[bend left] (c);
+\draw[->] (a) to[out=150,in=210,looseness=8] (a);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small Directed graph of $R=\{(a,a),(a,b),(a,c),(b,c)\}$ -- the loop at $a$ shows reflexivity there
+\end{center}
+
+\begin{note}[Properties as graph conditions]
+Reflexive: a loop at every vertex. Symmetric: every edge $a\to b$ has a matching edge $b\to a$. Transitive: whenever $a\to b\to c$, also $a\to c$ directly.
+\end{note}
+
+\begin{note}[Boolean matrix product computes composition -- harder, ties to \S2.6]
+If $M_R$, $M_S$ are zero-one matrices of $R\subseteq A\times B$, $S\subseteq B\times C$, then $M_R\odot M_S = M_{S\circ R}$ (Boolean product, \S2.6) -- so relation composition (\S2.15) reduces to matrix multiplication with $\vee,\wedge$ in place of $+,\times$.
+\end{note}
+
 \subsection{Properties of binary relations}
 % CN 2.14 / Rosen 9.1, 9.1.4
 
@@ -1182,6 +1339,41 @@ $R^+$ is always transitive.
 Each $R^{(i)}$ is contained in $R^+$: $R^{(1)}=R \subseteq R^+$ by (i), and if $R^{(i)} \subseteq R^+$, then $(x,z)\in R^{(i+1)}$ means $\exists y,\ (x,y)\in R^{(i)} \subseteq R^+$ and $yRz$, so $(x,z) \in R^+$ by (ii); induction gives $R^{(i)}\subseteq R^+$ for all $i$, hence $\bigcup_i R^{(i)} \subseteq R^+$. Conversely, $\bigcup_i R^{(i)}$ satisfies (i)-(iii) itself, and $R^+$ is the \emph{unique} relation satisfying them, so equality follows. Transitivity of $R^+$ is then immediate: any finite chain of $R^+$-steps is absorbed into some $R^{(i)} \subseteq R^+$.
 \end{proof}
 
+\begin{definition}[Closure, general]
+The \emph{closure} of $R$ under a property $P$ is the smallest relation $R'\supseteq R$ with property $P$ (if it exists).
+\end{definition}
+
+\begin{definition}[Reflexive closure]
+\[
+r(R) = R \cup \Delta_A, \qquad \Delta_A = \{(a,a):a\in A\} \text{ (the diagonal relation)}.
+\]
+\end{definition}
+
+\begin{definition}[Symmetric closure]
+\[
+s(R) = R \cup R^{-1}.
+\]
+\end{definition}
+
+\begin{note}
+Transitive closure $R^+$ was already defined above: $R^+=\bigcup_{i=1}^\infty R^{(i)}$.
+\end{note}
+
+\begin{theorem}[Warshall's algorithm -- harder, computes $R^+$ efficiently]
+Let $A=\{a_1,\dots,a_n\}$, $M_0=M_R$. Define $M_k$ from $M_{k-1}$ by:
+\[
+(M_k)_{ij} = (M_{k-1})_{ij} \ \vee\ \big((M_{k-1})_{ik} \wedge (M_{k-1})_{kj}\big),
+\]
+i.e.\ allow paths that route through $a_k$ as an intermediate vertex. Then $M_n = M_{R^+}$.
+\end{theorem}
+\begin{proof}[Proof idea]
+$(M_k)_{ij}=1$ iff there is a path $a_i \to a_j$ using only intermediate vertices from $\{a_1,\dots,a_k\}$. Induction on $k$: base case $k=0$ is exactly $R$ itself; the update rule captures ``either a path avoiding $a_k$ already existed, or one exists routing through $a_k$.'' At $k=n$, $(M_n)_{ij}=1$ iff \emph{any} path $a_i\to a_j$ exists -- exactly $R^+$.
+\end{proof}
+
+\begin{note}[Efficiency]
+Computing $R^+$ via $\bigcup_i R^{(i)}$ directly can cost $O(n^4)$; Warshall's algorithm computes the same $R^+$ in $O(n^3)$.
+\end{note}
+
 \subsection{Equivalence relations}
 % CN 2.16 / Rosen 9.5
 
@@ -1232,6 +1424,65 @@ If $y \in Y \setminus X$: since $X$ is an equivalence class and $y \notin X$, $(
 
 So every element of $A$ lies in exactly one equivalence class -- the classes are nonempty (by definition), pairwise disjoint (part (b)), and cover $A$ (part (a)): a partition.
 \end{proof}
+
+\begin{definition}[Partial order]
+$R$ on $A$ is a \emph{partial order} iff reflexive, antisymmetric, and transitive. $(A,R)$ is then a \emph{partially ordered set} (\emph{poset}), often written $(A,\preceq)$.
+\end{definition}
+
+\begin{example}
+$(\Z,\le)$; $(\mathcal P(S),\subseteq)$ for any set $S$ (\S1.6); $(\Z^+, \mid)$ where $a\mid b$ means $a$ divides $b$.
+\end{example}
+
+\begin{definition}[Comparable, total order, chain]
+$a,b\in A$ are \emph{comparable} if $a\preceq b$ or $b\preceq a$. If \emph{every} pair is comparable, $\preceq$ is a \emph{total} (or \emph{linear}) order and $A$ is a \emph{chain}.
+\end{definition}
+
+\begin{note}
+$(\Z,\le)$ is a total order; $(\mathcal P(S),\subseteq)$ is generally \emph{not} (e.g.\ $\{1\}$ and $\{2\}$ are incomparable in $\mathcal P(\{1,2\})$) -- exactly why \S1.7's maximal/maximum distinction was necessary.
+\end{note}
+
+\begin{definition}[Hasse diagram]
+A drawing of a finite poset: vertices $=A$, an edge drawn upward from $a$ to $b$ exactly when $a\prec b$ and there is no $c$ with $a\prec c\prec b$ (a \emph{covering} relation) -- omitting all edges implied by reflexivity/transitivity.
+\end{definition}
+
+\begin{example}
+For $\mathcal P(\{1,2,3\})$ under $\subseteq$: $\emptyset$ at the bottom, the three singletons above it, the three pairs above those, $\{1,2,3\}$ at the top.
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.4cm, every node/.style={draw,circle,inner sep=1pt,minimum size=6mm}]
+\node (e) at (0,0) {$\emptyset$};
+\node (1) at (-2,1.4) {$\{1\}$};
+\node (2) at (0,1.4) {$\{2\}$};
+\node (3) at (2,1.4) {$\{3\}$};
+\node (12) at (-2,2.8) {$\{1,2\}$};
+\node (13) at (0,2.8) {$\{1,3\}$};
+\node (23) at (2,2.8) {$\{2,3\}$};
+\node (123) at (0,4.2) {$\{1,2,3\}$};
+\draw (e)--(1) (e)--(2) (e)--(3);
+\draw (1)--(12) (2)--(12) (1)--(13) (3)--(13) (2)--(23) (3)--(23);
+\draw (12)--(123) (13)--(123) (23)--(123);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small Hasse diagram of $(\mathcal P(\{1,2,3\}),\subseteq)$
+\end{center}
+
+\begin{definition}[Upper/lower bound, LUB, GLB -- harder]
+For $S\subseteq A$: $u\in A$ is an \emph{upper bound} of $S$ if $s\preceq u$ for all $s\in S$; a \emph{least upper bound} (LUB, or \emph{join} $\vee$) is an upper bound $\preceq$ every other upper bound. Dually for \emph{lower bound} and \emph{greatest lower bound} (GLB, \emph{meet} $\wedge$).
+\end{definition}
+
+\begin{definition}[Lattice]
+A poset in which every pair $a,b$ has both a LUB and a GLB.
+\end{definition}
+
+\begin{example}
+$(\mathcal P(S),\subseteq)$ is a lattice: $A\vee B = A\cup B$, $A\wedge B = A\cap B$ (\S1.12).
+\end{example}
+
+\begin{note}
+$(\Z^+,\mid)$ is also a lattice: $\vee = \mathrm{lcm}$, $\wedge=\gcd$.
+\end{note}
 
 \subsection{Relations}
 % CN 2.17 / Rosen 9.2
@@ -1324,6 +1575,132 @@ Identical argument: an $n$-ary relation is a subset of $A_1\times\cdots\times A_
 Reflexive relations on $A$ with $|A|=m$: the $m$ diagonal pairs $(a,a)$ are forced \emph{in}, leaving $m^2 - m$ off-diagonal pairs free to choose independently, so there are $2^{m^2-m}$ reflexive relations on $A$.
 \end{example}
 
+\subsection{Matrices (Rosen \S2.6 -- extension, beyond CN syllabus)}
+
+\begin{definition}[Matrix]
+An $m\times n$ matrix $A=[a_{ij}]$ is a rectangular array with $m$ rows, $n$ columns, entries $a_{ij}$ ($1\le i\le m,\ 1\le j\le n$). $A$ is \emph{square} if $m=n$.
+\end{definition}
+
+\begin{definition}[Addition, scalar multiplication]
+For same-size $A,B$:
+\[
+(A+B)_{ij}=a_{ij}+b_{ij}.
+\]
+For scalar $c$:
+\[
+(cA)_{ij}=c\,a_{ij}.
+\]
+Addition is defined only when $A,B$ have identical dimensions.
+\end{definition}
+
+\bigskip
+\begin{definition}[Matrix multiplication]
+For $A$ ($m\times k$) and $B$ ($k\times n$), the product $AB$ is $m\times n$, with entry $(i,j)$ given by
+\[
+(AB)_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{ik}b_{kj} = \sum_{l=1}^{k} a_{il}b_{lj}
+\]
+-- the dot product of row $i$ of $A$ with column $j$ of $B$. Defined only when the number of columns of $A$ equals the number of rows of $B$.
+\end{definition}
+
+\begin{example}
+\[
+\begin{pmatrix}1&2\\3&4\end{pmatrix}
+\begin{pmatrix}5&6\\7&8\end{pmatrix}
+=
+\begin{pmatrix}1\cdot5+2\cdot7 & 1\cdot6+2\cdot8\\ 3\cdot5+4\cdot7 & 3\cdot6+4\cdot8\end{pmatrix}
+=
+\begin{pmatrix}19&22\\43&50\end{pmatrix}.
+\]
+\end{example}
+
+\begin{theorem}
+Matrix multiplication is associative: $(AB)C = A(BC)$ whenever the products are defined.
+\end{theorem}
+\begin{proof}
+Let $A$ be $m\times k$, $B$ be $k\times l$, $C$ be $l\times n$. Both $(AB)C$ and $A(BC)$ are $m\times n$.
+
+For entry $(i,j)$ of $(AB)C$: first $(AB)_{ip} = a_{i1}b_{1p}+\cdots+a_{ik}b_{kp}$ for each $p$, then
+\[
+\big((AB)C\big)_{ij} = \sum_{p=1}^{l} (AB)_{ip}\, c_{pj} = \sum_{p=1}^{l}\left(\sum_{q=1}^{k} a_{iq}b_{qp}\right)c_{pj} = \sum_{q=1}^{k}\sum_{p=1}^{l} a_{iq}b_{qp}c_{pj}.
+\]
+
+For entry $(i,j)$ of $A(BC)$: first $(BC)_{qj} = b_{q1}c_{1j}+\cdots+b_{ql}c_{lj}$ for each $q$, then
+\[
+\big(A(BC)\big)_{ij} = \sum_{q=1}^{k} a_{iq}\,(BC)_{qj} = \sum_{q=1}^{k} a_{iq}\left(\sum_{p=1}^{l} b_{qp}c_{pj}\right) = \sum_{q=1}^{k}\sum_{p=1}^{l} a_{iq}b_{qp}c_{pj}.
+\]
+
+Both expand to the same triple sum $\sum_{q,p} a_{iq}b_{qp}c_{pj}$ (finite sums may be freely reordered/regrouped), so $(AB)C=A(BC)$.
+\end{proof}
+
+\begin{theorem}
+Matrix multiplication is \emph{not} commutative in general.
+\end{theorem}
+\begin{proof}
+\[
+\begin{pmatrix}1&1\\0&0\end{pmatrix}\begin{pmatrix}1&0\\1&0\end{pmatrix} = \begin{pmatrix}2&0\\0&0\end{pmatrix}, \qquad
+\begin{pmatrix}1&0\\1&0\end{pmatrix}\begin{pmatrix}1&1\\0&0\end{pmatrix} = \begin{pmatrix}1&1\\1&1\end{pmatrix}.
+\]
+Different results, so $AB\neq BA$ here.
+\end{proof}
+
+\bigskip
+\begin{definition}[Identity matrix]
+$I_n$ is $n\times n$ with $1$s on the diagonal, $0$s elsewhere: $(I_n)_{ij} = 1$ if $i=j$, else $0$.
+\end{definition}
+
+\begin{theorem}
+For $A$ ($m\times n$): $I_mA=A$ and $AI_n=A$.
+\end{theorem}
+
+\begin{definition}[Transpose]
+$A^t$: $(A^t)_{ij}=a_{ji}$ -- rows and columns swapped.
+\end{definition}
+
+\begin{theorem}
+$(A+B)^t = A^t+B^t$; $(AB)^t = B^tA^t$ (order reverses).
+\end{theorem}
+
+\begin{definition}[Symmetric matrix]
+$A$ is \emph{symmetric} if $A=A^t$ (equivalently $a_{ij}=a_{ji}$ for all $i,j$; requires $A$ square).
+\end{definition}
+
+\bigskip
+\begin{definition}[Zero-one matrices, meet/join/Boolean product, Rosen -- harder, sets up \S2.15/9.4]
+For matrices with entries in $\{0,1\}$:
+\[
+(A\wedge B)_{ij}=a_{ij}\wedge b_{ij} \quad \text{(meet)}, \qquad (A\vee B)_{ij}=a_{ij}\vee b_{ij} \quad \text{(join)}.
+\]
+Boolean product:
+\[
+(A\odot B)_{ij} = (a_{i1}\wedge b_{1j}) \vee (a_{i2}\wedge b_{2j}) \vee \cdots \vee (a_{ik}\wedge b_{kj}) = \bigvee_{l=1}^{k} (a_{il}\wedge b_{lj}).
+\]
+An entry is $1$ iff \emph{some} $l$ has $a_{il}=b_{lj}=1$ -- same shape as ordinary matrix multiplication with $(\vee,\wedge)$ in place of $(+,\times)$.
+\end{definition}
+
+\begin{example}
+\[
+A=\begin{pmatrix}1&0\\1&1\end{pmatrix}, \quad B=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+\[
+A\wedge B = \begin{pmatrix}0&0\\1&0\end{pmatrix}, \qquad A\vee B = \begin{pmatrix}1&1\\1&1\end{pmatrix}, \qquad A\odot B = \begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\]
+For $(A\odot B)_{11}$: $(a_{11}\wedge b_{11})\vee(a_{12}\wedge b_{21}) = (1\wedge0)\vee(0\wedge1)=0$. For $(A\odot B)_{21}$: $(1\wedge0)\vee(1\wedge1)=1$.
+\end{example}
+
+\begin{theorem}[Connection to relations, Rosen]
+Let $A$ be the zero-one matrix of relation $R\subseteq X\times Y$ (\S2.13: $a_{ij}=1\iff(x_i,y_j)\in R$), $B$ that of $S\subseteq Y\times Z$. Then $A\odot B$ is exactly the matrix of $S\circ R$ (\S2.15).
+\end{theorem}
+\begin{proof}
+\[
+(A\odot B)_{ij}=1 \iff \exists l:\ a_{il}=1 \wedge b_{lj}=1 \iff \exists y_l:\ (x_i,y_l)\in R \wedge (y_l,z_j)\in S \iff (x_i,z_j)\in S\circ R,
+\]
+matching the definition of relation composition exactly (\S2.15).
+\end{proof}
+
+\begin{note}[Iterating for closures]
+Writing $A^{[n]} = A\odot A\odot\cdots\odot A$ ($n$ copies) gives the matrix of $R^{(n)}$. For finite $A$ ($n\times n$ zero-one matrix), the join $A\vee A^{[2]}\vee\cdots\vee A^{[n]}$ (only $n$ terms needed, since further terms add nothing new) gives the matrix of the transitive closure $R^+$ (\S2.15) -- this is the basis of \emph{Warshall's algorithm}, computed far more efficiently than by literally forming all powers.
+\end{note}
+
 % ============================================================
 % CHAPTER 3 --- PROOFS  (CN Ch.3, §3.1-3.15)
 % ============================================================
@@ -1412,6 +1789,14 @@ $P \implies Q$ is logically equivalent to its contrapositive $\neg Q \implies \n
 Both $P\Rightarrow Q$ and $\neg Q \Rightarrow \neg P$ are false in exactly one case ($P$ true, $Q$ false) and true otherwise -- identical truth tables, hence logically equivalent. The converse $Q\Rightarrow P$ and inverse $\neg P \Rightarrow \neg Q$ each fail in the case $P$ false, $Q$ true (for the converse) or $P$ false, $Q$ true (checking directly) -- a different failure case from the original, so neither need agree with $P \Rightarrow Q$ in general; the domino example ($P\Rightarrow Q$ true, $Q \Rightarrow P$ false) is a concrete witness.
 \end{proof}
 
+\begin{note}[Common logical fallacies, Rosen]
+\emph{Affirming the consequent}: from $P\implies Q$ and $Q$, wrongly concluding $P$ (this is the \emph{converse} error from earlier in this section). \emph{Denying the antecedent}: from $P\implies Q$ and $\neg P$, wrongly concluding $\neg Q$ (this is the \emph{inverse} error). \emph{Begging the question / circular reasoning}: using the claim being proved (or something equivalent to it) as a premise in its own proof.
+\end{note}
+
+\begin{example}[Affirming the consequent, in the wild]
+``If it rains, the ground is wet. The ground is wet. Therefore it rained.'' Invalid: the ground could be wet from a sprinkler.
+\end{example}
+
 \subsection{Proofs of existential and universal statements}
 % CN 3.3 / Rosen 1.4, 1.7
 
@@ -1449,6 +1834,32 @@ Checking every case individually only works for small, finite $D$ -- and not eve
 To \emph{disprove} a universal statement $\forall x \in D,\ P(x)$ (i.e.\ prove its negation $\exists x \in D,\ \neg P(x)$), a single \emph{counterexample} suffices -- disproof of a universal is existential proof of its negation. Conversely, disproving an existential statement $\exists x \in D,\ P(x)$ requires proving the universal $\forall x \in D,\ \neg P(x)$ -- generally the harder direction, since no single case can rule out all possibilities.
 \end{note}
 
+\begin{theorem}[Uniqueness example]
+There is exactly one real number $x$ such that $2x+3=7$.
+\end{theorem}
+\begin{proof}
+\textbf{Existence}: $x=2$ satisfies $2(2)+3=7$.
+
+\textbf{Uniqueness}: suppose $x_1,x_2$ both satisfy $2x+3=7$. Then $2x_1+3=2x_2+3$, so $2x_1=2x_2$, so $x_1=x_2$.
+
+So exactly one such $x$ exists.
+\end{proof}
+
+\begin{note}[The uniqueness pattern]
+Assume two witnesses $x_1,x_2$ both satisfy the property; derive $x_1=x_2$. Combined with a separate existence argument, this proves ``exactly one.''
+\end{note}
+
+\begin{example}[A plausible-looking false universal claim]
+Claim: ``every prime $p$ satisfies $2^p-1$ is prime'' (a \emph{Mersenne prime} for every prime exponent).
+\end{example}
+\begin{proof}[Disproof by counterexample]
+$p=11$ is prime, but $2^{11}-1 = 2047 = 23\times89$, not prime. So the universal claim is false -- a single counterexample suffices, despite the pattern holding for $p=2,3,5,7$ ($2^p-1=3,7,31,127$, all prime).
+\end{proof}
+
+\begin{note}
+This is a genuine cautionary example: checking several small cases can be misleading. $p=2,3,5,7$ all work, and it's tempting to conjecture the pattern continues -- but $p=11$ already breaks it.
+\end{note}
+
 \subsection{Finding proofs}
 % CN 3.4 / Rosen 1.7-1.8
 
@@ -1473,6 +1884,14 @@ Prove $A \subseteq B$ and $A \supseteq B$ separately (\S1.6). Each direction use
 If direct symbolic manipulation (algebraic rules) can transform expression $A$ into expression $B$, use that. Otherwise, prove $A \le B$ and $A \ge B$ separately -- the numerical analogue of the double-inclusion technique.
 \end{note}
 
+\begin{note}[Without loss of generality (WLOG), Rosen]
+When a proof is symmetric in two variables (swapping them leaves the claim unchanged), it suffices to prove one case and invoke the symmetry for the other -- written ``WLOG, assume $x\le y$'' etc. Using WLOG when the situation is \emph{not} actually symmetric is a common error -- check the symmetry claim carefully before invoking it.
+\end{note}
+
+\begin{note}[Forward vs.\ backward reasoning, Rosen]
+\emph{Forward}: start from known facts/assumptions, derive consequences, until reaching the goal. \emph{Backward}: start from the goal, ask ``what would suffice to prove this?'', and work backward to something already known. Backward reasoning is often how a proof is \emph{discovered}; it is then usually rewritten forward for presentation.
+\end{note}
+
 \subsection{Types of proofs}
 % CN 3.5 / Rosen 1.7-1.8
 
@@ -1488,6 +1907,30 @@ If direct symbolic manipulation (algebraic rules) can transform expression $A$ i
     \item \emph{Uniqueness proofs}: show existence, then show any two witnesses must coincide.
 \end{itemize}
 This list is not exhaustive, and real proofs frequently mix several of these -- e.g.\ a proof by cases where one case is handled by contradiction and another by direct construction.
+\end{note}
+
+\begin{example}[Vacuous proof]
+``For all $x\in\emptyset$, $x^2<0$.'' True vacuously: $\emptyset$ has no members, so the implication ``$x\in\emptyset \implies x^2<0$'' is never tested against an actual counterexample.
+\end{example}
+
+\begin{example}[Trivial proof]
+``If $n>0$, then $n^2+1>0$.'' The conclusion $n^2+1>0$ holds for \emph{every} real $n$ regardless of the hypothesis, so the implication is trivially true.
+\end{example}
+
+\bigskip
+\begin{theorem}[Contraposition example]
+If $n^2$ is even, then $n$ is even.
+\end{theorem}
+\begin{proof}[Proof by contraposition]
+We prove the contrapositive: if $n$ is odd, then $n^2$ is odd. Suppose $n=2k+1$ for some $k\in\Z$. Then
+\[
+n^2 = (2k+1)^2 = 4k^2+4k+1 = 2(2k^2+2k)+1,
+\]
+which is odd. By \S3.2's contrapositive theorem, this proves the original statement.
+\end{proof}
+
+\begin{note}
+Contraposition was the right tool here because ``$n$ is odd'' gives a concrete algebraic form ($2k+1$) to compute with, while ``$n^2$ is even'' does not directly hand you a useful form for $n$ itself.
 \end{note}
 
 \subsection{Proof by symbolic manipulation}
@@ -1576,6 +2019,32 @@ Either way, such $x,y$ exist.
 This proves the statement true \emph{without ever determining which case actually holds} -- we don't know, from this proof alone, whether $\sqrt2^{\sqrt2}$ itself is rational or irrational. (It is, in fact, irrational -- even transcendental, by the Gelfond--Schneider theorem -- but that fact is not needed here.) This is the clearest illustration of the constructive/nonconstructive distinction from \S3.5.
 \end{note}
 
+\bigskip
+\begin{definition}[Chomp]
+A rectangular grid of cookies; players alternate taking a cookie and every cookie above-and-to-the-right of it (relative to a fixed corner); the top-left cookie is poisoned; whoever takes it loses.
+\end{definition}
+
+\begin{example}[Chomp -- Rosen \S1.8, nonconstructive existence via strategy-stealing]
+On any rectangular Chomp board with more than one cookie, the \emph{first} player has a winning strategy.
+\end{example}
+\begin{proof}
+Consider the first player's opening move: take just the bottom-right cookie.
+
+\textbf{Case 1}: this opening move is part of \emph{some} winning strategy for the first player. Then the first player has a winning strategy -- done.
+
+\textbf{Case 2}: this opening move is \emph{not} part of any winning strategy for the first player. Then the second player, facing the resulting position, must have a winning response $r$. But now imagine the first player had opened with exactly that move $r$ instead (a legal first move, since it was a legal move for the second player from a position that only has more cookies removed than the empty-except-poison start). By the same argument, whatever position $r$ leads to, the first player is now in the position the second player would have been in Case 2 -- with a winning strategy available.
+
+Either way, the first player wins.
+\end{proof}
+
+\begin{note}[Why this is nonconstructive]
+The proof establishes a winning strategy \emph{exists} for the first player without ever revealing what it is -- indeed, for most board sizes, no explicit winning strategy is known at all. This is the sharpest possible illustration of the constructive/nonconstructive distinction (\S3.5): the theorem is proved, but the object it asserts exists (the strategy) remains, in general, unknown.
+\end{note}
+
+\begin{note}[Strategy-stealing, the technique]
+The argument never analyzes what the winning strategy actually \emph{does} -- it only argues that \emph{if} the second player had a winning response, the first player could ``steal'' it by playing that same move first. This strategy-stealing pattern appears throughout combinatorial game theory whenever a game has the property that having extra pieces on the board never hurts a player (true for Chomp, since eaten cookies only shrink future options for both sides equally).
+\end{note}
+
 \subsection{Proof by contradiction}
 % CN 3.9 / Rosen 1.7-1.8 (proof by contradiction, reductio ad absurdum)
 \begin{note}[Pattern]
@@ -1606,6 +2075,23 @@ Suppose, for contradiction, that $\sqrt2$ is rational: $\sqrt2 = a/b$ for intege
 
 \begin{note}
 Alongside Euclid's proof, this is the other canonical proof-by-contradiction example in mathematics -- both hinge on deriving a property (divisibility, in each case) that eventually contradicts an assumption baked into the setup (finiteness of the prime list; lowest-terms form of the fraction).
+\end{note}
+
+\bigskip
+\begin{note}[Open problems, Rosen]
+Not every true mathematical statement has a known proof. An \emph{open problem} is a precisely stated claim believed true (or at least undecided) but not yet proved or disproved.
+\end{note}
+
+\begin{example}[The Collatz conjecture]
+Define, for $n\in\Z^+$:
+\[
+\mathrm{Collatz}(n) = \begin{cases} n/2, & n \text{ even}, \\ 3n+1, & n \text{ odd}. \end{cases}
+\]
+\emph{Conjecture}: iterating $\mathrm{Collatz}$ from any starting $n\in\Z^+$ eventually reaches $1$.
+\end{example}
+
+\begin{note}
+Verified by computer for enormous ranges of starting values, but no proof (or disproof) is known -- an active open problem since 1937. Contrast with Euclid's infinitude-of-primes proof (\S3.9 above): that claim, once conjectured, was fully settled by a short contradiction argument; Collatz has resisted proof for nearly a century despite its simple statement.
 \end{note}
 
 \subsection{Proof by mathematical induction}
@@ -1665,54 +2151,58 @@ By induction, $S(n)$ holds for all $n$.
 \end{proof}
 
 \bigskip
-\begin{theorem}[Postage stamp problem, Rosen -- strong induction]
-Every integer $n \ge 12$ can be formed using only $4$-cent and $5$-cent stamps.
+\begin{theorem}[Divisibility example]
+For all $n\in\N$: $3 \mid (n^3-n)$.
 \end{theorem}
 \begin{proof}
-We use \emph{strong} induction.
+\textbf{Base case} ($n=0$): $n^3-n=0$, and $3\mid 0$.
 
-\textbf{Base cases} ($n=12,13,14,15$):
+\textbf{Inductive step}: assume $3\mid(k^3-k)$ for some $k\ge0$, i.e.\ $k^3-k=3m$ for some $m\in\Z$. Consider $n=k+1$:
 \[
-12=4+4+4, \qquad 13=4+4+5, \qquad 14=4+5+5, \qquad 15=5+5+5.
+(k+1)^3-(k+1) = k^3+3k^2+3k+1-k-1 = (k^3-k) + 3k^2+3k = 3m+3k^2+3k = 3(m+k^2+k).
 \]
+This is $3$ times an integer, so $3\mid\big((k+1)^3-(k+1)\big)$.
 
-\textbf{Inductive step}: let $k \ge 15$, and suppose every integer from $12$ to $k$ can be formed. Consider $k+1$.
-
-Since $k+1 \ge 16$, we have $k+1-4 \ge 12$, so by the strong inductive hypothesis, $k+1-4$ can be formed from $4$s and $5$s. Add one more $4$-cent stamp to form $k+1$ itself.
-
-By strong induction, every $n \ge 12$ can be formed.
+By induction, $3\mid(n^3-n)$ for all $n\in\N$.
 \end{proof}
 
-\begin{note}[Why strong induction, not weak]
-The step for $k+1$ reaches back to $k+1-4$, which for small $k$ is \emph{not} simply $k$ or $k-1$ -- ordinary (weak) induction, which only hands you $S(k)$, isn't enough here. Strong induction hands you $S(m)$ for \emph{every} $m$ from the base up to $k$, which is what the argument actually uses.
-\end{note}
-
 \bigskip
-\begin{theorem}[Deficient chessboard tiling, Rosen]
-For every $n \ge 1$, a $2^n \times 2^n$ chessboard with any \emph{one} square removed can be exactly tiled by L-trominoes (L-shaped pieces covering $3$ squares).
+\begin{definition}[Well-ordering property]
+Every nonempty subset of $\N$ has a least element.
+\end{definition}
+
+\begin{theorem}[Well-ordering $\implies$ mathematical induction]
+If the well-ordering property holds for $\N$, then the principle of mathematical induction is valid.
 \end{theorem}
 \begin{proof}
-\textbf{Base case} ($n=1$): a $2\times 2$ board minus one square is exactly one L-tromino.
+Suppose $S(1)$ holds and $S(k)\implies S(k+1)$ for all $k\ge1$. Suppose, for contradiction, $S(n)$ fails for some $n$. Let
+\[
+F = \{n\in\Z^+ : S(n) \text{ is false}\}.
+\]
+$F\neq\emptyset$ by assumption, so by well-ordering, $F$ has a least element $m$. Since $S(1)$ holds, $m\neq1$, so $m\ge2$ and $m-1\ge1$. Since $m$ is the \emph{least} element of $F$, $m-1\notin F$, i.e.\ $S(m-1)$ holds. But then the inductive step gives $S(m-1)\implies S(m)$, so $S(m)$ holds -- contradicting $m\in F$.
 
-\textbf{Inductive step}: assume every deficient $2^k \times 2^k$ board can be tiled. Consider a deficient $2^{k+1}\times 2^{k+1}$ board.
-
-\begin{enumerate}[label=(\roman*)]
-    \item Divide the board into four $2^k \times 2^k$ quadrants. The missing square lies in exactly one quadrant -- that quadrant is itself a deficient $2^k\times 2^k$ board, tileable by the inductive hypothesis.
-    \item Place one L-tromino at the center of the board, covering the one corner cell of \emph{each} of the other three quadrants nearest the center.
-    \item This makes each of those three quadrants a deficient $2^k\times 2^k$ board too (missing exactly the corner cell just covered), so each is tileable by the inductive hypothesis.
-\end{enumerate}
-
-Together: one central tromino plus four tiled quadrants tiles the whole deficient board.
-
-By induction, the claim holds for all $n \ge 1$.
+So $F=\emptyset$: $S(n)$ holds for all $n$.
 \end{proof}
 
 \begin{note}
-This is a genuinely constructive, recursive tiling algorithm hiding inside an induction proof -- the inductive step doesn't just assert existence, it describes exactly how to build the larger tiling from four smaller ones.
+This is why induction and well-ordering are often called \emph{equivalent} principles over $\N$ -- each can be used to derive the other, and most texts (Rosen included) simply take one as an axiom and prove the other as a consequence.
+\end{note}
+
+\bigskip
+\begin{definition}[Principle of strong induction, formal statement]
+To prove $S(n)$ for all $n\ge n_0$:
+\begin{itemize}
+    \item \textbf{Base case}: prove $S(n_0)$.
+    \item \textbf{Inductive step}: prove, for all $k\ge n_0$: if $S(n_0),S(n_0+1),\dots,S(k)$ \emph{all} hold, then $S(k+1)$ holds.
+\end{itemize}
+\end{definition}
+
+\begin{note}[Strong vs.\ weak induction -- equivalent in power]
+Strong induction's hypothesis is more generous (all of $S(n_0),\dots,S(k)$, not just $S(k)$), but this doesn't let you prove anything weak induction can't -- any strong-induction proof can be mechanically rewritten as a weak-induction proof of the stronger statement $T(n) = S(n_0)\wedge\cdots\wedge S(n)$. Strong induction is a convenience, not a logically stronger tool. See \S3.11 for worked examples of both.
 \end{note}
 
 \subsection{Induction: more examples}
-% CN 3.11 / Rosen 5.1 (harder inequality examples)
+% CN 3.11 / Rosen 5.1, 5.2
 
 \begin{theorem}[Sum of the first $n$ positive integers, CN Thm 19]
 For all $n \ge 1$:
@@ -1753,7 +2243,7 @@ By induction, $2^n > n^2$ for all $n \ge 5$.
 \end{proof}
 
 \begin{note}[Why the base case matters here]
-The inequality is \emph{false} for $n=1,2,3,4$ (e.g.\ $2^4=16 < 16$... actually $2^4=16=4^2$, equality, not $>$). Getting the base case right -- and matching it to where the inductive step's algebra actually works -- is essential; a careless choice of base case can make the whole proof invalid even though the inductive step itself is correctly argued.
+The inequality is \emph{false} for $n=1,2,3,4$. Getting the base case right -- and matching it to where the inductive step's algebra actually works -- is essential; a careless choice of base case can make the whole proof invalid even though the inductive step itself is correctly argued.
 \end{note}
 
 \bigskip
@@ -1779,9 +2269,319 @@ By induction, the inequality holds for all $n \ge 0$.
 \end{proof}
 
 \begin{note}
-The condition $x\ge-1$ is exactly what's needed for $1+x\ge0$, which is what allows multiplying an inequality through by $(1+x)$ without flipping its direction -- a genuinely delicate step, not just bookkeeping.
+The condition $x\ge-1$ is exactly what's needed for $1+x\ge0$, which is what allows multiplying an inequality through by $(1+x)$ without flipping its direction.
 \end{note}
 
+\bigskip
+\begin{theorem}[Harmonic numbers, Rosen]
+Let $H_m = 1+\tfrac12+\tfrac13+\cdots+\tfrac1m$. Then for every $n\ge0$:
+\[
+H_{2^n} \ge 1+\frac{n}{2}.
+\]
+\end{theorem}
+\begin{proof}
+\textbf{Base case} ($n=0$): $H_{2^0}=H_1=1 \ge 1+0$.
+
+\textbf{Inductive step}: assume $H_{2^k}\ge1+\frac{k}{2}$ for some $k\ge0$. Then
+\[
+H_{2^{k+1}} = H_{2^k} + \frac{1}{2^k+1}+\frac{1}{2^k+2}+\cdots+\frac{1}{2^{k+1}}.
+\]
+There are $2^k$ terms in this added block, each $\ge \frac{1}{2^{k+1}}$, so the block sums to at least $2^k\cdot\frac{1}{2^{k+1}}=\frac12$. Hence
+\[
+H_{2^{k+1}} \ge \left(1+\frac{k}{2}\right)+\frac12 = 1+\frac{k+1}{2}.
+\]
+
+By induction, $H_{2^n}\ge1+\frac{n}{2}$ for all $n\ge0$.
+\end{proof}
+
+\begin{note}
+Since $1+n/2 \to \infty$ as $n\to\infty$, this proves the harmonic series diverges.
+\end{note}
+
+\bigskip
+\begin{theorem}[Counting subsets, Rosen -- revisits \S1.8 with a picture]
+A set with $n$ elements has $2^n$ subsets.
+\end{theorem}
+\begin{proof}
+\textbf{Base case} ($n=0$): $\emptyset$ has exactly $1=2^0$ subset (itself).
+
+\textbf{Inductive step}: assume a $k$-element set has $2^k$ subsets. A $(k+1)$-element set $S=T\cup\{x\}$ (with $|T|=k$, $x\notin T$) has subsets falling into two kinds: those not containing $x$ (exactly the $2^k$ subsets of $T$), and those containing $x$ (each is $\{x\}\cup U$ for a subset $U$ of $T$, again $2^k$ of them). Total: $2^k+2^k=2^{k+1}$.
+
+By induction, an $n$-element set has $2^n$ subsets.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[level distance=1.3cm, sibling distance=1.6cm,
+  every node/.style={circle,draw,fill=white,inner sep=1.5pt,font=\scriptsize}]
+\node {$\emptyset$}
+  child { node {$\{a\}$}
+    child { node {$\{a,b\}$} }
+    child { node {$\{a\}$} }
+  }
+  child { node {$\emptyset$}
+    child { node {$\{b\}$} }
+    child { node {$\emptyset$} }
+  };
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small Building all subsets of $\{a,b\}$ by deciding ``include $a$?'' then ``include $b$?'' -- each level doubles the count
+\end{center}
+
+\bigskip
+\begin{definition}[Depth of a set of intervals, Rosen]
+For lectures given as time intervals, the \emph{depth} is the maximum number that mutually overlap at any single instant.
+\end{definition}
+
+\begin{theorem}[Greedy lecture-scheduling algorithm is optimal, Rosen]
+Sorting lectures by start time and greedily assigning each to the first available room needs exactly $\mathrm{depth}$ rooms -- optimal, since no schedule can use fewer than $\mathrm{depth}$ rooms.
+\end{theorem}
+\begin{proof}[Proof sketch, induction on the number of lectures scheduled]
+\textbf{Base case}: the first lecture needs $1$ room; $1\le\mathrm{depth}$.
+
+\textbf{Inductive step}: suppose the first $k$ lectures (in start-time order) have been assigned using at most $\mathrm{depth}$ rooms. When lecture $k+1$ arrives, if all currently-open rooms are busy at that moment, the number of busy rooms equals the number of lectures overlapping at that instant -- at most $\mathrm{depth}$. If exactly $\mathrm{depth}$ rooms are busy, opening one more room suffices and keeps the total at $\mathrm{depth}$; if fewer are busy, an existing free room is reused.
+
+By induction, the greedy algorithm never needs more than $\mathrm{depth}$ rooms -- matching the lower bound, hence optimal.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=0.9cm,y=0.7cm]
+\foreach \x in {0,...,10} \draw[gray!40] (\x,0) -- (\x,-3.5);
+\draw[thick,blue] (0,0) -- (3,0) node[midway,above] {\scriptsize $L_1$};
+\draw[thick,blue] (2,-1) -- (5,-1) node[midway,above] {\scriptsize $L_2$};
+\draw[thick,blue] (4,-2) -- (7,-2) node[midway,above] {\scriptsize $L_3$};
+\draw[thick,blue] (1,-3) -- (6,-3) node[midway,above] {\scriptsize $L_4$};
+\draw[->] (-0.3,-3.7) -- (10.3,-3.7) node[right] {\scriptsize time};
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small $L_1$ and $L_4$ overlap $L_2$; $L_4$ overlaps $L_3$ too -- depth $=2$ at every instant, so $2$ rooms suffice
+\end{center}
+
+\bigskip
+\begin{theorem}[Odd pie fight -- creative induction]
+An odd number $n$ of people stand at pairwise distinct distances. Each simultaneously throws a pie at their \emph{nearest} neighbor. Then at least one person is not hit.
+\end{theorem}
+\begin{proof}
+Induction on odd $n$ (i.e.\ $n=2m+1$, induct on $m\ge1$).
+
+\textbf{Base case} ($n=3$): let $A,B,C$ be the three people. Some pair -- say $A,B$ -- is the \emph{closest} pair overall. Then $A,B$ pie each other; $C$'s pie goes to whichever of $A,B$ is closer to $C$. Either way, $A$ or $B$ is hit twice and $C$ isn't hit -- a survivor exists.
+
+\textbf{Inductive step}: assume the claim for $n=2k+1$ people, and consider $n=2k+3$. Find the overall closest pair $A,B$ -- they pie each other. Remove $A,B$: the other $2k+1$ people still throw pies among themselves at mutually distinct distances -- a valid instance of the same problem. By the inductive hypothesis, this group has a survivor, who also survives in the full group.
+
+By induction, every odd $n$ has a survivor.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[>={Stealth[length=2mm]}]
+\coordinate (A) at (0,0);
+\coordinate (B) at (1.5,0.3);
+\coordinate (C) at (3.5,1.5);
+\fill (A) circle (2pt) node[below] {$A$};
+\fill (B) circle (2pt) node[below] {$B$};
+\fill (C) circle (2pt) node[above] {$C$};
+\draw[->,thick] (A) -- (B);
+\draw[->,thick] (B) -- (A);
+\draw[->,thick] (C) -- (B);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small Base case $n=3$: $A,B$ are the closest pair and pie each other; $C$ pies $B$ -- $A$ survives
+\end{center}
+
+\begin{note}
+False for even $n$: e.g.\ $4$ people can be arranged in two mutual-nearest-neighbor pairs, hitting everyone.
+\end{note}
+
+\bigskip
+\begin{theorem}[Deficient chessboard tiling, ordinary induction -- Rosen \S5.1]
+For every $n\ge1$, a $2^n\times2^n$ chessboard with any \emph{one} square removed can be exactly tiled by L-trominoes.
+\end{theorem}
+\begin{proof}
+\textbf{Base case} ($n=1$): a $2\times2$ board minus one square is exactly one L-tromino.
+
+\textbf{Inductive step}: assume every deficient $2^k\times2^k$ board can be tiled. Consider a deficient $2^{k+1}\times2^{k+1}$ board, split into four $2^k\times2^k$ quadrants.
+
+The missing square lies in exactly one quadrant -- deficient, tileable by the inductive hypothesis. Place one L-tromino at the very center, covering the corner cell of \emph{each} of the other three quadrants nearest the center -- making each of those quadrants deficient too.
+
+One central tromino plus four tiled quadrants tiles the whole board.
+
+By induction (using only $P(k)\Rightarrow P(k+1)$ -- this is \emph{ordinary}, not strong, induction, despite the recursive flavor), the claim holds for all $n\ge1$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.55]
+\draw[thick] (0,0) rectangle (8,8);
+\draw[thick] (4,0) -- (4,8);
+\draw[thick] (0,4) -- (8,4);
+\fill[gray!30] (0.5,6.5) rectangle (1.5,7.5);
+\node at (0.7,7.9) [font=\tiny] {missing};
+\fill[orange!60] (3.5,3.5) rectangle (4.5,4.5);
+\fill[orange!60] (3.5,4.5) rectangle (4.5,5.5);
+\fill[orange!60] (4.5,3.5) rectangle (5.5,4.5);
+\node at (2,2) [font=\tiny] {Q3 (deficient by tromino)};
+\node at (6,2) [font=\tiny] {Q4 (deficient by tromino)};
+\node at (6,6) [font=\tiny] {Q2 (deficient by tromino)};
+\node at (2,6) [font=\tiny] {Q1 (already deficient)};
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small One tromino at the center makes the other three quadrants deficient too
+\end{center}
+
+\bigskip
+\begin{theorem}[Postage stamp problem, Rosen -- strong induction]
+Every integer $n \ge 12$ can be formed using only $4$-cent and $5$-cent stamps.
+\end{theorem}
+\begin{proof}
+\textbf{Base cases} ($n=12,13,14,15$):
+\[
+12=4+4+4, \qquad 13=4+4+5, \qquad 14=4+5+5, \qquad 15=5+5+5.
+\]
+
+\textbf{Inductive step}: let $k \ge 15$, and suppose every integer from $12$ to $k$ can be formed. Consider $k+1$. Since $k+1 \ge 16$, we have $k+1-4 \ge 12$, so by the strong inductive hypothesis, $k+1-4$ can be formed. Add one more $4$-cent stamp to form $k+1$.
+
+By strong induction, every $n \ge 12$ can be formed.
+\end{proof}
+
+\begin{note}[Why strong induction, not weak]
+The step for $k+1$ reaches back to $k+1-4$, which for small $k$ is \emph{not} simply $k$ or $k-1$ -- ordinary induction, which only hands you $S(k)$, isn't enough here.
+\end{note}
+
+\bigskip
+\begin{theorem}[Existence of prime factorization -- classic strong induction example]
+Every integer $n\ge2$ can be written as a product of one or more primes.
+\end{theorem}
+\begin{proof}
+\textbf{Base case} ($n=2$): $2$ itself is prime.
+
+\textbf{Inductive step}: let $k\ge2$, and suppose every integer from $2$ to $k$ has a prime factorization. Consider $n=k+1$.
+
+\textbf{Case 1}: $n$ is prime. Then $n$ itself is its factorization.
+
+\textbf{Case 2}: $n$ is composite, so $n=ab$ for integers $2\le a,b\le n-1=k$. By the strong inductive hypothesis, both $a$ and $b$ have prime factorizations; concatenating them gives a prime factorization of $n=ab$.
+
+Either way, $n$ has a prime factorization.
+
+By strong induction, every $n\ge2$ has one.
+\end{proof}
+
+\begin{note}
+This needs \emph{strong} induction: the factors $a,b$ of composite $n$ can be much smaller than $n-1$, so the hypothesis must cover \emph{all} smaller values.
+\end{note}
+
+\bigskip
+\begin{theorem}[Division algorithm -- existence part, via well-ordering]
+For $a\in\Z,\ d\in\Z^+$, there exist $q,r\in\Z$ with $a=dq+r$ and $0\le r<d$.
+\end{theorem}
+\begin{proof}
+Consider $S = \{a-dq : q\in\Z,\ a-dq\ge0\}$. $S\subseteq\N$ and $S\neq\emptyset$. By well-ordering, $S$ has a least element $r=a-dq_0$.
+
+We claim $r<d$. If not, $r-d = a-d(q_0+1) \in S$, but $r-d<r$, contradicting minimality of $r$.
+
+So $r<d$, and $q=q_0$ gives $a=dq+r$ with $0\le r<d$.
+\end{proof}
+
+\bigskip
+\begin{example}[Game-strategy example, Rosen -- strong induction, non-numeric]
+Two players alternately remove $1$ or $2$ stones from a pile; the player taking the last stone wins. Claim: the first player wins whenever $n\not\equiv0\pmod3$, and loses whenever $n\equiv0\pmod3$.
+\end{example}
+\begin{proof}[Proof sketch, strong induction on $n$]
+\textbf{Base cases}: $n=1,2$: first player wins. $n=3$: whatever the first player takes, the opponent wins -- first player loses.
+
+\textbf{Inductive step}: assume the claim for all pile sizes less than $n$. If $n\equiv0\pmod3$: any move leaves $n-1$ or $n-2$, neither $\equiv0\pmod3$, so the opponent wins -- first player loses. If $n\not\equiv0\pmod3$: the first player can always leave a multiple of $3$, putting the opponent in a losing position.
+\end{proof}
+
+\bigskip
+\begin{definition}[Simple polygon, diagonal]
+A \emph{simple polygon} is a polygon whose sides do not cross. A \emph{diagonal} is a line segment connecting two non-adjacent vertices that lies entirely inside the polygon.
+\end{definition}
+
+\begin{lemma}[Every simple polygon with $\ge4$ sides has a diagonal]
+\end{lemma}
+\begin{proof}[Proof sketch]
+Take the leftmost vertex $v$ and its two neighbors $u,w$. If segment $uw$ lies inside the polygon, it is a diagonal. Otherwise, some vertex lies inside triangle $uvw$; take the one farthest from line $uw$ -- the segment from $v$ to that vertex is a diagonal.
+\end{proof}
+
+\bigskip
+\begin{theorem}[Triangulation of simple polygons -- Rosen, strong induction]
+Every simple polygon with $n\ge3$ sides can be triangulated into exactly $n-2$ triangles using $n-3$ non-crossing diagonals.
+\end{theorem}
+\begin{proof}
+\textbf{Base case} ($n=3$): a triangle is already $1=3-2$ triangle, using $0=3-3$ diagonals.
+
+\textbf{Inductive step}: let $k\ge3$, and suppose every simple polygon with fewer than $k+1$ sides can be triangulated as claimed. Let $P$ have $n=k+1\ge4$ sides.
+
+By the lemma, $P$ has a diagonal $d$, splitting $P$ into $P_1,P_2$ sharing edge $d$, with $n_1+n_2 = n+2$.
+
+Since $3\le n_1,n_2\le n-1$, the strong inductive hypothesis applies to both: $P_1$ triangulates into $n_1-2$ triangles, $P_2$ into $n_2-2$.
+
+Together: $(n_1-2)+(n_2-2) = n-2$ triangles, using $1+(n_1-3)+(n_2-3) = n-3$ diagonals.
+
+By strong induction, the claim holds for all $n\ge3$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+\coordinate (v1) at (90:2);
+\coordinate (v2) at (150:2);
+\coordinate (v3) at (210:2);
+\coordinate (v4) at (270:2);
+\coordinate (v5) at (330:2);
+\coordinate (v6) at (30:2);
+\draw[thick] (v1)--(v2)--(v3)--(v4)--(v5)--(v6)--cycle;
+\draw[dashed] (v1)--(v3);
+\draw[dashed] (v1)--(v4);
+\draw[dashed] (v1)--(v5);
+\foreach \p in {v1,v2,v3,v4,v5,v6} {\fill (\p) circle (1.5pt);}
+\node at ($(v1)+(0,0.35)$) {$v_1$};
+\node at ($(v2)+(-0.35,0.15)$) {$v_2$};
+\node at ($(v3)+(-0.35,-0.15)$) {$v_3$};
+\node at ($(v4)+(0,-0.35)$) {$v_4$};
+\node at ($(v5)+(0.35,-0.15)$) {$v_5$};
+\node at ($(v6)+(0.35,0.15)$) {$v_6$};
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\small A hexagon triangulated by $3$ diagonals into $4$ triangles
+\end{center}
+
+\bigskip
+\begin{theorem}[The matchstick game -- Rosen \S5.2, Example 4, strong induction]
+Two piles start with $n$ matches each. Players alternate turns; each turn, remove any positive number of matches from \emph{one} pile. The player who removes the last match wins. Then the \emph{second} player can always force a win, for every $n\ge1$.
+\end{theorem}
+\begin{proof}
+Let $P(n)$: ``if both piles start with $n$ matches, the second player can force a win.''
+
+\textbf{Base case} ($n=1$): the first player must remove the single match from one pile; the second takes the other and wins.
+
+\textbf{Inductive step}: let $k\ge1$, suppose $P(1),\dots,P(k)$ hold. Whatever the first player does -- removing $r$ matches from one pile -- the second mirrors on the other pile.
+
+\begin{itemize}
+    \item If $r=k+1$: the second empties the other pile, winning immediately.
+    \item If $r<k+1$: both piles now have equal size $k+1-r\le k$ -- by $P(k+1-r)$, the second player can force a win from there.
+\end{itemize}
+
+Either way, the second player wins. By strong induction, $P(n)$ holds for all $n\ge1$.
+\end{proof}
+
+\bigskip
+\begin{theorem}[Round-robin tournament ranking -- classic strong induction example]
+In a round-robin tournament with $n$ players, the players can be labeled $p_1,\dots,p_n$ such that $p_i$ beats $p_{i+1}$ for every $i$.
+\end{theorem}
+\begin{proof}
+\textbf{Base case} ($n=1$): trivial.
+
+\textbf{Inductive step}: let $k\ge1$, suppose the claim holds for at most $k$ players. Consider $k+1$ players. Pick any player $x$; let $B$ = players who beat $x$, $L$ = players $x$ beats, so $|B|,|L|\le k$.
+
+By the inductive hypothesis, $B$ has a chain ordering $b_1,\dots,b_{|B|}$, and $L$ has $\ell_1,\dots,\ell_{|L|}$. Concatenate:
+\[
+b_1,\dots,b_{|B|},\ x,\ \ell_1,\dots,\ell_{|L|}.
+\]
+The joins $b_{|B|}\to x$ and $x\to\ell_1$ hold by definition of $B,L$.
+
+By strong induction, the claim holds for all $n\ge1$.
+\end{proof}
 \subsection{Induction: extended example}
 % CN 3.12 (omega, advanced) -- CN's own extended example: injections into a shortlist relation
 
@@ -2485,5 +3285,586 @@ Check each directly by truth table, or: $P\mid P = \neg(P\wedge P) = \neg P$; th
 This is why NAND gates alone suffice to build any digital circuit -- a genuinely important fact in computer engineering, well beyond what CN's syllabus covers here.
 \end{note}
 
+% ============================================================
+% CHAPTER 5 --- PREDICATE LOGIC  (CN Ch.5, §5.1-5.15)
+% ============================================================
+\newpage
+\section{Predicate Logic}
+
+\subsection{Relations, predicates, and truth-valued functions}
+% CN 5.1 / Rosen 1.4
+
+\begin{definition}[Predicate]
+A \emph{predicate} is a relation (\S2.13, \S2.17), used with intent to do logic with it. A predicate with $k$ arguments is \emph{$k$-ary}.
+\end{definition}
+
+\begin{definition}[Predicate as a truth-valued function, Rosen]
+A $k$-ary relation $R \subseteq A_1\times\cdots\times A_k$ can equivalently be viewed as a function
+\[
+R : A_1\times\cdots\times A_k \to \{T,F\}, \qquad R(a_1,\dots,a_k) = T \iff (a_1,\dots,a_k)\in R.
+\]
+Rosen also calls this a \emph{propositional function}.
+\end{definition}
+
+\begin{note}[Substitution yields a proposition]
+Giving specific values to every argument of a predicate produces a proposition (definite truth value).
+\end{note}
+
+\begin{note}[Equality is always available]
+$=$ is a predicate assumed available for \emph{every} domain -- without it, no domain of objects could even be meaningfully discussed.
+\end{note}
+
+\begin{definition}[Property]
+A unary predicate (\emph{property}) $P(x)$ on domain $D$ corresponds to the set $\{x\in D : P(x)\}$.
+\end{definition}
+
+\subsection{Variables and constants}
+% CN 5.2 / Rosen 1.4
+
+\begin{definition}[Variable]
+A name for an object, without specifying it exactly, used to reason about an unknown or arbitrary member of its \emph{domain}.
+\end{definition}
+
+\begin{definition}[Constant]
+An object belonging to the domain of some variable -- a specific, named member of that domain.
+\end{definition}
+
+\begin{note}[Every variable has a domain]
+E.g.\ ``let $x\in\Z$'' declares $x$ with domain $\Z$; a Boolean variable always has domain $\{T,F\}$.
+\end{note}
+
+\begin{note}[Math vs.\ programming variables, Rosen]
+A programming variable occupies memory and is restricted to finite/representable values; a mathematical variable has no memory association and its domain may be infinite.
+\end{note}
+
+\subsection{Predicates and variables}
+% CN 5.3 / Rosen 1.4
+
+\begin{definition}[Free variable]
+A variable in a predicate expression not (yet) assigned a value.
+\end{definition}
+
+\begin{note}[Truth value requires all arguments fixed]
+An expression with $\ge1$ free variable is not a proposition (no truth value). Only when \emph{every} free variable is assigned a value from its domain does the expression become a proposition.
+\end{note}
+
+\begin{note}[Domain matching is mandatory]
+Any value or variable placed into an argument of a predicate must belong to that argument's declared domain -- mismatched domains make the expression ill-formed, not just false.
+\end{note}
+
+\begin{example}
+$\mathrm{Parent}(\text{Alan Turing}, X)$ with $X$ a free variable, domain $\mathbb P$ (people): not a proposition. Substituting $X=$``Sara Turing'' gives the proposition $\mathrm{Parent}(\text{Alan Turing},\text{Sara Turing})$, true.
+\end{example}
+
+\begin{note}[Prefix vs.\ infix notation, Rosen]
+Newly defined predicates typically use prefix notation, $R(a,b)$; predicates for ordering/equality/equivalence conventionally use infix notation, $a<b$, $a=b$ (\S2.5).
+\end{note}
+
+\subsection{Arguments of predicates}
+% CN 5.4
+
+\begin{definition}[Term, recursive]
+A \emph{term} of domain $D$ is one of:
+\begin{itemize}
+    \item a constant from $D$;
+    \item a variable with domain $D$;
+    \item a function with codomain $D$, each of whose arguments is given a term of matching domain.
+\end{itemize}
+\end{definition}
+
+\begin{note}[Recursion bottoms out]
+Terms are built from constants/variables/functions to arbitrary finite depth (composition, nested function calls), but never infinitely -- every term has a finite construction.
+\end{note}
+
+\begin{example}
+$a^2+b^2$ is a term of domain $\R$ (real addition, codomain $\R$, applied to two terms $a^2, b^2$, each themselves a term of domain $\R$ via the squaring function). $\mathrm{MotherOf}(\mathrm{FatherOf}(Y))$ is a term of domain $\mathbb P$ similarly.
+\end{example}
+
+\begin{example}[Not terms]
+$2+3+$ (malformed), $x{+}{+}$ (undefined operation here), $\log x$ (if $\log$ is not among the available functions), $z$ (if $z$ is neither a declared variable nor constant).
+\end{example}
+
+\begin{note}
+Only terms whose domain matches an argument's declared domain may be plugged into that argument -- of a function \emph{or} a predicate; the same matching rule applies uniformly at every level of nesting.
+\end{note}
+
+\subsection{Building logical expressions with predicates}
+% CN 5.5 / Rosen 1.4
+
+\begin{definition}[Predicate logic expression, recursive]
+\begin{itemize}
+    \item $T, F$ are predicate logic expressions.
+    \item A predicate applied to terms of matching domains is a predicate logic expression.
+    \item If $E,F$ are predicate logic expressions, so are $(E),\ \neg E,\ E\wedge F,\ E\vee F,\ E\implies F,\ E\iff F$.
+\end{itemize}
+\end{definition}
+
+\begin{note}[Free variables propagate]
+A predicate logic expression's free variables are the union of the free variables of its terms/sub-expressions -- combining expressions never removes a free variable (only quantification, \S5.6-5.9, does that).
+\end{note}
+
+\begin{example}
+$(1<i)\wedge(i<n)$ has free variables $i,n$. $\mathrm{Parent}(X,Y)\iff\big(Y=\mathrm{MotherOf}(X)\big)\vee\big(Y=\mathrm{FatherOf}(X)\big)$ has free variables $X,Y$.
+\end{example}
+
+\begin{note}[Boolean algebra applies unchanged]
+Every law from Chapter 4 (De Morgan's, distributive, etc.) applies to predicate logic expressions exactly as to propositions -- since fixing values for all free variables reduces any predicate expression to an ordinary proposition, and the laws hold for \emph{every} such assignment.
+\end{note}
+
+\subsection{Existential quantifier}
+% CN 5.6 / Rosen 1.4
+
+\begin{definition}[Existential quantifier]
+For predicate $P(x)$ on domain $D$:
+\[
+\exists x\, P(x)
+\]
+is true iff $P(a)$ is true for \emph{at least one} $a\in D$.
+\end{definition}
+
+\begin{note}[Punctuation]
+$\exists x : P(x)$, $\exists x.\, P(x)$, $\exists x\, P(x)$ are all used; the colon/period is read ``such that''.
+\end{note}
+
+\begin{definition}[Bound variable]
+Once quantified, $x$ is \emph{bound}: no longer available to receive a specific value. A fully-quantified expression has no free variables and is a genuine proposition, with a definite truth value.
+\end{definition}
+
+\begin{note}[Domain matters]
+$\exists W\in\N:\ W<0$ is false; $\exists W\in\Z:\ W<0$ is true -- same predicate, different domain, different truth value.
+\end{note}
+
+\begin{note}[Analogy with disjunction -- and where it breaks]
+$\exists x \in D,\ P(x)$ behaves like the disjunction $\bigvee_{a\in D} P(a)$ -- true iff at least one disjunct is true. But this is only an analogy: disjunctions must be \emph{finite}, while $D$ may be infinite, so existential quantification genuinely extends what propositional logic alone can express.
+\end{note}
+
+\begin{note}[Vacuous quantification]
+If $x$ does not appear in $P$, $\exists x\, P$ is equivalent to $P$ itself (the quantifier is inert): e.g.\ $\exists w:\ z<0$ is just $z<0$.
+\end{note}
+
+\begin{note}
+Quantifiers apply only to variables, never to constants: $\exists 5$ or $\exists\text{Annie}$ are ill-formed.
+\end{note}
+
+\bigskip
+\begin{example}[Rosen -- harder: nested quantifiers and negation]
+Let $P(x,y)$ mean ``$x+y=0$'' on domain $\R$. Consider $\exists x\, \forall y\, P(x,y)$ vs.\ $\forall y\, \exists x\, P(x,y)$.
+\[
+\exists x\, \forall y\, P(x,y): \text{one fixed } x \text{ that works for \emph{every} } y \text{ -- false (no single } x \text{ satisfies } x+y=0 \text{ for all } y\text{)}.
+\]
+\[
+\forall y\, \exists x\, P(x,y): \text{for each } y, \text{ some } x \text{ (possibly depending on } y\text{) works -- true, take } x=-y.
+\]
+This shows quantifier \emph{order} genuinely matters -- covered fully in \S5.10.
+\end{example}
+
+\subsection{Restricting existentially quantified variables}
+% CN 5.7 / Rosen 1.4 (restricted quantifiers)
+
+\begin{note}[Restricting $\exists$ uses $\wedge$]
+To assert ``some $X$ satisfying $R(X)$ also satisfies $P(X)$'':
+\[
+\exists X:\ R(X) \wedge P(X).
+\]
+\end{note}
+
+\begin{example}[Correct vs.\ a common wrong attempt]
+``Some computer is human'':
+\[
+\text{correct: } \exists X:\ \mathrm{computer}(X)\wedge\mathrm{human}(X), \qquad
+\text{wrong: } \exists X:\ \mathrm{computer}(X)\implies\mathrm{human}(X).
+\]
+The wrong version says ``something is not a computer, or is human'' -- true of any non-computer, regardless of computers at all, so it fails to capture the intended restriction.
+\end{example}
+
+\bigskip
+\begin{note}[Rosen's restricted-quantifier shorthand]
+Rosen writes $\exists X \in D\, [\dots]$ or $\exists X<0\, [\dots]$ directly as shorthand for the conjunction above, folding the restriction into the quantifier notation itself rather than writing it as an explicit $\wedge$.
+\end{note}
+
+\subsection{Universal quantifier}
+% CN 5.8 / Rosen 1.4
+
+\begin{definition}[Universal quantifier]
+For predicate $P(x)$ on domain $D$:
+\[
+\forall x\, P(x)
+\]
+is true iff $P(a)$ is true for \emph{every} $a\in D$.
+\end{definition}
+
+\begin{note}
+As with $\exists$: the quantified variable becomes bound; an irrelevant quantifier (variable not appearing in the body) can be dropped.
+\end{note}
+
+\bigskip
+\begin{note}[Rosen -- vacuous truth generalizes]
+$\forall x\in\emptyset,\ P(x)$ is vacuously true for \emph{any} $P$, exactly generalizing $\emptyset\subseteq A$ (\S1.6 Theorem 1) to arbitrary predicates, not just set membership.
+\end{note}
+
+\subsection{Restricting universally quantified variables}
+% CN 5.9 / Rosen 1.4
+
+\begin{note}[Restricting $\forall$ uses $\implies$]
+To assert ``every $X$ satisfying $R(X)$ also satisfies $P(X)$'':
+\[
+\forall X:\ R(X) \implies P(X).
+\]
+\end{note}
+
+\begin{example}[Correct vs.\ a common wrong attempt]
+``Every computer is human'':
+\[
+\text{correct: } \forall X:\ \mathrm{computer}(X)\implies\mathrm{human}(X), \qquad
+\text{wrong: } \forall X:\ \mathrm{computer}(X)\wedge\mathrm{human}(X).
+\]
+The wrong version says ``everything is both a computer and human'' -- forces non-computers to also be human computers, which was never intended.
+\end{example}
+
+\begin{note}[The mirror-image trap, worth memorizing]
+$\exists$ pairs naturally with $\wedge$; $\forall$ pairs naturally with $\implies$. Swapping these (using $\implies$ with $\exists$, or $\wedge$ with $\forall$) is one of the most common predicate-logic errors -- always double check which connective a restricted quantifier needs.
+\end{note}
+
+\bigskip
+\begin{theorem}[De Morgan's for quantifiers, Rosen -- preview of \S5.13]
+\[
+\neg\forall x\, P(x) \ \equiv\ \exists x\,\neg P(x), \qquad \neg\exists x\, P(x) \ \equiv\ \forall x\,\neg P(x).
+\]
+\end{theorem}
+\begin{note}
+Consequence: negating $\forall X: R(X)\implies P(X)$ gives $\exists X: R(X)\wedge\neg P(X)$ -- exactly matching the $\exists/\wedge$ pairing above, since $\neg(R\implies P) \equiv R\wedge\neg P$ (\S4.15).
+\end{note}
+
+\subsection{Multiple quantifiers}
+% CN 5.10 / Rosen 1.4
+
+\begin{note}[Same-type quantifiers commute]
+\[
+\exists X\,\exists Y\, P = \exists Y\,\exists X\, P = \exists(X,Y)\, P, \qquad
+\forall X\,\forall Y\, P = \forall Y\,\forall X\, P = \forall(X,Y)\, P.
+\]
+\end{note}
+
+\begin{note}[Mixed quantifiers do \emph{not} commute]
+\[
+\exists X\,\forall Y\, P, \quad \forall X\,\exists Y\, P, \quad \exists Y\,\forall X\, P, \quad \forall Y\,\exists X\, P
+\]
+are, in general, four genuinely different statements.
+\end{note}
+
+\begin{example}[hasVisited$(P,C)$: person $P$ has visited country $C$]
+\[
+\exists P\,\forall C:\ \text{someone has visited every country}, \qquad
+\forall C\,\exists P:\ \text{every country has been visited by someone}.
+\]
+The first is a strong claim about one exceptional traveler; the second is far weaker (each country just needs \emph{some} visitor, possibly a different one each time).
+\end{example}
+
+\bigskip
+\begin{example}[Rosen -- classic order-matters example]
+Let $D(x,y)$ mean ``$x$ has dated $y$'' on the domain of all people.
+\[
+\exists x\,\forall y\, D(x,y): \text{someone has dated everyone}.
+\]
+\[
+\forall y\,\exists x\, D(x,y): \text{everyone has been dated by someone.}
+\]
+The first implies the second (that one exceptional dater witnesses every $y$), but not conversely -- the second only needs, for each $y$, \emph{some} $x$, possibly different for each $y$.
+\end{example}
+
+\begin{theorem}[$\exists\forall \implies \forall\exists$, general fact, Rosen]
+\[
+\exists x\,\forall y\, P(x,y) \ \implies\ \forall y\,\exists x\, P(x,y).
+\]
+The converse implication does \emph{not} hold in general.
+\end{theorem}
+\begin{proof}
+Suppose $\exists x\,\forall y\,P(x,y)$: fix such an $x_0$, so $P(x_0,y)$ holds for every $y$. Then for any $y$, taking $x=x_0$ witnesses $\exists x\,P(x,y)$ -- so $\forall y\,\exists x\,P(x,y)$ holds. The dating example above (with $D$ not symmetric enough to reverse) shows the converse can fail.
+\end{proof}
+
+\subsection{Predicate logic expressions}
+% CN 5.11 / Rosen 1.4
+
+\begin{definition}[Predicate logic expression, complete recursive grammar]
+\begin{itemize}
+    \item $T,F$ are predicate logic expressions.
+    \item Terms of matching domains plugged into a predicate give a predicate logic expression.
+    \item If $E,F$ are predicate logic expressions: $(E),\ \neg E,\ E\wedge F,\ E\vee F,\ E\implies F,\ E\iff F$.
+    \item If $E$ is a predicate logic expression and $X$ is a free variable of $E$: $\exists X: E$ and $\forall X: E$ are predicate logic expressions, and $X$ is \emph{no longer free} in either.
+\end{itemize}
+\end{definition}
+
+\begin{note}[Free variables shrink under quantification]
+If $V$ is the free-variable set of $E$, then $\exists X: E$ and $\forall X: E$ each have free-variable set $V\setminus\{X\}$.
+\end{note}
+
+\subsection{Doing logic with quantifiers}
+% CN 5.12 / Rosen 1.4
+
+\begin{note}[Instantiation and generalization]
+\[
+\big(\forall X\, P(X)\big) \implies P(\mathrm{obj}), \qquad P(\mathrm{obj}) \implies \big(\exists X\, P(X)\big)
+\]
+for any specific $\mathrm{obj}$ in $X$'s domain.
+\end{note}
+
+\begin{theorem}[$\forall$ distributes over $\wedge$; $\exists$ distributes over $\vee$]
+\[
+\forall X\,(P(X)\wedge Q(X)) \ \equiv\ (\forall X\, P(X)) \wedge (\forall X\, Q(X)),
+\]
+\[
+\exists X\,(P(X)\vee Q(X)) \ \equiv\ (\exists X\, P(X)) \vee (\exists X\, Q(X)).
+\]
+\end{theorem}
+
+\begin{note}[$\forall$ over $\vee$, and $\exists$ over $\wedge$, only give one-way implications, Rosen]
+\[
+(\forall X\, P(X)) \vee (\forall X\, Q(X)) \implies \forall X\,(P(X)\vee Q(X)),
+\]
+\[
+\exists X\,(P(X)\wedge Q(X)) \implies (\exists X\, P(X)) \wedge (\exists X\, Q(X)),
+\]
+but neither converse holds in general -- e.g.\ every integer is even or odd ($\forall X$, $\mathrm{even}(X)\vee\mathrm{odd}(X)$), yet it is false that every integer is even, or every integer is odd.
+\end{note}
+
+\begin{definition}[Scope of a quantified variable]
+The sub-expression from the quantifier to the end of its innermost enclosing parentheses (or the end of the whole expression, if unparenthesized).
+\end{definition}
+
+\begin{example}[Two disjoint scopes, same variable name]
+In $(\forall X\, P(X)) \wedge (\forall X\, Q(X))$, the two $X$'s are entirely independent -- like distinct local variables in a program that happen to share a name.
+\end{example}
+
+\subsection{Duality between quantifiers}
+% CN 5.13 / Rosen 1.4 (De Morgan's laws for quantifiers)
+
+\begin{theorem}[De Morgan's laws for quantifiers]
+\[
+\neg\forall X\, P(X) \ \equiv\ \exists X\,\neg P(X), \qquad \neg\exists X\, P(X) \ \equiv\ \forall X\,\neg P(X).
+\]
+\end{theorem}
+
+\begin{example}[``Not all stars are visible'' $=$ ``some star is invisible'']
+\begin{align*}
+\neg\forall X\,(\mathrm{star}(X)\implies\mathrm{visible}(X))
+&= \exists X\,\neg(\mathrm{star}(X)\implies\mathrm{visible}(X)) \\
+&= \exists X\,\neg(\neg\mathrm{star}(X)\vee\mathrm{visible}(X)) \\
+&= \exists X\,(\mathrm{star}(X)\wedge\neg\mathrm{visible}(X)).
+\end{align*}
+\end{example}
+
+\begin{note}
+$\neg\forall Y\,\neg = \exists Y$, and $\neg\exists Y\,\neg = \forall Y$ (apply the laws twice, using double negation).
+\end{note}
+
+\subsection{Some examples}
+% CN 5.15 / Rosen 1.4
+
+\begin{example}[``Infinitely many primes'', in predicate logic]
+With $\mathrm{Prime}(n)$ on domain $\N$ and predicate $\le$:
+\[
+\forall b\, \exists n\ \mathrm{Prime}(n) \wedge \neg(n \le b).
+\]
+Read: for every bound $b$, some prime exceeds it -- correctly capturing ``infinitely many primes'' without needing an infinite conjunction.
+\end{example}
+
+\begin{example}[Swapping the quantifiers gives a different, false, statement]
+\[
+\exists n\, \forall b\ \mathrm{Prime}(n) \wedge \neg(n \le b).
+\]
+\end{example}
+\begin{proof}[Why this is false -- step by step]
+Distribute $\forall b$ over the conjunction (\S5.12):
+\[
+\forall b\ \mathrm{Prime}(n) \wedge \neg(n\le b) \ \equiv\ (\forall b\, \mathrm{Prime}(n)) \wedge (\forall b\, \neg(n\le b)).
+\]
+
+Since $\mathrm{Prime}(n)$ does not involve $b$, the quantifier is superfluous (\S5.9):
+\[
+\forall b\, \mathrm{Prime}(n) \ \equiv\ \mathrm{Prime}(n).
+\]
+
+Substituting back:
+\[
+\exists n\,\big(\mathrm{Prime}(n) \wedge \forall b\,\neg(n\le b)\big) \ \equiv\ \exists n\in\{\text{primes}\}\ \forall b\ n>b.
+\]
+
+This asserts a single prime exceeding \emph{every} number -- false. So the two quantifier orderings genuinely differ in meaning, one true and one false.
+\end{proof}
+
+\bigskip
+\begin{example}[Rosen -- translating a nested-quantifier English sentence, harder]
+``Every real number except $0$ has a multiplicative inverse.'' With $\mathrm{domain}=\R$:
+\[
+\forall x\,\big(x\neq 0 \implies \exists y\, (xy=1)\big).
+\]
+Note the restricted-$\forall$ pattern from \S5.9 ($x\neq0 \implies \cdots$) nested with a plain $\exists y$ inside -- $y$'s existence is allowed to depend on $x$, which is essential: no single $y$ works for every nonzero $x$.
+\end{example}
+
+\subsection{Summary of rules for logic with quantifiers}
+% CN 5.14
+
+\begin{note}[Full rule list]
+\begin{align*}
+\exists x\in A\, P(x) &\equiv \exists x\,(x\in A \wedge P(x)) & \text{(\S5.7)}\\
+\forall x\in A\, P(x) &\equiv \forall x\,(x\in A \implies P(x)) & \text{(\S5.9)}\\
+\exists x\, R &\equiv R, \quad \forall x\, R \equiv R & (x \text{ not free in } R;\ \S5.7,5.9)\\
+\exists x\exists y\, P(x,y) &\equiv \exists y\exists x\, P(x,y) & \text{(\S5.10)}\\
+\forall x\forall y\, P(x,y) &\equiv \forall y\forall x\, P(x,y) & \text{(\S5.10)}\\
+\forall x\, P(x) &\implies P(\mathrm{obj}), \quad P(\mathrm{obj}) \implies \exists x\, P(x) & \text{(\S5.12)}\\
+\exists x\,(P(x)\vee Q(x)) &\equiv (\exists x\,P(x))\vee(\exists x\,Q(x)) & \text{(\S5.12)}\\
+\forall x\,(P(x)\wedge Q(x)) &\equiv (\forall x\,P(x))\wedge(\forall x\,Q(x)) & \text{(\S5.12)}\\
+\neg\exists x\, P(x) &\equiv \forall x\,\neg P(x), \quad \neg\forall x\, P(x) \equiv \exists x\,\neg P(x) & \text{(\S5.13)}
+\end{align*}
+\end{note}
+
+\subsection{Rules of inference (Rosen \S1.6 -- extension, beyond CN syllabus)}
+
+\begin{definition}[Rule of inference]
+A \emph{rule of inference} is an argument form: premises above a line, conclusion below, valid because the conjunction of the premises implying the conclusion is a tautology.
+\end{definition}
+
+\begin{note}[Basic rules for propositional logic]
+\[
+\text{Modus ponens: } \frac{P,\ P\implies Q}{\therefore Q}
+\qquad
+\text{Modus tollens: } \frac{\neg Q,\ P\implies Q}{\therefore \neg P}
+\]
+\[
+\text{Hypothetical syllogism: } \frac{P\implies Q,\ Q\implies R}{\therefore P\implies R}
+\qquad
+\text{Disjunctive syllogism: } \frac{P\vee Q,\ \neg P}{\therefore Q}
+\]
+\[
+\text{Addition: } \frac{P}{\therefore P\vee Q}
+\qquad
+\text{Simplification: } \frac{P\wedge Q}{\therefore P}
+\qquad
+\text{Conjunction: } \frac{P,\ Q}{\therefore P\wedge Q}
+\]
+\[
+\text{Resolution: } \frac{P\vee Q,\ \neg P\vee R}{\therefore Q\vee R}
+\]
+\end{note}
+
+\begin{theorem}
+Each rule above is valid: the conjunction of its premises implies its conclusion is a tautology.
+\end{theorem}
+\begin{proof}[Verification for modus tollens]
+Suppose $\neg Q$ and $P\implies Q$ both hold. If $P$ were true, $P\implies Q$ would force $Q$ true, contradicting $\neg Q$. So $P$ is false, i.e.\ $\neg P$ holds. (The others verify similarly, by truth table or direct argument -- \S4.15's laws are exactly what's needed.)
+\end{proof}
+
+\bigskip
+\begin{note}[Rules of inference for quantified statements]
+\[
+\text{Universal instantiation: } \frac{\forall x\, P(x)}{\therefore P(c)} \ (c \text{ any specific element of the domain})
+\]
+\[
+\text{Universal generalization: } \frac{P(c) \text{ for arbitrary, generic } c}{\therefore \forall x\, P(x)}
+\]
+\[
+\text{Existential instantiation: } \frac{\exists x\, P(x)}{\therefore P(c)} \ (c \text{ some element, not otherwise specified})
+\]
+\[
+\text{Existential generalization: } \frac{P(c) \text{ for a specific } c}{\therefore \exists x\, P(x)}
+\]
+\end{note}
+
+\begin{note}[These match CN's own principles]
+Universal instantiation and existential generalization are exactly the two implications from \S5.12; universal generalization is exactly the ``let $x$ be arbitrary, generic'' technique from \S3.3/\S3.4 for proving universal statements.
+\end{note}
+
+\bigskip
+\begin{example}[Chained formal proof -- harder, Rosen-style]
+Premises: (1) $\forall x\,(\mathrm{Student}(x)\implies\mathrm{Studies}(x))$; (2) $\forall x\,(\mathrm{Studies}(x)\implies\mathrm{Passes}(x))$; (3) $\neg\mathrm{Passes}(\text{Sam})$; (4) $\mathrm{Student}(\text{Sam})$.
+
+Conclusion to derive: a contradiction (showing the premises are jointly unsatisfiable).
+
+\begin{enumerate}[label=(\arabic*)]
+    \setcounter{enumi}{4}
+    \item $\mathrm{Student}(\text{Sam})\implies\mathrm{Studies}(\text{Sam})$ \hfill (universal instantiation on (1), $c=$ Sam)
+    \item $\mathrm{Studies}(\text{Sam})\implies\mathrm{Passes}(\text{Sam})$ \hfill (universal instantiation on (2), $c=$ Sam)
+    \item $\mathrm{Student}(\text{Sam})\implies\mathrm{Passes}(\text{Sam})$ \hfill (hypothetical syllogism, (5)+(6))
+    \item $\mathrm{Passes}(\text{Sam})$ \hfill (modus ponens, (4)+(7))
+    \item $\mathrm{Passes}(\text{Sam}) \wedge \neg\mathrm{Passes}(\text{Sam})$ \hfill (conjunction, (8)+(3))
+\end{enumerate}
+Line (9) is a contradiction, so the four premises cannot all hold simultaneously.
+\end{example}
+
+% ============================================================
+% NOTATION SUMMARY
+% ============================================================
+\newpage
+\section*{Notation summary}
+\addcontentsline{toc}{section}{Notation summary}
+
+\subsection*{Sets (Ch.\,1)}
+\begin{longtable}{ll}
+$\in,\ \notin$ & membership \\
+$\emptyset,\ \{\}$ & empty set \\
+$\{x : P(x)\}$ & set-builder \\
+$[a,b],\ (a,b),\ [a,b),\ (a,b]$ & intervals \\
+$\N,\Z,\Z^+,\Z^-,\Q,\R,\R^+,\R^-,\C$ & standard number sets \\
+$|A|$ & cardinality \\
+$\Sigma,\ \Sigma^n,\ \Sigma^*$ & alphabet, strings of length $n$, all strings \\
+$\subseteq,\ \subsetneq,\ \supseteq$ & subset, proper subset, superset \\
+$\mathcal P(A)$ & power set \\
+$\binom{n}{k}$ & binomial coefficient \\
+$A-B$ (or $A\setminus B$),\ $\overline{A}$ & set difference, complement \\
+$\cup,\ \cap$ & union, intersection \\
+$\triangle$ & symmetric difference \\
+$\times,\ A^n$ & Cartesian product, $n$-fold power \\
+\end{longtable}
+
+\subsection*{Functions and relations (Ch.\,2)}
+\begin{longtable}{ll}
+$f:A\to B,\ f(x)$ & function declaration, value \\
+$\dom(f)$ & domain \\
+$i_A$ & identity function \\
+$\chi_A$ & indicator/characteristic function \\
+$c_a$ & constant function \\
+$\lfloor x\rfloor,\ \lceil x\rceil$ & floor, ceiling \\
+$f|_X$ & restriction \\
+$f^{-1}$ & inverse function (or preimage, context-dependent) \\
+$g\circ f$ & composition \\
+$f^{(n)}$ & iterated composition \\
+$e_k,\ d_k$ & encryption/decryption (cryptosystem) \\
+$R \subseteq A\times B,\ xRy$ & binary relation, infix notation \\
+$R(x),\ R^{-1}(y)$ & image set, inverse-image set (relation) \\
+$R\circ S$ & relation composition \\
+$R^{(n)},\ R^+$ & iterated relation, transitive closure \\
+$[x]_R$ & equivalence class \\
+$[a_{ij}]$ & matrix \\
+$\wedge,\vee$ (matrices) & meet, join (zero-one matrices) \\
+$\odot$ & Boolean matrix product \\
+$\preceq$ & partial order \\
+$\vee,\wedge$ (posets) & join (LUB), meet (GLB) \\
+\end{longtable}
+
+\subsection*{Propositional logic (Ch.\,4)}
+\begin{longtable}{ll}
+$T,\ F$ & truth values \\
+$\neg$ & negation \\
+$\wedge,\ \vee$ & conjunction, disjunction \\
+$\implies,\ \iff$ & implication, biconditional \\
+$\oplus$ & exclusive-or \\
+$\mid$ & Sheffer stroke (NAND) \\
+$\equiv$ (or $=$) & logical equivalence \\
+\end{longtable}
+
+\subsection*{Predicate logic (Ch.\,5)}
+\begin{longtable}{ll}
+$P(x)$ & predicate applied to a term \\
+$\exists x,\ \exists x\in A$ & existential quantifier, restricted \\
+$\forall x,\ \forall x\in A$ & universal quantifier, restricted \\
+$\dom(f)$ & (as in Ch.\,2 -- domain of a variable/predicate argument) \\
+\end{longtable}
+
+\subsection*{Proof and general notation (Ch.\,3, throughout)}
+\begin{longtable}{ll}
+$\blacksquare$ & end of proof \\
+$\mid$ (number theory) & divides ($a\mid b$) \\
+$\Rightarrow$ (proof steps) & logical consequence within a proof \\
+\end{longtable}
 
 \end{document}
