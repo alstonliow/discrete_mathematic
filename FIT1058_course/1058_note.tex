@@ -1,10 +1,10 @@
 \documentclass[11pt]{article}
 \usepackage{mystyle}
 
-\title{FIT1058 --- Course Notes\\
-\large Structured to match Course Notes table of contents}
+\title{FIT1058 --- Notes\\
+\large Course Note(CN) $+$ Rosen Discrete Mathematic (Rosen)}
 \author{Alston}
-\date{\today}
+\date{25 August 2026}
 
 \begin{document}
 \maketitle
@@ -3196,6 +3196,55 @@ Negate the output column; build DNF for $\neg P$; negate that expression; apply 
 When every CNF clause has exactly $3$ literals, satisfiability is the classical \emph{3-SAT} problem -- the canonical NP-complete problem (Cook--Levin theorem). This is why CNF, not DNF, is the standard input format for SAT solvers: checking DNF satisfiability is trivial, but CNF satisfiability is computationally hard in general, which is exactly the structure that makes CNF expressive enough to encode real combinatorial problems.
 \end{note}
 
+\subsection{Satisfiability}
+% New section (not in CN ToC) -- Rosen 1.3
+
+\begin{definition}[Satisfiable, unsatisfiable]
+A compound proposition is \emph{satisfiable} if some assignment of truth values to its variables makes it true (a \emph{satisfying assignment}); otherwise it is \emph{unsatisfiable}.
+\end{definition}
+
+\begin{note}[Satisfiability and normal forms]
+In DNF (\S4.16), satisfiability is trivial to check: any one disjunct with no variable appearing both negated and unnegated gives a satisfying assignment directly. In CNF (\S4.17), determining satisfiability in general is the SAT problem -- NP-complete (\S4.17's note on 3-SAT).
+\end{note}
+
+\bigskip
+\begin{example}[The $n$-queens problem as satisfiability]
+Place $n$ queens on an $n\times n$ chessboard so that no two attack each other (same row, column, or diagonal). Encode as CNF:
+
+Variables $x_{i,j}$ ($1\le i,j\le n$): true iff a queen occupies row $i$, column $j$.
+
+\begin{itemize}
+    \item \emph{At least one queen per row $i$}: $x_{i,1}\vee x_{i,2}\vee\cdots\vee x_{i,n}$.
+    \item \emph{At most one queen per row $i$}: $\neg x_{i,j}\vee\neg x_{i,k}$ for all $j\neq k$.
+    \item \emph{At most one queen per column $j$}: $\neg x_{i,j}\vee\neg x_{k,j}$ for all $i\neq k$.
+    \item \emph{At most one queen per diagonal}: $\neg x_{i,j}\vee\neg x_{k,l}$ whenever $(i,j)\neq(k,l)$ and $|i-k|=|j-l|$.
+\end{itemize}
+
+The conjunction of all these clauses is satisfiable iff an $n$-queens solution exists; a satisfying assignment directly gives the queen placements.
+\end{example}
+
+\bigskip
+\begin{example}[Sudoku as satisfiability]
+A $9\times9$ grid, digits $1$--$9$, each row/column/$3\times3$ box containing every digit exactly once, some cells pre-filled.
+
+Variables $x_{i,j,k}$ ($1\le i,j,k\le 9$): true iff cell $(i,j)$ contains digit $k$.
+
+\begin{itemize}
+    \item \emph{Each cell has at least one digit}: $\bigvee_{k=1}^{9} x_{i,j,k}$, for each cell $(i,j)$.
+    \item \emph{Each cell has at most one digit}: $\neg x_{i,j,k}\vee\neg x_{i,j,l}$ for $k\neq l$.
+    \item \emph{Each row has every digit}: for each row $i$, digit $k$: $\bigvee_{j=1}^{9} x_{i,j,k}$.
+    \item \emph{Each column has every digit}: analogous, indices swapped.
+    \item \emph{Each $3\times3$ box has every digit}: analogous, summing over the $9$ cells of each box.
+    \item \emph{Given clues}: for each pre-filled cell $(i,j)=k_0$, the unit clause $x_{i,j,k_0}$.
+\end{itemize}
+
+A satisfying assignment is exactly a solved Sudoku grid consistent with the clues.
+\end{example}
+
+\begin{note}
+Both encodings turn a combinatorial puzzle into a pure question about propositional satisfiability -- this is exactly how modern SAT solvers are used to solve such puzzles in practice, rather than hand-coding a puzzle-specific search algorithm.
+\end{note}
+
 \subsection{Representing logical statements}
 % CN 4.18
 
@@ -3325,6 +3374,10 @@ A unary predicate (\emph{property}) $P(x)$ on domain $D$ corresponds to the set 
 A name for an object, without specifying it exactly, used to reason about an unknown or arbitrary member of its \emph{domain}.
 \end{definition}
 
+\begin{note}[Domain]
+    $Domain$ also call $domain of discourse$ or $universe of discourse$.
+\end{note}
+
 \begin{definition}[Constant]
 An object belonging to the domain of some variable -- a specific, named member of that domain.
 \end{definition}
@@ -3377,7 +3430,57 @@ Terms are built from constants/variables/functions to arbitrary finite depth (co
 \end{note}
 
 \begin{example}
-$a^2+b^2$ is a term of domain $\R$ (real addition, codomain $\R$, applied to two terms $a^2, b^2$, each themselves a term of domain $\R$ via the squaring function). $\mathrm{MotherOf}(\mathrm{FatherOf}(Y))$ is a term of domain $\mathbb P$ similarly.
+Let $a,b$ be variables with domain $\R$. The expression
+\[
+a^2+b^2
+\]
+is a term of domain $\R$.
+
+To see this, first consider $a^2$. The squaring function
+\[
+\operatorname{square}:\R\to\R
+\]
+has codomain $\R$, and its argument $a$ is a term of domain $\R$. Therefore,
+\[
+a^2=\operatorname{square}(a)
+\]
+is a term of domain $\R$.
+
+Similarly, since $b$ is a term of domain $\R$,
+\[
+b^2=\operatorname{square}(b)
+\]
+is also a term of domain $\R$.
+
+Finally, consider the real addition function
+\[
++:\R\times\R\to\R.
+\]
+Its two arguments must each be terms of domain $\R$. Since both $a^2$ and $b^2$ are terms of domain $\R$, they can be given to the two arguments of the addition function. Hence,
+\[
+a^2+b^2
+\]
+is a term of domain $\R$.
+\end{example}
+
+\begin{example}
+Let $\mathbb P$ be the domain of people, and suppose that
+\[
+\operatorname{FatherOf}:\mathbb P\to\mathbb P
+\]
+and
+\[
+\operatorname{MotherOf}:\mathbb P\to\mathbb P.
+\]
+If $Y$ is a variable with domain $\mathbb P$, then
+\[
+\operatorname{FatherOf}(Y)
+\]
+is a term of domain $\mathbb P$. Consequently,
+\[
+\operatorname{MotherOf}(\operatorname{FatherOf}(Y))
+\]
+is also a term of domain $\mathbb P$.
 \end{example}
 
 \begin{example}[Not terms]
@@ -3701,6 +3804,83 @@ This asserts a single prime exceeding \emph{every} number -- false. So the two q
 Note the restricted-$\forall$ pattern from \S5.9 ($x\neq0 \implies \cdots$) nested with a plain $\exists y$ inside -- $y$'s existence is allowed to depend on $x$, which is essential: no single $y$ works for every nonzero $x$.
 \end{example}
 
+\bigskip
+\begin{example}[Limit of a function, nested quantifiers -- Rosen, requires calculus]
+$\lim_{x\to a} f(x) = L$ means: for every real number $\epsilon>0$ there exists a real number $\delta>0$ such that $|f(x)-L|<\epsilon$ whenever $0<|x-a|<\delta$.
+
+In quantifiers, with $\epsilon,\delta$ ranging over \emph{all} reals and the positivity built into the body:
+\[
+\forall\epsilon\,\exists\delta\,\forall x\,\Big(0<|x-a|<\delta \implies |f(x)-L|<\epsilon\Big),
+\]
+where the domain for $\epsilon,\delta$ is understood to already be ``positive reals,'' and for $x$ is all reals.
+
+Equivalently, using \emph{restricted} quantifiers (\S5.7, \S5.9) to make the positivity explicit rather than implicit in the domain:
+\[
+\forall\epsilon>0\,\exists\delta>0\,\forall x\,\Big(0<|x-a|<\delta \implies |f(x)-L|<\epsilon\Big),
+\]
+now with $\epsilon,\delta$ ranging over \emph{all} real numbers, and the restriction ``$>0$'' carried by the quantifier notation itself instead of by the choice of domain.
+\end{example}
+
+\begin{note}[Order is essential here]
+The quantifier order $\forall\epsilon\,\exists\delta\,\forall x$ matters critically: $\delta$ is allowed to depend on $\epsilon$ (chosen \emph{after} $\epsilon$ is fixed), but must work for \emph{all} $x$ satisfying the closeness condition. Swapping to $\exists\delta\,\forall\epsilon$ would wrongly demand a single $\delta$ working for every $\epsilon$ simultaneously -- a much stronger, generally false, claim.
+\end{note}
+
+\bigskip
+\begin{example}[``Limit does not exist,'' via negation of nested quantifiers -- Rosen, requires calculus]
+$\lim_{x\to a} f(x)$ does not exist means: for every real number $L$, $\lim_{x\to a}f(x)\neq L$.
+
+Using the restricted-quantifier form above, $\lim_{x\to a}f(x)\neq L$ is the negation of
+\[
+\forall\epsilon>0\,\exists\delta>0\,\forall x\,\Big(0<|x-a|<\delta \implies |f(x)-L|<\epsilon\Big),
+\]
+i.e.
+\[
+\neg\forall\epsilon>0\,\exists\delta>0\,\forall x\,\Big(0<|x-a|<\delta \implies |f(x)-L|<\epsilon\Big).
+\]
+
+Push the negation inward one quantifier at a time, using \S5.13's De Morgan's laws for quantifiers at each step:
+\begin{align*}
+&\phantom{{}\equiv{}} \neg\forall\epsilon>0\,\exists\delta>0\,\forall x\,(0<|x-a|<\delta\implies|f(x)-L|<\epsilon) \\
+&\equiv \exists\epsilon>0\,\neg\exists\delta>0\,\forall x\,(0<|x-a|<\delta\implies|f(x)-L|<\epsilon) \\
+&\equiv \exists\epsilon>0\,\forall\delta>0\,\neg\forall x\,(0<|x-a|<\delta\implies|f(x)-L|<\epsilon) \\
+&\equiv \exists\epsilon>0\,\forall\delta>0\,\exists x\,\neg\big(0<|x-a|<\delta\implies|f(x)-L|<\epsilon\big) \\
+&\equiv \exists\epsilon>0\,\forall\delta>0\,\exists x\,\Big(0<|x-a|<\delta \ \wedge\ |f(x)-L|\ge\epsilon\Big).
+\end{align*}
+The last step uses $\neg(P\implies Q)\equiv P\wedge\neg Q$ (\S4.15), applied with $P=(0<|x-a|<\delta)$, $Q=(|f(x)-L|<\epsilon)$, and $\neg(|f(x)-L|<\epsilon) \equiv |f(x)-L|\ge\epsilon$.
+
+Since ``the limit does not exist'' means $\forall L$, $\lim_{x\to a}f(x)\neq L$, prepend $\forall L$:
+\[
+\forall L\,\exists\epsilon>0\,\forall\delta>0\,\exists x\,\Big(0<|x-a|<\delta \ \wedge\ |f(x)-L|\ge\epsilon\Big).
+\]
+
+Read aloud: ``for every candidate limit value $L$, there is some $\epsilon>0$ such that, no matter how small a $\delta>0$ is chosen, some $x$ within $\delta$ of $a$ still has $f(x)$ at least $\epsilon$ away from $L$'' -- exactly capturing that no $L$ can serve as the limit.
+\end{example}
+
+\begin{note}
+Each of the four inner negation steps flips $\forall\leftrightarrow\exists$ and pushes $\neg$ past exactly one quantifier, mirroring the definitions in \S5.13 one at a time; only the final step differs, converting the negated implication via ordinary propositional logic rather than a quantifier law.
+\end{note}
+
+\bigskip
+\begin{example}[Negating a triple-nested quantifier statement -- Rosen, harder]
+``There is no woman who has flown on every airline in the world.'' Let $P(w,f)$: ``woman $w$ has taken flight $f$''; $Q(f,a)$: ``flight $f$ is on airline $a$.'' ``Some woman has flown on every airline'' is
+\[
+\exists w\,\forall a\,\exists f\,\big(P(w,f)\wedge Q(f,a)\big),
+\]
+so the negation is $\neg\exists w\,\forall a\,\exists f\,(P(w,f)\wedge Q(f,a))$. Pushing the negation inward, one quantifier at a time:
+\begin{align*}
+&\phantom{{}\equiv{}} \neg\exists w\,\forall a\,\exists f\,(P(w,f)\wedge Q(f,a)) \\
+&\equiv \forall w\,\neg\forall a\,\exists f\,(P(w,f)\wedge Q(f,a)) \\
+&\equiv \forall w\,\exists a\,\neg\exists f\,(P(w,f)\wedge Q(f,a)) \\
+&\equiv \forall w\,\exists a\,\forall f\,\neg(P(w,f)\wedge Q(f,a)) \\
+&\equiv \forall w\,\exists a\,\forall f\,\big(\neg P(w,f)\vee\neg Q(f,a)\big).
+\end{align*}
+Reading it back: ``for every woman, there is some airline such that, for every flight, either she hasn't taken that flight or that flight isn't on that airline.''
+\end{example}
+
+\begin{note}
+Three nested quantifiers, three applications of the same rule from \S5.13 -- the pattern doesn't change with depth, only the bookkeeping does.
+\end{note}
+
 \subsection{Summary of rules for logic with quantifiers}
 % CN 5.14
 
@@ -3792,6 +3972,985 @@ Line (9) is a contradiction, so the four premises cannot all hold simultaneously
 \end{example}
 
 % ============================================================
+% CHAPTER 6 --- SEQUENCES & SERIES  (CN Ch.6, §6.1-6.16)
+% ============================================================
+\newpage
+\section{Sequences \& Series}
+
+\subsection{Definitions and notation}
+% CN 6.1 / Rosen 2.4
+
+\begin{definition}[Sequence]
+A \emph{sequence} is a function whose domain is $\N$ (an \emph{infinite sequence}) or $\{1,\dots,n\}$ for some $n$ (a \emph{finite sequence}, equivalently an ordered $n$-tuple, \S1.14).
+\end{definition}
+
+\begin{definition}[Term, $n$-th term notation]
+For a sequence $f$ over a set $A$ (i.e.\ $f:\N\to A$ or similar), $f(n)$ (also written $f_n$) is the \emph{$n$-th term}. The \emph{terms} of $f$ are the members of its image (\S2.1.2), listed in the order given by the domain.
+\end{definition}
+
+\begin{definition}[Length]
+The \emph{length} of a finite sequence is the size of its domain -- its number of terms.
+\end{definition}
+
+\begin{note}[Rosen's phrasing]
+Rosen defines a sequence identically: a function from a subset of $\Z$ (typically $\{0,1,2,\dots\}$ or $\{1,2,3,\dots\}$) to a set $S$; $a_n$ denotes the image of $n$, called a \emph{term}.
+\end{note}
+
+\begin{note}[Ways to specify a sequence]
+\begin{itemize}
+    \item List all terms explicitly (only practical if short).
+    \item A formula for the $n$-th term: $(n^2 : n\in\N)$ or $(n^2)_{n=1}^{\infty}$, matching set-builder notation (\S1.2) but with parentheses since order matters.
+    \item A recurrence relation (\S6.2): each term defined using previous term(s).
+\end{itemize}
+A sequence is \emph{not} well-defined merely by listing a few terms and trusting a "pattern" -- infinitely many different formulas can match any finite initial segment (see \S6.2's exercise on this danger, and the counterexample below).
+\end{note}
+
+\begin{example}[A pattern-guessing trap, Rosen -- harder]
+The sequence $1,2,4,8,16,\dots$ (five terms shown) matches $a_n = 2^{n-1}$ -- but it also matches
+\[
+a_n = \binom{n-1}{0}+\binom{n-1}{1}+\binom{n-1}{2}+\binom{n-1}{3}+\binom{n-1}{4},
+\]
+which equals $1,2,4,8,16$ for $n=1,\dots,5$ but gives $31$, not $32$, at $n=6$ (since the $\binom{n-1}{5}$ term, absent from this formula, would otherwise contribute). A finite list of terms never uniquely determines a sequence.
+\end{example}
+
+\begin{note}[Number sequences]
+Sequences over $\N,\Z,\Q,\R$ (\emph{number sequences}) are especially important -- not only for direct computation, but for measuring properties of computation itself: running time, memory use, input/output size, and so on.
+\end{note}
+
+\subsection{Recursive definitions of sequences}
+% CN 6.2 / Rosen 2.4, 5.3
+
+\begin{definition}[Recurrence relation]
+A \emph{recurrence relation} for $(a_n)$ expresses $a_n$ in terms of one or more earlier terms ($a_{n-1}$, or several), together with enough \emph{base cases} (initial terms given explicitly) to make every term uniquely determined.
+\end{definition}
+
+\begin{note}[General shape of a recursive definition, Rosen \S5.3]
+\begin{itemize}
+    \item \textbf{Base case}: explicitly define finitely many of the simplest objects.
+    \item \textbf{Recursive case}: define a general object in terms of simpler ones already in the family.
+\end{itemize}
+This is the same two-part shape as recursively-defined sets/functions (\S5.3 generalizes it beyond sequences -- see the note below).
+\end{note}
+
+\begin{example}
+\[
+f_1=1,\ f_n=f_{n-1}+2 \quad\Rightarrow\quad 1,3,5,7,\dots \text{ (odd numbers)};
+\]
+\[
+f_1=0,\ f_n=f_{n-1}+2 \quad\Rightarrow\quad 0,2,4,6,\dots \text{ (even numbers)} \text{ -- same rule, different base case, different sequence};
+\]
+\[
+f_1=1,\ f_n=nf_{n-1} \quad\Rightarrow\quad 1,2,6,24,120,\dots \text{ (factorials, i.e.\ } n!\text{)}.
+\]
+\end{example}
+
+\begin{note}[Multiple base cases]
+$f_n=4f_{n-2}$ (depending on the term \emph{two} back) needs \emph{two} base cases, $f_1,f_2$, to determine the whole sequence -- one base case alone only fixes every other term. E.g.\ $f_1=2,f_2=0,\ f_n=4f_{n-2}$ gives $2,0,8,0,32,0,\dots$
+\end{note}
+
+\bigskip
+\begin{example}[Structural induction preview, Rosen \S5.3 -- harder]
+Recursively-defined \emph{sets} follow the same base/recursive pattern: e.g.\ the set $S$ of "balanced parenthesis strings" is defined by (i) $\varepsilon\in S$ (base case); (ii) if $w\in S$, then $(w)\in S$ and, if $u,v\in S$, then $uv\in S$ (recursive case). Proving a property $P$ holds for every $w\in S$ then uses \emph{structural induction}: prove $P$ for the base case, and prove that the recursive case preserves $P$ (assuming it holds for the smaller pieces used to build $w$) -- the direct set-theoretic analogue of induction on sequences.
+\end{example}
+
+\subsection{Arithmetic sequences}
+% CN 6.3 / Rosen 2.4
+
+\begin{definition}[Arithmetic sequence]
+A sequence with constant difference $d$ between consecutive terms: $f_1=a,\ f_n=f_{n-1}+d$. The $n$-th term is $a+(n-1)d$.
+\end{definition}
+
+\begin{note}[Rosen's phrasing]
+Rosen calls this an \emph{arithmetic progression}: $a_n=a+dn$ (indexing from $n=0$) or equivalently $a_n=a_{n-1}+d$ -- same sequence, differing only in whether the first term is indexed $0$ or $1$.
+\end{note}
+
+\subsection{Geometric sequences}
+% CN 6.4 / Rosen 2.4
+
+\begin{definition}[Geometric sequence]
+A sequence with constant ratio $r$ between consecutive terms: $f_1=a,\ f_n=f_{n-1}\cdot r$. The $n$-th term is $ar^{n-1}$.
+\end{definition}
+
+\begin{note}[Rosen's phrasing]
+Rosen calls this a \emph{geometric progression}: $a_n=ar^n$ (indexing from $0$) or $a_n=a_{n-1}\cdot r$.
+\end{note}
+
+\subsection{Harmonic sequences}
+% CN 6.5 -- no direct Rosen counterpart
+
+\begin{definition}[Harmonic sequence]
+$(a_n)$ is \emph{harmonic} iff $(1/a_n)$ is arithmetic.
+\end{definition}
+
+\begin{note}
+$(1/n : n\in\N)$ is the key example -- harmonic since $\N$ itself is arithmetic. See \S6.15 for its properties.
+\end{note}
+
+\subsection{From recursive definitions to formulas}
+% CN 6.6 / Rosen 8.1-8.2
+
+\begin{note}[Explore -- conjecture -- prove]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Explore}: compute the first several terms.
+    \item \textbf{Conjecture}: look for a pattern; propose a closed-form formula.
+    \item \textbf{Prove}: verify the formula for all $n$, typically by induction.
+\end{enumerate}
+\end{note}
+
+\begin{example}
+\[
+f_1=1,\quad f_n = 2f_{n-1}+1.
+\]
+
+\textbf{Explore}: $f_1=1,\ f_2=3,\ f_3=7,\ f_4=15$.
+
+\textbf{Conjecture}: each term is one less than a power of $2$: $f_n = 2^n-1$.
+
+\textbf{Prove} (induction on $n$):
+
+\textit{Base case} ($n=1$): $2^1-1=1=f_1$.
+
+\textit{Inductive step}: assume $f_k=2^k-1$ for some $k\ge1$. Then
+\[
+f_{k+1} = 2f_k+1 = 2(2^k-1)+1 = 2^{k+1}-2+1 = 2^{k+1}-1.
+\]
+
+By induction, $f_n=2^n-1$ for all $n\ge1$.
+\end{example}
+
+\bigskip
+\begin{definition}[Linear homogeneous recurrence with constant coefficients, Rosen \S8.2 -- systematic method]
+\[
+a_n = c_1a_{n-1}+c_2a_{n-2}+\cdots+c_ka_{n-k}, \qquad c_k \neq 0,
+\]
+with $k$ initial conditions $a_0,\dots,a_{k-1}$ given. Its \emph{characteristic equation} is
+\[
+x^k - c_1x^{k-1}-c_2x^{k-2}-\cdots-c_k = 0.
+\]
+\end{definition}
+
+\begin{theorem}[Distinct roots case, Rosen]
+If the characteristic equation has $k$ \emph{distinct} roots $r_1,\dots,r_k$, then every solution has the form
+\[
+a_n = \alpha_1 r_1^n + \alpha_2 r_2^n + \cdots + \alpha_k r_k^n
+\]
+for constants $\alpha_1,\dots,\alpha_k$ determined by the initial conditions.
+\end{theorem}
+\begin{note}[Why this is really linear algebra]
+The set of all sequences satisfying this recurrence forms a vector space: if $(b_n)$ and $(c_n)$ both satisfy it, so does any combination $\beta b_n+\gamma c_n$ (the recurrence is \emph{linear}). This space has dimension $k$ -- a solution is pinned down entirely by its $k$ initial values $a_0,\dots,a_{k-1}$.
+
+Each geometric sequence $r_i^n$ is itself a solution (plugging it into the recurrence and using $r_i^k=c_1r_i^{k-1}+\cdots+c_k$ confirms it). When the $r_i$ are distinct, these $k$ solutions are \emph{linearly independent} -- this is exactly a Vandermonde-determinant fact from linear algebra: distinct roots $\Rightarrow$ nonzero Vandermonde determinant $\Rightarrow$ independence. $k$ independent vectors in a $k$-dimensional space form a \emph{basis}, so every solution is a unique linear combination of them -- which is exactly the formula above, with $\alpha_1,\dots,\alpha_k$ solved for using whatever initial conditions are given.
+\end{note}
+
+\begin{example}[Solving a second-order recurrence -- harder, worked example]
+\[
+a_n = 5a_{n-1} - 6a_{n-2}, \qquad a_0=1,\ a_1=4.
+\]
+
+\textbf{Characteristic equation}: $x^2-5x+6=0$, i.e.\ $(x-2)(x-3)=0$, roots $r_1=2,\ r_2=3$.
+
+\textbf{General solution}: $a_n = \alpha_1 2^n + \alpha_2 3^n$.
+
+\textbf{Solve for $\alpha_1,\alpha_2$} using initial conditions:
+\[
+a_0=1:\ \alpha_1+\alpha_2=1, \qquad a_1=4:\ 2\alpha_1+3\alpha_2=4.
+\]
+From the first equation, $\alpha_1=1-\alpha_2$; substituting: $2(1-\alpha_2)+3\alpha_2=4 \Rightarrow \alpha_2=2,\ \alpha_1=-1$.
+
+\textbf{Closed form}:
+\[
+a_n = -2^n + 2\cdot3^n.
+\]
+\end{example}
+
+\begin{note}[Why this beats guess-and-check]
+The explore-conjecture-prove method above needs a pattern to be \emph{visible} in the first few terms -- it can fail entirely on recurrences with less obvious closed forms (this one, $a_n=5a_{n-1}-6a_{n-2}$, produces $1,4,14,46,\dots$, no obvious pattern by inspection). The characteristic-equation method is systematic: it always works, whenever the roots can be found. This is exactly the machinery behind the exact Fibonacci formula in \S6.7.4.
+\end{note}
+
+\bigskip
+\begin{definition}[Recursively defined set, Rosen \S5.3]
+A set $S$ is defined recursively by:
+\begin{itemize}
+    \item \textbf{Basis step}: specify an initial collection of elements in $S$.
+    \item \textbf{Recursive step}: rules that construct new elements of $S$ from existing ones.
+    \item (Implicitly) $S$ contains \emph{only} elements obtainable this way.
+\end{itemize}
+\end{definition}
+
+\begin{example}[Balanced parenthesis strings]
+Define $B$ recursively: (i) $\varepsilon\in B$ (empty string); (ii) if $w\in B$, then $(w)\in B$; (iii) if $u,v\in B$, then $uv\in B$.
+\end{example}
+
+\begin{definition}[Recursively defined function, Rosen \S5.3]
+A function $f$ on a recursively defined set $S$ is defined by: giving $f$'s value(s) on the basis elements, and giving a rule for $f$'s value on a constructed element in terms of $f$'s value(s) on the piece(s) it was built from.
+\end{definition}
+
+\begin{example}
+$n!$ on $\N$ (basis: $0!=1$; recursive: $n!=n\cdot(n-1)!$) fits this exact pattern -- a recursively defined function on the recursively defined set $\N$.
+\end{example}
+
+\begin{theorem}[Structural induction, Rosen \S5.3]
+To prove property $P$ holds for every element of a recursively defined set $S$:
+\begin{itemize}
+    \item \textbf{Basis step}: prove $P$ holds for every basis element.
+    \item \textbf{Recursive step}: prove that, if $P$ holds for the element(s) a recursive rule builds from, $P$ holds for the newly constructed element too.
+\end{itemize}
+\end{theorem}
+
+\begin{example}[Structural induction on balanced parentheses -- harder]
+Prove: every $w\in B$ has an equal number of `(' and `)'.
+\end{example}
+\begin{proof}
+\textbf{Basis step}: $\varepsilon$ has $0$ of each -- equal.
+
+\textbf{Recursive step, rule (ii)}: suppose $w\in B$ has equal counts, say $k$ each. Then $(w)$ has $k+1$ of each -- still equal.
+
+\textbf{Recursive step, rule (iii)}: suppose $u,v\in B$ have equal counts $k_u,k_v$ respectively. Then $uv$ has $k_u+k_v$ of each -- still equal.
+
+By structural induction, every $w\in B$ has equal counts of `(' and `)'.
+\end{proof}
+
+\begin{note}[Structural induction $\equiv$ ordinary induction, in disguise]
+Structural induction is not a genuinely new principle -- it is ordinary (or strong) induction on the "construction depth" of an element (how many recursive steps were used to build it), applied to the recursively defined set instead of to $\N$ directly.
+\end{note}
+
+\bigskip
+\begin{example}[Rabbit population, Rosen \S8.1 -- the origin of Fibonacci]
+A pair of rabbits produces one new pair each month starting from their second month of life; no rabbit dies. Let $f_n$ = number of pairs after $n$ months, starting from one newborn pair. Then $f_1=1,f_2=1$, and for $n\ge3$: pairs present at month $n$ = pairs already alive at month $n-1$, plus new pairs born (one per pair that was already alive and mature at month $n-2$):
+\[
+f_n = f_{n-1}+f_{n-2},
+\]
+exactly the Fibonacci recurrence (\S6.7).
+\end{example}
+
+\begin{example}[Tower of Hanoi, Rosen \S8.1]
+$n$ disks, decreasing size, on peg $A$; move all to peg $C$ (via peg $B$), one disk at a time, never placing a larger disk on a smaller one. Let $H_n$ = minimum number of moves.
+\end{example}
+\begin{note}[Recurrence]
+Move the top $n-1$ disks $A\to B$ ($H_{n-1}$ moves), move the largest disk $A\to C$ ($1$ move), move the $n-1$ disks $B\to C$ ($H_{n-1}$ moves):
+\[
+H_1=1, \qquad H_n = 2H_{n-1}+1.
+\]
+\end{note}
+\begin{theorem}
+$H_n = 2^n-1$.
+\end{theorem}
+\begin{proof}
+Exactly the recurrence and proof of \S6.6's worked example (same recurrence shape, $a=1,b=1$ shifted), by induction: base case $H_1=1=2^1-1$; inductive step $H_{k+1}=2H_k+1=2(2^k-1)+1=2^{k+1}-1$.
+\end{proof}
+
+\bigskip
+\begin{definition}[Linear nonhomogeneous recurrence, Rosen \S8.2]
+\[
+a_n = c_1a_{n-1}+\cdots+c_ka_{n-k} + F(n), \qquad F(n)\not\equiv0.
+\]
+The associated \emph{homogeneous} recurrence drops $F(n)$.
+\end{definition}
+
+\begin{theorem}[General solution shape]
+Every solution has the form
+\[
+a_n = a_n^{(p)} + a_n^{(h)},
+\]
+where $a_n^{(p)}$ is any \emph{one} particular solution to the nonhomogeneous recurrence, and $a_n^{(h)}$ is the general solution of the associated homogeneous recurrence.
+\end{theorem}
+\begin{proof}
+If $a_n^{(p)}$ solves the nonhomogeneous recurrence and $(b_n)$ is \emph{any} solution to it, then $b_n-a_n^{(p)}$ satisfies the \emph{homogeneous} recurrence (subtracting the two nonhomogeneous equations cancels $F(n)$). So $b_n-a_n^{(p)} = a_n^{(h)}$ for some homogeneous solution, i.e.\ $b_n=a_n^{(p)}+a_n^{(h)}$.
+\end{proof}
+
+\begin{note}[Finding a particular solution -- trial forms]
+When $F(n)$ is a polynomial times $s^n$, try $a_n^{(p)}$ of the same shape (polynomial of the same degree times $s^n$) -- unless $s$ is itself a root of the characteristic equation, in which case multiply by $n$ (or $n^m$ for a root of multiplicity $m$).
+\end{note}
+
+\begin{example}[Worked nonhomogeneous example -- harder]
+\[
+a_n = 3a_{n-1}+2^n, \qquad a_0=1.
+\]
+
+\textbf{Homogeneous part}: characteristic equation $x-3=0$, so $a_n^{(h)}=\alpha\cdot3^n$.
+
+\textbf{Particular solution}: try $a_n^{(p)}=A\cdot2^n$ ($s=2$ is not a root of $x-3=0$). Substituting:
+\[
+A\cdot2^n = 3A\cdot2^{n-1}+2^n \ \Rightarrow\ 2A = 3A+2 \ \Rightarrow\ A=-2.
+\]
+So $a_n^{(p)}=-2\cdot2^n=-2^{n+1}$.
+
+\textbf{General solution}: $a_n = \alpha\cdot3^n - 2^{n+1}$.
+
+\textbf{Match $a_0=1$}: $\alpha-2=1\Rightarrow\alpha=3$.
+
+\textbf{Closed form}: $a_n = 3^{n+1}-2^{n+1}$.
+\end{example}
+
+\bigskip
+\begin{theorem}[Repeated roots case, Rosen -- harder]
+If characteristic root $r$ has multiplicity $m$, its contribution to the general solution is
+\[
+(\alpha_0+\alpha_1n+\alpha_2n^2+\cdots+\alpha_{m-1}n^{m-1})\,r^n
+\]
+instead of a single term $\alpha r^n$.
+\end{theorem}
+
+\begin{example}
+$a_n=4a_{n-1}-4a_{n-2}$: characteristic equation $x^2-4x+4=(x-2)^2=0$, double root $r=2$. General solution: $a_n=(\alpha_0+\alpha_1n)2^n$.
+\end{example}
+
+\bigskip
+\begin{definition}[Divide-and-conquer recurrence, Rosen \S8.3]
+An algorithm that splits a size-$n$ problem into $a$ subproblems of size $n/b$, spending $g(n)$ extra work to combine results, has running time
+\[
+f(n) = a\,f(n/b) + g(n).
+\]
+\end{definition}
+
+\begin{example}[Merge sort]
+Split into $a=2$ halves ($b=2$), merge in $g(n)=n$ (linear) time:
+\[
+f(n) = 2f(n/2)+n.
+\]
+\end{example}
+
+\begin{theorem}[Master theorem, special case $g(n)=cn^d$, Rosen]
+For $f(n)=af(n/b)+cn^d$ ($a\ge1,\ b>1,\ c,d\ge0$ real), when $n$ is a power of $b$:
+\[
+f(n) = \Theta\!\left(
+\begin{cases}
+n^d, & a<b^d, \\
+n^d\log n, & a=b^d, \\
+n^{\log_b a}, & a>b^d.
+\end{cases}
+\right)
+\]
+\end{theorem}
+\begin{proof}[Proof sketch, unrolling the recurrence]
+Let $n=b^k$. Unroll once: $f(n)=af(n/b)+cn^d$. Unroll again: $f(n)=a^2f(n/b^2)+ac(n/b)^d+cn^d$. After $k$ unrollings:
+\[
+f(n) = a^kf(1) + cn^d\sum_{i=0}^{k-1}\left(\frac{a}{b^d}\right)^i.
+\]
+The geometric sum $\sum(a/b^d)^i$ behaves differently depending on whether the ratio $a/b^d$ is $<1$, $=1$, or $>1$ -- giving the three cases (via the finite geometric series formula, \S6.13, and $a^k=a^{\log_b n}=n^{\log_b a}$).
+\end{proof}
+
+\begin{example}[Applying it to merge sort]
+$a=2,\ b=2,\ d=1$: $a=b^d$ ($2=2^1$), so $f(n)=\Theta(n\log n)$.
+\end{example}
+
+\bigskip
+\begin{definition}[Generating function, Rosen \S8.4]
+For sequence $(a_n)_{n=0}^{\infty}$, its \emph{generating function} is the formal power series
+\[
+G(x) = \sum_{n=0}^{\infty} a_n x^n.
+\]
+\end{definition}
+
+\begin{example}
+$(1,1,1,\dots)$: $G(x)=\sum x^n = \dfrac{1}{1-x}$ (geometric series, \S6.14). $\binom{n}{k}$ for fixed $k$, varying $n$: related to $(1-x)^{-(k+1)}$.
+\end{example}
+
+\begin{note}[Solving recurrences via generating functions -- the technique]
+\begin{enumerate}[label=\arabic*.]
+    \item Multiply the recurrence $a_n=c_1a_{n-1}+\cdots$ by $x^n$ and sum over $n$.
+    \item Recognize each resulting sum as a shifted/scaled copy of $G(x)=\sum a_nx^n$.
+    \item Solve the resulting algebraic equation for $G(x)$.
+    \item Expand $G(x)$ back into a power series (e.g.\ partial fractions) to read off $a_n$ as the coefficient of $x^n$.
+\end{enumerate}
+\end{note}
+
+\begin{example}[Fibonacci via generating functions -- harder, alternate route to \S6.7.4's formula]
+$f_0=0,f_1=1,\ f_n=f_{n-1}+f_{n-2}$ for $n\ge2$. Let $G(x)=\sum_{n\ge0}f_nx^n$.
+
+\[
+G(x) = f_0+f_1x+\sum_{n\ge2}f_nx^n = x + \sum_{n\ge2}(f_{n-1}+f_{n-2})x^n = x + x\sum_{n\ge2}f_{n-1}x^{n-1} + x^2\sum_{n\ge2}f_{n-2}x^{n-2}.
+\]
+The two sums are $G(x)$ itself (shifted indices, re-summed from $n=1$ and $n=0$ respectively, matching since $f_0=0$ doesn't affect the first):
+\[
+G(x) = x + xG(x) + x^2G(x) \ \Rightarrow\ G(x)(1-x-x^2) = x \ \Rightarrow\ G(x) = \frac{x}{1-x-x^2}.
+\]
+Partial-fraction expanding $\frac{x}{1-x-x^2}$ (using the roots of $1-x-x^2=0$, related to the golden ratio) and reading off the coefficient of $x^n$ reproduces exactly the closed form from \S6.7.4.
+\end{example}
+
+\subsection{The Fibonacci sequence}
+% CN 6.7 / Rosen 8.1
+
+\begin{definition}[Fibonacci sequence]
+\[
+f_1=1,\quad f_2=1,\quad f_n=f_{n-1}+f_{n-2}\ (n\ge3).
+\]
+\[
+1,1,2,3,5,8,13,21,34,55,\dots
+\]
+\end{definition}
+
+\begin{note}[Explore-conjecture-prove, applied here]
+No formula is obvious from the recurrence alone. The ratio $f_{n+1}/f_n$ appears to settle down (e.g.\ $f_{10}/f_9=55/34\approx1.617$), suggesting exponential growth at some rate -- explored further below.
+\end{note}
+
+\subsubsection{Upper bounds}
+% CN 6.7.1
+
+\begin{theorem}
+$f_n \le 2^n$ for all $n\ge1$.
+\end{theorem}
+\begin{proof}
+Strong induction, base cases $n=1,2$ ($f_1=1\le2$, $f_2=1\le4$); inductive step ($k\ge2$): $f_{k+1}=f_k+f_{k-1}\le2^k+2^{k-1}<2^{k+1}$.
+\end{proof}
+
+\begin{note}[Tightening the bound]
+The proof only used $2^k+2^{k-1}\le2^{k+1}$, i.e.\ (dividing by $2^{k-1}$) $2+1\le2^2$. Any $r$ with $r+1\le r^2$ would work the same way in place of $2$ -- so the smallest such $r$ gives the tightest bound of this form.
+\end{note}
+
+\begin{theorem}[Sharpest bound of this form]
+Let $r_1 = \dfrac{1+\sqrt5}{2}$ (the positive root of $r^2-r-1=0$). Then $f_n \le r_1^n$ for all $n\ge1$.
+\end{theorem}
+\begin{proof}
+Same induction, using $r_1^k+r_1^{k-1}=r_1^{k+1}$ exactly (since $r_1$ satisfies $r_1+1=r_1^2$, multiply through by $r_1^{k-1}$), and base cases $f_1,f_2=1 < r_1,r_1^2$.
+\end{proof}
+
+\subsubsection{Lower bounds}
+% CN 6.7.2
+
+\begin{theorem}
+$f_n \ge r_1^{n-2}$ for all $n\ge1$, where $r_1$ is as above.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Same strategy in reverse: seek the largest $r\le r_1$ with $r+1\ge r^2$; the quadratic $r^2-r-1=0$'s roots are exactly the boundary, so $r_1$ itself (the larger root) works with equality in the recurrence step, giving the tightest such lower bound after matching the base cases $n=1,2$.
+\end{proof}
+
+\subsubsection{Asymptotic behaviour}
+% CN 6.7.3
+
+\begin{note}[Squeezing $f_n$ between bounds]
+Combining both bounds:
+\[
+r_1^{n-2} \le f_n \le r_1^n \quad\Longrightarrow\quad r_1^{-2} \le \frac{f_n}{r_1^n} \le 1.
+\]
+So $f_n/r_1^n$ is trapped between two constants, independent of $n$ -- meaning $f_n$ grows \emph{exactly} like $r_1^n$ up to a bounded factor. $r_1$ is the \emph{golden ratio}, usually written $\varphi$.
+\end{note}
+
+\subsubsection{An exact formula}
+% CN 6.7.4 / Rosen 8.2 -- Binet's formula, harder
+
+\begin{theorem}[Binet's formula]
+For all $n\ge1$:
+\[
+f_n = \frac{\varphi^n - \psi^n}{\sqrt5}, \qquad \varphi=\frac{1+\sqrt5}{2},\ \ \psi=\frac{1-\sqrt5}{2}.
+\]
+\end{theorem}
+\begin{proof}
+The characteristic equation of $f_n=f_{n-1}+f_{n-2}$ is $x^2-x-1=0$, with roots exactly $\varphi,\psi$ (the two roots identified in \S6.7.1--6.7.2). Since these are distinct, the general solution (\S6.6's Distinct roots theorem) is
+\[
+f_n = \alpha\varphi^n + \beta\psi^n.
+\]
+Match initial conditions $f_1=f_2=1$:
+\[
+\alpha\varphi+\beta\psi = 1, \qquad \alpha\varphi^2+\beta\psi^2 = 1.
+\]
+Solving this $2\times2$ linear system (using $\varphi-\psi=\sqrt5$) gives $\alpha=\dfrac{1}{\sqrt5}$, $\beta=-\dfrac{1}{\sqrt5}$, yielding
+\[
+f_n = \frac{1}{\sqrt5}\varphi^n - \frac{1}{\sqrt5}\psi^n = \frac{\varphi^n-\psi^n}{\sqrt5}.
+\]
+\end{proof}
+
+\begin{note}[Consistency check with \S6.7.3]
+Since $|\psi|<1$, $\psi^n\to0$, so $f_n \approx \varphi^n/\sqrt5$ for large $n$ -- consistent with the squeeze $r_1^{-2}\le f_n/r_1^n\le1$ obtained purely by induction, without ever solving the characteristic equation.
+\end{note}
+
+\begin{note}[A genuinely surprising fact]
+$f_n$ is always an integer, yet the formula involves $\sqrt5$ throughout -- the irrational parts exactly cancel in $\varphi^n-\psi^n$ for every $n$. In fact $f_n$ is the \emph{nearest integer} to $\varphi^n/\sqrt5$, since $|\psi^n/\sqrt5|<\tfrac12$ for all $n\ge1$.
+\end{note}
+
+\subsection{Limits of infinite sequences}
+% CN 6.8 -- treated rigorously following 张筑生《数学分析》 (no direct Rosen counterpart)
+
+\begin{definition}[Limit of a sequence, $\varepsilon$-$N$ definition]
+$(a_n)$ has \emph{limit} $\ell$, written $\lim_{n\to\infty}a_n=\ell$ (or $a_n\to\ell$), iff
+\[
+\forall\varepsilon>0\ \exists N\in\N\ \forall n\ge N\quad |a_n-\ell|<\varepsilon.
+\]
+If such $\ell$ exists, $(a_n)$ is \emph{convergent}; otherwise \emph{divergent}.
+\end{definition}
+
+\begin{example}
+$\lim_{n\to\infty} \dfrac1n = 0$: given $\varepsilon>0$, take $N>1/\varepsilon$; then $n\ge N \Rightarrow 1/n \le 1/N < \varepsilon$, so $|1/n-0|<\varepsilon$.
+\end{example}
+
+\begin{example}
+$\lim_{n\to\infty}\dfrac{n}{n+1}=1$: given $\varepsilon>0$,
+\[
+\left|\frac{n}{n+1}-1\right| = \frac{1}{n+1} < \varepsilon \iff n > \frac1\varepsilon-1,
+\]
+so take $N$ any integer $>\tfrac1\varepsilon-1$.
+\end{example}
+
+\bigskip
+\begin{theorem}[Uniqueness of the limit]
+If $a_n\to\ell_1$ and $a_n\to\ell_2$, then $\ell_1=\ell_2$.
+\end{theorem}
+\begin{proof}
+Suppose $\ell_1\neq\ell_2$; let $\varepsilon=|\ell_1-\ell_2|/2>0$. By the two limit definitions, there exist $N_1,N_2$ with $|a_n-\ell_1|<\varepsilon$ for $n\ge N_1$ and $|a_n-\ell_2|<\varepsilon$ for $n\ge N_2$. For $n\ge\max(N_1,N_2)$, the triangle inequality gives
+\[
+|\ell_1-\ell_2| \le |\ell_1-a_n|+|a_n-\ell_2| < \varepsilon+\varepsilon = |\ell_1-\ell_2|,
+\]
+a contradiction. So $\ell_1=\ell_2$.
+\end{proof}
+
+\begin{theorem}[Convergent sequences are bounded]
+If $(a_n)$ converges, then $(a_n)$ is bounded: $\exists M>0,\ |a_n|\le M$ for all $n$.
+\end{theorem}
+\begin{proof}
+Let $a_n\to\ell$. Taking $\varepsilon=1$ in the definition, there is $N$ with $|a_n-\ell|<1$ for all $n\ge N$, so $|a_n|<|\ell|+1$ for those $n$. Let
+\[
+M = \max\big(|a_1|,\dots,|a_{N-1}|,\ |\ell|+1\big).
+\]
+Then $|a_n|\le M$ for every $n$.
+\end{proof}
+
+\bigskip
+\begin{theorem}[Algebra of limits]
+If $a_n\to a$ and $b_n\to b$, then:
+\[
+a_n+b_n\to a+b, \qquad a_n-b_n\to a-b, \qquad a_nb_n\to ab, \qquad \frac{a_n}{b_n}\to\frac{a}{b}\ (b\neq0,\ b_n\neq0).
+\]
+\end{theorem}
+\begin{proof}[Proof of the product rule, as a representative example]
+Since $(a_n)$ converges, it is bounded (previous theorem): $|a_n|\le M$ for all $n$. Given $\varepsilon>0$, choose $N_1$ so that $n\ge N_1\Rightarrow|a_n-a|<\dfrac{\varepsilon}{2(|b|+1)}$, and $N_2$ so that $n\ge N_2\Rightarrow|b_n-b|<\dfrac{\varepsilon}{2M}$. For $n\ge\max(N_1,N_2)$:
+\[
+|a_nb_n-ab| = |a_nb_n-a_nb+a_nb-ab| \le |a_n||b_n-b| + |b||a_n-a| < M\cdot\frac{\varepsilon}{2M} + |b|\cdot\frac{\varepsilon}{2(|b|+1)} < \varepsilon.
+\]
+\end{proof}
+
+\bigskip
+\begin{theorem}[Squeeze theorem ]
+If $a_n\le c_n\le b_n$ for all $n$ (eventually), and $a_n\to\ell$, $b_n\to\ell$, then $c_n\to\ell$.
+\end{theorem}
+\begin{proof}
+Given $\varepsilon>0$, choose $N_1,N_2$ with $|a_n-\ell|<\varepsilon$ for $n\ge N_1$ and $|b_n-\ell|<\varepsilon$ for $n\ge N_2$. For $n\ge\max(N_1,N_2)$:
+\[
+\ell-\varepsilon < a_n \le c_n \le b_n < \ell+\varepsilon,
+\]
+so $|c_n-\ell|<\varepsilon$.
+\end{proof}
+
+\begin{example}[Applying the squeeze theorem -- revisits \S6.7.3]
+The bounds $r_1^{-2}\le f_n/r_1^n\le1$ established for Fibonacci (\S6.7.3) do \emph{not} by themselves give $\lim f_n/r_1^n$ -- the squeeze theorem needs \emph{both} bounding sequences to converge to the \emph{same} limit, which $r_1^{-2}$ (constant) and $1$ (constant) do not (they're different constants) -- so this only shows $f_n/r_1^n$ stays bounded, not that it converges. (It does in fact converge, to $1/\sqrt5$, by Binet's formula, \S6.7.4 -- but that requires more than the squeeze theorem alone.)
+\end{example}
+
+\bigskip
+\begin{theorem}[Monotone convergence theorem]
+Every bounded, monotonic sequence converges.
+\end{theorem}
+\begin{note}[Proof idea]
+Relies on the completeness of $\R$ (every bounded set of reals has a supremum): if $(a_n)$ is increasing and bounded above, $\ell=\sup\{a_n\}$ exists, and one shows $a_n\to\ell$ directly from the definition of supremum. This is genuinely a deeper real-analysis fact (completeness of $\R$), not provable from the algebraic properties of $\R$ alone -- it fails, for instance, over $\Q$.
+\end{note}
+
+\bigskip
+\begin{lemma}[Cauchy Mean Value Theorem]
+For $f,g$ continuous on $[a,x]$, differentiable on $(a,x)$, with $g'\neq0$ throughout $(a,x)$: there exists $\xi\in(a,x)$ with
+\[
+\frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(\xi)}{g'(\xi)}.
+\]
+This generalizes the ordinary Mean Value Theorem (the case $g(t)=t$).
+\end{lemma}
+
+\begin{theorem}[L'Hôpital's rule, $0/0$ form]
+Let $f,g$ be differentiable on $(a,b)$ with $g'(x)\neq0$ throughout, and suppose $\lim_{x\to a^+}f(x)=\lim_{x\to a^+}g(x)=0$. If $\lim_{x\to a^+}\dfrac{f'(x)}{g'(x)}=L$ exists (finite or $\pm\infty$), then
+\[
+\lim_{x\to a^+}\frac{f(x)}{g(x)} = L.
+\]
+\end{theorem}
+\begin{proof}
+Extend $f,g$ to $[a,b)$ by setting $f(a)=g(a)=0$ (continuous, by the hypothesis on the one-sided limits). Fix $x\in(a,b)$. By the Cauchy Mean Value Theorem (Lemma above) applied to $f,g$ on $[a,x]$, there exists $\xi\in(a,x)$ with
+\[
+\frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(\xi)}{g'(\xi)}, \qquad \text{i.e.}\qquad \frac{f(x)}{g(x)} = \frac{f'(\xi)}{g'(\xi)}
+\]
+(using $f(a)=g(a)=0$). As $x\to a^+$, also $\xi\to a^+$ (since $a<\xi<x$), so
+\[
+\lim_{x\to a^+}\frac{f(x)}{g(x)} = \lim_{\xi\to a^+}\frac{f'(\xi)}{g'(\xi)} = L.
+\]
+\end{proof}
+
+\begin{example}[Applying L'Hôpital's rule to a sequence limit -- via the corresponding function limit]
+For $a_n = \dfrac{\ln n}{n}$: consider $f(x)=\ln x,\ g(x)=x$ on $[1,\infty)$, both $\to\infty$ as $x\to\infty$ ($\infty/\infty$ form, same proof idea applies with $x\to\infty$ in place of $x\to a^+$). Then
+\[
+\lim_{x\to\infty}\frac{f'(x)}{g'(x)} = \lim_{x\to\infty}\frac{1/x}{1} = 0,
+\]
+so $\lim_{x\to\infty}\dfrac{\ln x}{x}=0$, and since $a_n$ is exactly this function evaluated at integer $x=n$, $\lim_{n\to\infty}a_n=0$ too.
+\end{example}
+
+\begin{note}[Why sequences need this detour through functions]
+L'Hôpital's rule is stated for functions of a real variable $x$ (it needs derivatives, which sequences -- defined only on integers -- don't have). To use it on a sequence limit $\lim_{n\to\infty}a_n$, first find a differentiable function $f$ agreeing with $a_n$ at integer points, compute $\lim_{x\to\infty}f(x)$ by L'Hôpital, then conclude the sequence has the same limit.
+\end{note}
+
+\bigskip
+\begin{note}[The seven indeterminate forms L'Hôpital's rule (and its variants) address]
+\[
+\frac{0}{0}, \quad \frac{\infty}{\infty}, \quad 0\cdot\infty, \quad \infty-\infty, \quad 0^0, \quad \infty^0, \quad 1^\infty.
+\]
+The last three ($0^0,\ \infty^0,\ 1^\infty$) reduce to the $0/0$ or $\infty/\infty$ form by taking $\ln$ of the expression first, applying L'Hôpital to the resulting log-limit, then exponentiating the result.
+\end{note}
+
+\begin{theorem}[L'Hôpital's rule, $\infty/\infty$ form]
+Let $f,g$ be differentiable on $(a,b)$ with $g'(x)\neq0$ throughout, and suppose $\lim_{x\to a^+}f(x)=\lim_{x\to a^+}g(x)=\infty$ (or $-\infty$). If $\lim_{x\to a^+}\dfrac{f'(x)}{g'(x)}=L$ exists, then $\lim_{x\to a^+}\dfrac{f(x)}{g(x)}=L$.
+\end{theorem}
+\begin{note}
+Same conclusion as the $0/0$ case, but the proof is genuinely different (the extend-by-continuity trick used for $0/0$ doesn't apply when $f,g\to\infty$) -- it instead uses the Cauchy Mean Value Theorem on a shrinking interval near $a$ together with a direct $\varepsilon$-argument, rather than a single application at a fixed point.
+\end{note}
+
+\begin{note}[Variants of the limiting process]
+The rule (both forms) holds unchanged when $x\to a^+$ is replaced by $x\to a^-$, $x\to a$ (two-sided), $x\to\infty$, or $x\to-\infty$ -- only the specific mechanics of the proof (e.g.\ the substitution $x=1/t,\ t\to0^+$ to reduce $x\to\infty$ to $t\to0^+$) differ.
+\end{note}
+
+\begin{example}[$0\cdot\infty$ reduced to $0/0$]
+$\lim_{x\to0^+} x\ln x$: rewrite as $\lim_{x\to0^+} \dfrac{\ln x}{1/x}$ ($\infty/\infty$ form). L'Hôpital:
+\[
+\lim_{x\to0^+} \frac{1/x}{-1/x^2} = \lim_{x\to0^+}(-x) = 0.
+\]
+\end{example}
+
+\begin{example}[$1^\infty$ reduced via logarithm]
+$\lim_{x\to\infty}\left(1+\dfrac1x\right)^x$: let $y=\left(1+\dfrac1x\right)^x$, so $\ln y = x\ln\left(1+\dfrac1x\right)$, a $\infty\cdot0$ form, rewritten as
+\[
+\lim_{x\to\infty} \frac{\ln(1+1/x)}{1/x} \quad (0/0 \text{ form}).
+\]
+L'Hôpital (differentiating with respect to $x$, using the chain rule on $\ln(1+1/x)$):
+\[
+\lim_{x\to\infty} \frac{\frac{-1/x^2}{1+1/x}}{-1/x^2} = \lim_{x\to\infty}\frac{1}{1+1/x} = 1.
+\]
+So $\ln y\to1$, hence $y\to e^1=e$.
+\end{example}
+
+\begin{note}[A caution, worth stating plainly]
+L'Hôpital's rule is a \emph{sufficient}, not necessary, condition: $\lim f/g$ can exist even when $\lim f'/g'$ does not (e.g.\ oscillating derivatives). The rule is also only valid when the hypotheses (differentiability, $g'\neq0$, and the indeterminate form itself) genuinely hold -- applying it to a non-indeterminate ratio, or repeatedly past the point where the form is still $0/0$ or $\infty/\infty$, gives wrong answers.
+\end{note}
+
+\bigskip
+\begin{definition}[Subsequence]
+Given $(a_n)_{n=1}^\infty$ and a strictly increasing sequence of indices $n_1<n_2<n_3<\cdots$, the sequence $(a_{n_k})_{k=1}^\infty$ is a \emph{subsequence} of $(a_n)$.
+\end{definition}
+
+\begin{theorem}[Bolzano-Weierstrass theorem]
+Every bounded sequence in $\R$ has a convergent subsequence.
+\end{theorem}
+\begin{proof}[Proof sketch, bisection]
+Let $(a_n)\subseteq[A,B]$. Bisect $[A,B]$ into two closed halves; at least one half contains $a_n$ for infinitely many $n$ -- call it $I_1$, and pick any $a_{n_1}\in I_1$. Bisect $I_1$ similarly, get $I_2\subset I_1$ (half the length) still containing infinitely many terms, pick $a_{n_2}\in I_2$ with $n_2>n_1$. Repeating gives nested intervals $I_1\supset I_2\supset\cdots$ with lengths $\to0$, and a subsequence $a_{n_k}\in I_k$. By the Nested Interval Property (a consequence of completeness of $\R$), $\bigcap_k I_k$ is a single point $\ell$, and $a_{n_k}\to\ell$ since $|a_{n_k}-\ell|\le\mathrm{length}(I_k)\to0$.
+\end{proof}
+
+\bigskip
+\begin{definition}[Limit superior, limit inferior, Rudin]
+For a bounded sequence $(a_n)$:
+\[
+\limsup_{n\to\infty} a_n = \lim_{N\to\infty}\Big(\sup_{n\ge N} a_n\Big), \qquad \liminf_{n\to\infty} a_n = \lim_{N\to\infty}\Big(\inf_{n\ge N} a_n\Big).
+\]
+\end{definition}
+
+\begin{note}[Always defined, unlike the limit itself]
+$\sup_{n\ge N}a_n$ is nonincreasing in $N$ (bounded below, since $(a_n)$ is bounded), so it converges -- meaning $\limsup$ always exists for a bounded sequence, even when $\lim a_n$ does not. Similarly for $\liminf$.
+\end{note}
+
+\begin{theorem}
+$(a_n)$ converges to $\ell$ $\iff$ $\limsup a_n = \liminf a_n = \ell$.
+\end{theorem}
+
+\begin{example}
+$a_n=(-1)^n$: $\limsup a_n=1$, $\liminf a_n=-1$ -- unequal, so $(a_n)$ diverges, but both quantities are still well-defined.
+\end{example}
+
+\bigskip
+\begin{definition}[Cauchy sequence]
+$(a_n)$ is \emph{Cauchy} iff
+\[
+\forall\varepsilon>0\ \exists N\in\N\ \forall m,n\ge N\quad |a_n-a_m|<\varepsilon.
+\]
+\end{definition}
+
+\begin{theorem}[Cauchy criterion, Rudin]
+$(a_n)$ converges (in $\R$) $\iff$ $(a_n)$ is Cauchy.
+\end{theorem}
+\begin{proof}[Proof sketch]
+($\Rightarrow$) If $a_n\to\ell$: given $\varepsilon>0$, take $N$ with $|a_n-\ell|<\varepsilon/2$ for $n\ge N$; then for $m,n\ge N$, $|a_n-a_m|\le|a_n-\ell|+|\ell-a_m|<\varepsilon$.
+
+($\Leftarrow$) If $(a_n)$ is Cauchy: it is bounded (same argument as convergent $\Rightarrow$ bounded), so by Bolzano-Weierstrass it has a convergent subsequence $a_{n_k}\to\ell$. The full Cauchy condition (terms eventually all close to \emph{each other}) then forces the whole sequence, not just the subsequence, to converge to that same $\ell$.
+\end{proof}
+
+\begin{note}[Why this matters -- proving convergence without knowing the limit]
+The Cauchy criterion lets you prove $(a_n)$ converges \emph{without ever identifying $\ell$} -- purely from how close later terms get to each other. This is the standard tool when no closed form for the limit is available, and it is what makes $\R$ \emph{complete} (every Cauchy sequence converges) -- a property $\Q$ notably lacks (e.g.\ decimal truncations of $\sqrt2$ are Cauchy in $\Q$ but converge to $\sqrt2\notin\Q$).
+\end{note}
+
+\bigskip
+\begin{theorem}[L'Hôpital's rule, Rudin's stronger version -- allows $L=\pm\infty$]
+Let $f,g$ be real and differentiable on $(a,b)$, $g'(x)\neq0$ for all $x\in(a,b)$, and suppose
+\[
+\frac{f'(x)}{g'(x)} \to A \quad \text{as } x\to a,
+\]
+where $A$ may be $+\infty,-\infty$, or a real number. If either $f(x),g(x)\to0$ as $x\to a$, \emph{or} $g(x)\to+\infty$ as $x\to a$, then
+\[
+\frac{f(x)}{g(x)} \to A \quad \text{as } x\to a.
+\]
+\end{theorem}
+\begin{note}[What's genuinely stronger here]
+Two upgrades beyond the $0/0$ version proved earlier: (i) $A$ is allowed to be infinite, not just a finite real number; (ii) the hypothesis on $g$ is relaxed to \emph{just} $g\to\infty$ -- $f$ need not tend to $0$ or $\infty$ at all. The proof no longer reduces cleanly to a single Cauchy Mean Value Theorem application (which assumed $f(a)=g(a)=0$ exactly) -- Rudin's argument instead works directly with the defining $\varepsilon$-$\delta$ statement of $f'/g'\to A$, choosing points $x_1<x_2$ near $a$ carefully and bounding $f(x)/g(x)$ between values built from $f'/g'$ at nearby points, without ever assuming $f,g$ vanish at $a$.
+\end{note}
+
+\subsection{Big-O notation}
+% CN 6.9 / Rosen 3.2, 3.3
+
+\begin{definition}[Big-O]
+For $(a_n)$ nonnegative and $f:\N\to\R$:
+\[
+a_n = O(f(n)) \iff \exists c,N\ \forall n\ge N\quad a_n \le c\cdot f(n).
+\]
+\end{definition}
+
+\begin{example}
+For $t_n = 100n+10n^2+2n+\log n$: for $n\ge10$, each of $100n,10n^2,\log n \le 2^n$, so
+\[
+t_n \le 4\cdot2^n \quad (n\ge10), \qquad \text{hence } t_n = O(2^n).
+\]
+\end{example}
+
+\begin{note}[Big-O swallows constant factors]
+$t_n=O(2^n)$, $O(4\cdot2^n)$, $O(0.001\cdot2^n)$ are all correct -- since $2^n=O(0.001\cdot2^n)$ too (take $c=1000$). So constants inside the $O(\cdot)$ are pointless; state $O(2^n)$, not $O(4\cdot2^n)$.
+\end{note}
+
+\begin{note}[Base matters, unlike constant factors]
+$t_n=O(3^n)$ is also true (looser, since $2^n\le3^n$), but $t_n=O(1.9^n)$ is \emph{false} -- no constant $c$ makes $c\cdot1.9^n$ eventually dominate $2^n$. Exponential \emph{bases} are not interchangeable, unlike constant multipliers.
+\end{note}
+
+\begin{example}[Dominant-term technique]
+\[
+\tfrac18n^3+\tfrac14n^2+\tfrac12n+1 = O(n^3), \qquad \log n+\log\log n = O(\log n), \qquad (\sqrt n+3n+9^{1/n})(17+12\log n) = O(n\log n).
+\]
+\end{example}
+
+\bigskip
+\begin{definition}[Big-Omega, Big-Theta, Rosen \S3.2]
+\[
+f(n)=\Omega(g(n)) \iff \exists c,N\ \forall n\ge N\ f(n)\ge cg(n) \quad\text{(lower bound; } g=O(f)\text{)},
+\]
+\[
+f(n)=\Theta(g(n)) \iff f(n)=O(g(n)) \text{ and } f(n)=\Omega(g(n)) \quad\text{(matching bounds both ways)}.
+\]
+\end{definition}
+
+\begin{note}
+$O$ alone (CN's focus) only gives an upper bound -- e.g.\ $n=O(n^2)$ is true but loose. $\Theta$ pins growth down exactly (up to constants) -- $t_n=\Theta(2^n)$, but \emph{not} $t_n=\Theta(3^n)$, since $3^n$ is not $O(t_n)$.
+\end{note}
+
+\bigskip
+\begin{definition}[Time complexity of an algorithm, Rosen \S3.3]
+The \emph{worst-case time complexity} of an algorithm is $f(n)=O(g(n))$ if the number of operations it performs on \emph{any} input of size $n$ is $O(g(n))$.
+\end{definition}
+
+\begin{example}[Linear search, Rosen -- harder, complete algorithm analysis]
+Search a list of $n$ items for a target, comparing one at a time until found or the list ends.
+\begin{itemize}
+    \item \emph{Worst case}: target absent (or last), $n$ comparisons: $\Theta(n)$.
+    \item \emph{Best case}: target first, $1$ comparison: $\Theta(1)$.
+    \item \emph{Average case} (target present, each position equally likely): $\frac{1+2+\cdots+n}{n}=\frac{n+1}{2}=\Theta(n)$ (\S6.11's sum formula).
+\end{itemize}
+\end{example}
+
+\begin{example}[Binary search, Rosen]
+On a sorted list of $n$ items, each comparison halves the remaining search space: $T(n)=T(n/2)+O(1)$, giving $T(n)=O(\log n)$ (\S6.6/\S8.3's divide-and-conquer machinery, master theorem case $a=1,b=2,d=0$: $a=b^d$).
+\end{example}
+
+\begin{note}[Why worst-case dominates in practice]
+CN's emphasis on upper bounds (via $O$ rather than $\Theta$ or average-case analysis) matches how complexity is usually reported: a guaranteed ceiling on resource use is often more actionable for budgeting than an exact or average figure, especially when the exact behavior is too complex to pin down precisely (CN's own motivation for introducing $O$ at all).
+\end{note}
+
+\bigskip
+\begin{definition}[Polynomial-time algorithm, tractability]
+An algorithm is \emph{polynomial-time} if its worst-case complexity is $O(n^k)$ for some fixed $k$ -- called \emph{tractable}. Complexity like $O(2^n)$ or $O(n!)$ is \emph{intractable}: even modest $n$ makes it infeasible to run.
+\end{definition}
+
+\begin{example}[Why the distinction matters -- concrete numbers]
+At $10^9$ operations/second: $n=100$, $O(n^3)$ ($10^6$ ops) takes a fraction of a second; $O(2^n)$ ($2^{100}\approx10^{30}$ ops) takes vastly longer than the age of the universe. The gap between polynomial and exponential dwarfs any constant-factor speedup from faster hardware.
+\end{example}
+
+\bigskip
+\begin{definition}[Class P, class NP, Rosen -- harder, beyond CN]
+$P$ = decision problems solvable by a polynomial-time algorithm. $NP$ = decision problems whose "yes" answers have a polynomial-time \emph{verifiable} certificate (a solution can be checked quickly, even if it might be hard to \emph{find}).
+\end{definition}
+
+\begin{note}
+$P\subseteq NP$: a polynomial-time solver is trivially also a polynomial-time verifier (just re-solve and compare). Whether $P=NP$ -- whether every efficiently-\emph{verifiable} problem is also efficiently \emph{solvable} -- is the most famous open problem in computer science (a Clay Millennium Prize problem), unresolved despite decades of effort.
+\end{note}
+
+\begin{note}[Connection to earlier material]
+The $n$-queens / Sudoku satisfiability encodings (\S4's Satisfiability section) are instances of $NP$: a proposed solution (a truth assignment) is checked in polynomial time by just evaluating the CNF formula, but no polynomial-time algorithm for \emph{finding} a satisfying assignment is known for general CNF -- SAT is, in fact, \emph{NP-complete}: every problem in $NP$ can be reduced to it in polynomial time, so a polynomial-time SAT solver would imply $P=NP$.
+\end{note}
+
+\subsection{Sums and summation}
+% CN 6.10 / Rosen 2.4
+
+\begin{note}[Notation]
+\[
+\sum_{k=1}^n a_k = a_1+a_2+\cdots+a_n.
+\]
+\end{note}
+
+\begin{example}[Double sum, swapping order -- Rosen, harder]
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{i} j = \sum_{j=1}^{n}\sum_{i=j}^{n} j = \sum_{j=1}^n j(n-j+1).
+\]
+The first equality swaps summation order (the region $1\le j\le i\le n$ described either "by rows" or "by columns"); the second collapses the inner sum since $j$ is constant over $i=j,\dots,n$, contributing $n-j+1$ copies.
+\end{example}
+
+\begin{example}[Telescoping sum -- harder]
+\[
+\sum_{k=1}^n \frac{1}{k(k+1)} = \sum_{k=1}^n\left(\frac1k-\frac1{k+1}\right) = 1-\frac1{n+1},
+\]
+since every interior term cancels: $\left(1-\tfrac12\right)+\left(\tfrac12-\tfrac13\right)+\cdots+\left(\tfrac1n-\tfrac1{n+1}\right)$, leaving only the first and last pieces.
+\end{example}
+
+\bigskip
+\begin{theorem}[Abel summation (summation by parts) -- beyond Rosen, genuinely advanced]
+For sequences $(a_k),(b_k)$, let $A_n=\sum_{k=1}^n a_k$. Then
+\[
+\sum_{k=1}^n a_k b_k = A_n b_n - \sum_{k=1}^{n-1} A_k(b_{k+1}-b_k).
+\]
+\end{theorem}
+\begin{proof}
+Write $a_k = A_k-A_{k-1}$ (with $A_0=0$). Then
+\[
+\sum_{k=1}^n a_kb_k = \sum_{k=1}^n(A_k-A_{k-1})b_k = \sum_{k=1}^n A_kb_k - \sum_{k=1}^n A_{k-1}b_k.
+\]
+Re-index the second sum ($j=k-1$): $\sum_{j=0}^{n-1}A_jb_{j+1} = \sum_{j=1}^{n-1}A_jb_{j+1}$ (since $A_0=0$). So
+\[
+\sum_{k=1}^n a_kb_k = A_nb_n + \sum_{k=1}^{n-1}A_k(b_k-b_{k+1}) = A_nb_n - \sum_{k=1}^{n-1}A_k(b_{k+1}-b_k).
+\]
+\end{proof}
+
+\begin{note}[The discrete analogue of integration by parts]
+$A_n$ plays the role of an antiderivative of $a_k$; $b_{k+1}-b_k$ is a discrete derivative -- $\int u\,dv = uv-\int v\,du$ with sums replacing integrals. This underlies proving convergence of series like $\sum\frac{(-1)^k}{k}$ that don't converge absolutely.
+\end{note}
+
+\subsection{Finite series}
+% CN 6.11
+
+\begin{note}
+A \emph{finite series} is the sum of a finite sequence's terms; a \emph{partial sum} $S_n=\sum_{k=1}^n a_k$ of an infinite sequence.
+\end{note}
+
+\subsection{Finite arithmetic series}
+% CN 6.12
+
+\begin{theorem}
+\[
+\sum_{k=1}^n (a+(k-1)d) = n\cdot\frac{2a+(n-1)d}{2}.
+\]
+\end{theorem}
+
+\begin{example}[Deriving $\sum k^2$ by telescoping, before proving it -- zhangzhusheng-style construction]
+Start from the identity
+\[
+(k+1)^3 - k^3 = 3k^2+3k+1.
+\]
+Sum both sides for $k=1,\dots,n$. The left side telescopes:
+\[
+\sum_{k=1}^n \big[(k+1)^3-k^3\big] = (n+1)^3 - 1^3,
+\]
+since every intermediate term cancels: $(2^3-1^3)+(3^3-2^3)+\cdots+((n{+}1)^3-n^3)$.
+
+The right side sums termwise:
+\[
+\sum_{k=1}^n(3k^2+3k+1) = 3\sum_{k=1}^n k^2 + 3\sum_{k=1}^n k + n = 3\sum_{k=1}^n k^2 + 3\cdot\frac{n(n+1)}{2} + n.
+\]
+
+Equating and solving for $\sum k^2$:
+\[
+(n+1)^3-1 = 3\sum_{k=1}^n k^2 + \frac{3n(n+1)}{2}+n \quad\Longrightarrow\quad \sum_{k=1}^n k^2 = \frac{(n+1)^3-1-n-\frac{3n(n+1)}{2}}{3}.
+\]
+
+Simplifying the numerator (common denominator $2$, expand $(n+1)^3=n^3+3n^2+3n+1$):
+\[
+(n+1)^3-1-n-\tfrac{3n(n+1)}{2} = n^3+3n^2+3n-n-\tfrac{3n^2+3n}{2} = \tfrac{2n^3+6n^2+4n-3n^2-3n}{2} = \tfrac{2n^3+3n^2+n}{2} = \tfrac{n(n+1)(2n+1)}{2}.
+\]
+
+Dividing by $3$:
+\[
+\sum_{k=1}^n k^2 = \frac{n(n+1)(2n+1)}{6}.
+\]
+\end{example}
+
+\begin{note}[Why this method matters]
+Unlike the induction proof below (which needs the formula \emph{guessed} first), this telescoping method \emph{derives} the formula from scratch -- the same technique, using $(k+1)^4-k^4$, derives $\sum k^3$, and in general $(k+1)^{m+1}-k^{m+1}$ derives $\sum k^m$ for any $m$, always reducing to lower-power sums already known.
+\end{note}
+
+\subsection{Finite geometric series}
+% CN 6.13
+
+\begin{theorem}
+For $r\neq1$:
+\[
+\sum_{k=0}^n ar^k = a\cdot\frac{r^{n+1}-1}{r-1}.
+\]
+\end{theorem}
+
+\bigskip
+\begin{example}[Sum $\sum k\cdot2^k$ -- via differentiating a generating function, harder]
+Start from $\sum_{k=0}^n x^k = \dfrac{x^{n+1}-1}{x-1}$. Differentiate both sides with respect to $x$:
+\[
+\sum_{k=0}^n kx^{k-1} = \frac{(n+1)x^n(x-1)-(x^{n+1}-1)}{(x-1)^2}.
+\]
+Multiply by $x$ and substitute $x=2$:
+\[
+\sum_{k=0}^n k2^k = 2\big[(n+1)2^n\cdot1-(2^{n+1}-1)\big] = (n-1)2^{n+1}+2.
+\]
+\end{example}
+
+\subsection{Infinite geometric series}
+% CN 6.14
+
+\begin{theorem}[Convergence condition, via \S6.8's rigorous limit machinery]
+\[
+\sum_{k=0}^\infty ar^k = \frac{a}{1-r} \iff |r|<1.
+\]
+\end{theorem}
+\begin{proof}
+The partial sums $S_n = a\dfrac{1-r^{n+1}}{1-r}$. By \S6.8's example ($r^n\to0$ for $|r|<1$, established rigorously via $\varepsilon$-$N$), $S_n \to \dfrac{a}{1-r}$. For $|r|\ge1$, $r^n$ does not $\to0$ (it diverges, or stays $\ge1$ in absolute value), so $S_n$ has no finite limit.
+\end{proof}
+
+\subsection{Harmonic numbers}
+% CN 6.15
+
+\begin{definition}[Harmonic numbers]
+\[
+H_n = 1+\frac12+\frac13+\cdots+\frac1n.
+\]
+\end{definition}
+
+\begin{theorem}[Divergence of the harmonic series]
+$H_n\to\infty$ as $n\to\infty$, despite $1/n\to0$.
+\end{theorem}
+\begin{proof}[Classical proof, grouping by powers of $2$]
+Group terms:
+\[
+H_{2^k} = 1 + \frac12 + \left(\frac13+\frac14\right) + \left(\frac15+\cdots+\frac18\right) + \cdots + \left(\frac{1}{2^{k-1}+1}+\cdots+\frac{1}{2^k}\right).
+\]
+The block from $\frac{1}{2^{j-1}+1}$ to $\frac{1}{2^j}$ has $2^{j-1}$ terms, each $\ge \dfrac{1}{2^j}$, so the block sums to $\ge 2^{j-1}\cdot\dfrac{1}{2^j}=\dfrac12$. There are $k$ such blocks (for $j=1,\dots,k$), so
+\[
+H_{2^k} \ge 1+\frac{k}{2}.
+\]
+Since $1+k/2\to\infty$, $H_{2^k}\to\infty$, and $H_n$ is increasing, so $H_n\to\infty$.
+\end{proof}
+
+\begin{note}
+This is exactly the same bound proved earlier by induction (\S3.11's harmonic-numbers theorem, $H_{2^n}\ge1+n/2$) -- here derived directly, without induction, by explicit grouping.
+\end{note}
+
+\begin{note}[Contrast: convergent vs.\ divergent zero-limit sequences]
+$(1/n^2)$ and $(1/2^n)$ both $\to0$ with \emph{finite} sum (the latter by \S6.14's geometric series). $(1/n)$ is the borderline case: it decays just slowly enough to have infinite sum -- among decaying sequences, $1/n$ marks roughly where convergence of the sum starts to fail (the $p$-series $\sum1/n^p$ converges for $p>1$, diverges for $p\le1$).
+\end{note}
+
+\begin{note}[Euler's constant]
+\[
+\lim_{n\to\infty}(H_n-\ln n) = \gamma = 0.5772\dots,
+\]
+so $H_n \approx \ln n+\gamma$ for large $n$. Whether $\gamma$ is rational is unknown -- an open problem.
+\end{note}
+
+
+% ============================================================
 % NOTATION SUMMARY
 % ============================================================
 \newpage
@@ -3858,6 +5017,23 @@ $P(x)$ & predicate applied to a term \\
 $\exists x,\ \exists x\in A$ & existential quantifier, restricted \\
 $\forall x,\ \forall x\in A$ & universal quantifier, restricted \\
 $\dom(f)$ & (as in Ch.\,2 -- domain of a variable/predicate argument) \\
+\end{longtable}
+
+\subsection*{Sequences and series (Ch.\,6)}
+\begin{longtable}{ll}
+$(a_n),\ f_n,\ (n^2:n\in\N)$ & sequence, $n$-th term, formula notation \\
+$a,d$ & arithmetic sequence: first term, common difference \\
+$a,r$ & geometric sequence: first term, common ratio \\
+$\varphi,\psi$ & golden ratio and its conjugate (Fibonacci/Binet) \\
+$O,\ \Omega,\ \Theta$ & big-O, big-Omega, big-Theta \\
+$P,\ NP$ & complexity classes \\
+$\sum,\ \prod$ & summation, product notation \\
+$A_n$ & partial sum, Abel summation \\
+$\lim_{n\to\infty}a_n,\ \varepsilon,N$ & sequence limit, $\varepsilon$-$N$ definition \\
+$\limsup,\ \liminf$ & limit superior, limit inferior \\
+$H_n$ & harmonic number \\
+$\gamma$ & Euler's constant \\
+$G(x)$ & generating function \\
 \end{longtable}
 
 \subsection*{Proof and general notation (Ch.\,3, throughout)}
