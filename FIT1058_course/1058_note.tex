@@ -4543,86 +4543,6 @@ Relies on the completeness of $\R$ (every bounded set of reals has a supremum): 
 \end{note}
 
 \bigskip
-\begin{lemma}[Cauchy Mean Value Theorem]
-For $f,g$ continuous on $[a,x]$, differentiable on $(a,x)$, with $g'\neq0$ throughout $(a,x)$: there exists $\xi\in(a,x)$ with
-\[
-\frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(\xi)}{g'(\xi)}.
-\]
-This generalizes the ordinary Mean Value Theorem (the case $g(t)=t$).
-\end{lemma}
-
-\begin{theorem}[L'Hôpital's rule, $0/0$ form]
-Let $f,g$ be differentiable on $(a,b)$ with $g'(x)\neq0$ throughout, and suppose $\lim_{x\to a^+}f(x)=\lim_{x\to a^+}g(x)=0$. If $\lim_{x\to a^+}\dfrac{f'(x)}{g'(x)}=L$ exists (finite or $\pm\infty$), then
-\[
-\lim_{x\to a^+}\frac{f(x)}{g(x)} = L.
-\]
-\end{theorem}
-\begin{proof}
-Extend $f,g$ to $[a,b)$ by setting $f(a)=g(a)=0$ (continuous, by the hypothesis on the one-sided limits). Fix $x\in(a,b)$. By the Cauchy Mean Value Theorem (Lemma above) applied to $f,g$ on $[a,x]$, there exists $\xi\in(a,x)$ with
-\[
-\frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(\xi)}{g'(\xi)}, \qquad \text{i.e.}\qquad \frac{f(x)}{g(x)} = \frac{f'(\xi)}{g'(\xi)}
-\]
-(using $f(a)=g(a)=0$). As $x\to a^+$, also $\xi\to a^+$ (since $a<\xi<x$), so
-\[
-\lim_{x\to a^+}\frac{f(x)}{g(x)} = \lim_{\xi\to a^+}\frac{f'(\xi)}{g'(\xi)} = L.
-\]
-\end{proof}
-
-\begin{example}[Applying L'Hôpital's rule to a sequence limit -- via the corresponding function limit]
-For $a_n = \dfrac{\ln n}{n}$: consider $f(x)=\ln x,\ g(x)=x$ on $[1,\infty)$, both $\to\infty$ as $x\to\infty$ ($\infty/\infty$ form, same proof idea applies with $x\to\infty$ in place of $x\to a^+$). Then
-\[
-\lim_{x\to\infty}\frac{f'(x)}{g'(x)} = \lim_{x\to\infty}\frac{1/x}{1} = 0,
-\]
-so $\lim_{x\to\infty}\dfrac{\ln x}{x}=0$, and since $a_n$ is exactly this function evaluated at integer $x=n$, $\lim_{n\to\infty}a_n=0$ too.
-\end{example}
-
-\begin{note}[Why sequences need this detour through functions]
-L'Hôpital's rule is stated for functions of a real variable $x$ (it needs derivatives, which sequences -- defined only on integers -- don't have). To use it on a sequence limit $\lim_{n\to\infty}a_n$, first find a differentiable function $f$ agreeing with $a_n$ at integer points, compute $\lim_{x\to\infty}f(x)$ by L'Hôpital, then conclude the sequence has the same limit.
-\end{note}
-
-\bigskip
-\begin{note}[The seven indeterminate forms L'Hôpital's rule (and its variants) address]
-\[
-\frac{0}{0}, \quad \frac{\infty}{\infty}, \quad 0\cdot\infty, \quad \infty-\infty, \quad 0^0, \quad \infty^0, \quad 1^\infty.
-\]
-The last three ($0^0,\ \infty^0,\ 1^\infty$) reduce to the $0/0$ or $\infty/\infty$ form by taking $\ln$ of the expression first, applying L'Hôpital to the resulting log-limit, then exponentiating the result.
-\end{note}
-
-\begin{theorem}[L'Hôpital's rule, $\infty/\infty$ form]
-Let $f,g$ be differentiable on $(a,b)$ with $g'(x)\neq0$ throughout, and suppose $\lim_{x\to a^+}f(x)=\lim_{x\to a^+}g(x)=\infty$ (or $-\infty$). If $\lim_{x\to a^+}\dfrac{f'(x)}{g'(x)}=L$ exists, then $\lim_{x\to a^+}\dfrac{f(x)}{g(x)}=L$.
-\end{theorem}
-\begin{note}
-Same conclusion as the $0/0$ case, but the proof is genuinely different (the extend-by-continuity trick used for $0/0$ doesn't apply when $f,g\to\infty$) -- it instead uses the Cauchy Mean Value Theorem on a shrinking interval near $a$ together with a direct $\varepsilon$-argument, rather than a single application at a fixed point.
-\end{note}
-
-\begin{note}[Variants of the limiting process]
-The rule (both forms) holds unchanged when $x\to a^+$ is replaced by $x\to a^-$, $x\to a$ (two-sided), $x\to\infty$, or $x\to-\infty$ -- only the specific mechanics of the proof (e.g.\ the substitution $x=1/t,\ t\to0^+$ to reduce $x\to\infty$ to $t\to0^+$) differ.
-\end{note}
-
-\begin{example}[$0\cdot\infty$ reduced to $0/0$]
-$\lim_{x\to0^+} x\ln x$: rewrite as $\lim_{x\to0^+} \dfrac{\ln x}{1/x}$ ($\infty/\infty$ form). L'Hôpital:
-\[
-\lim_{x\to0^+} \frac{1/x}{-1/x^2} = \lim_{x\to0^+}(-x) = 0.
-\]
-\end{example}
-
-\begin{example}[$1^\infty$ reduced via logarithm]
-$\lim_{x\to\infty}\left(1+\dfrac1x\right)^x$: let $y=\left(1+\dfrac1x\right)^x$, so $\ln y = x\ln\left(1+\dfrac1x\right)$, a $\infty\cdot0$ form, rewritten as
-\[
-\lim_{x\to\infty} \frac{\ln(1+1/x)}{1/x} \quad (0/0 \text{ form}).
-\]
-L'Hôpital (differentiating with respect to $x$, using the chain rule on $\ln(1+1/x)$):
-\[
-\lim_{x\to\infty} \frac{\frac{-1/x^2}{1+1/x}}{-1/x^2} = \lim_{x\to\infty}\frac{1}{1+1/x} = 1.
-\]
-So $\ln y\to1$, hence $y\to e^1=e$.
-\end{example}
-
-\begin{note}[A caution, worth stating plainly]
-L'Hôpital's rule is a \emph{sufficient}, not necessary, condition: $\lim f/g$ can exist even when $\lim f'/g'$ does not (e.g.\ oscillating derivatives). The rule is also only valid when the hypotheses (differentiability, $g'\neq0$, and the indeterminate form itself) genuinely hold -- applying it to a non-indeterminate ratio, or repeatedly past the point where the form is still $0/0$ or $\infty/\infty$, gives wrong answers.
-\end{note}
-
-\bigskip
 \begin{definition}[Subsequence]
 Given $(a_n)_{n=1}^\infty$ and a strictly increasing sequence of indices $n_1<n_2<n_3<\cdots$, the sequence $(a_{n_k})_{k=1}^\infty$ is a \emph{subsequence} of $(a_n)$.
 \end{definition}
@@ -4635,60 +4555,12 @@ Let $(a_n)\subseteq[A,B]$. Bisect $[A,B]$ into two closed halves; at least one h
 \end{proof}
 
 \bigskip
-\begin{definition}[Limit superior, limit inferior, Rudin]
-For a bounded sequence $(a_n)$:
-\[
-\limsup_{n\to\infty} a_n = \lim_{N\to\infty}\Big(\sup_{n\ge N} a_n\Big), \qquad \liminf_{n\to\infty} a_n = \lim_{N\to\infty}\Big(\inf_{n\ge N} a_n\Big).
-\]
-\end{definition}
-
-\begin{note}[Always defined, unlike the limit itself]
-$\sup_{n\ge N}a_n$ is nonincreasing in $N$ (bounded below, since $(a_n)$ is bounded), so it converges -- meaning $\limsup$ always exists for a bounded sequence, even when $\lim a_n$ does not. Similarly for $\liminf$.
-\end{note}
-
-\begin{theorem}
-$(a_n)$ converges to $\ell$ $\iff$ $\limsup a_n = \liminf a_n = \ell$.
-\end{theorem}
-
-\begin{example}
-$a_n=(-1)^n$: $\limsup a_n=1$, $\liminf a_n=-1$ -- unequal, so $(a_n)$ diverges, but both quantities are still well-defined.
-\end{example}
-
-\bigskip
 \begin{definition}[Cauchy sequence]
 $(a_n)$ is \emph{Cauchy} iff
 \[
 \forall\varepsilon>0\ \exists N\in\N\ \forall m,n\ge N\quad |a_n-a_m|<\varepsilon.
 \]
 \end{definition}
-
-\begin{theorem}[Cauchy criterion, Rudin]
-$(a_n)$ converges (in $\R$) $\iff$ $(a_n)$ is Cauchy.
-\end{theorem}
-\begin{proof}[Proof sketch]
-($\Rightarrow$) If $a_n\to\ell$: given $\varepsilon>0$, take $N$ with $|a_n-\ell|<\varepsilon/2$ for $n\ge N$; then for $m,n\ge N$, $|a_n-a_m|\le|a_n-\ell|+|\ell-a_m|<\varepsilon$.
-
-($\Leftarrow$) If $(a_n)$ is Cauchy: it is bounded (same argument as convergent $\Rightarrow$ bounded), so by Bolzano-Weierstrass it has a convergent subsequence $a_{n_k}\to\ell$. The full Cauchy condition (terms eventually all close to \emph{each other}) then forces the whole sequence, not just the subsequence, to converge to that same $\ell$.
-\end{proof}
-
-\begin{note}[Why this matters -- proving convergence without knowing the limit]
-The Cauchy criterion lets you prove $(a_n)$ converges \emph{without ever identifying $\ell$} -- purely from how close later terms get to each other. This is the standard tool when no closed form for the limit is available, and it is what makes $\R$ \emph{complete} (every Cauchy sequence converges) -- a property $\Q$ notably lacks (e.g.\ decimal truncations of $\sqrt2$ are Cauchy in $\Q$ but converge to $\sqrt2\notin\Q$).
-\end{note}
-
-\bigskip
-\begin{theorem}[L'Hôpital's rule, Rudin's stronger version -- allows $L=\pm\infty$]
-Let $f,g$ be real and differentiable on $(a,b)$, $g'(x)\neq0$ for all $x\in(a,b)$, and suppose
-\[
-\frac{f'(x)}{g'(x)} \to A \quad \text{as } x\to a,
-\]
-where $A$ may be $+\infty,-\infty$, or a real number. If either $f(x),g(x)\to0$ as $x\to a$, \emph{or} $g(x)\to+\infty$ as $x\to a$, then
-\[
-\frac{f(x)}{g(x)} \to A \quad \text{as } x\to a.
-\]
-\end{theorem}
-\begin{note}[What's genuinely stronger here]
-Two upgrades beyond the $0/0$ version proved earlier: (i) $A$ is allowed to be infinite, not just a finite real number; (ii) the hypothesis on $g$ is relaxed to \emph{just} $g\to\infty$ -- $f$ need not tend to $0$ or $\infty$ at all. The proof no longer reduces cleanly to a single Cauchy Mean Value Theorem application (which assumed $f(a)=g(a)=0$ exactly) -- Rudin's argument instead works directly with the defining $\varepsilon$-$\delta$ statement of $f'/g'\to A$, choosing points $x_1<x_2$ near $a$ carefully and bounding $f(x)/g(x)$ between values built from $f'/g'$ at nearby points, without ever assuming $f,g$ vanish at $a$.
-\end{note}
 
 \subsection{Big-O notation}
 % CN 6.9 / Rosen 3.2, 3.3
