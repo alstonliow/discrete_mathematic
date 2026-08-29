@@ -18,20 +18,27 @@
 \RequirePackage{longtable}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
+<<<<<<< Updated upstream
+=======
+\usetikzlibrary{shapes.gates.logic.US}
+\DeclareMathOperator{\lcmop}{lcm}
+\usetikzlibrary{backgrounds}
+\RequirePackage[american]{circuitikz}
+>>>>>>> Stashed changes
 
 \geometry{margin=2.5cm}
 
 % ---------- theorem-like environments ----------
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{claim}{Claim}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{claim}{Claim}[section]
 
 \theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
