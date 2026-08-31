@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 5.2: Strong Induction and Well-Ordering\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{3}
+    Let $P(n)$ be the statement that a postage of $n$ cents can be
+    formed using just 3-cent stamps and 5-cent stamps. The parts of
+    this exercise outline a strong induction proof that $P(n)$ is true
+    for $n \geq 8$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that the statements $P(8)$, $P(9)$, and $P(10)$ are
+        true, completing the basis step of the proof.
+        \item What is the inductive hypothesis of the proof?
+        \item What do you need to prove in the inductive step?
+        \item Complete the inductive step for $k \geq 10$.
+        \item Explain why these steps show that this statement is true
+        whenever $n \geq 8$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{9}
+    Use strong induction to prove that $\sqrt{2}$ is irrational.
+    [\emph{Hint}: Let $P(n)$ be the statement that $\sqrt{2} \neq n/b$
+    for any positive integer $b$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{11}
+    Consider this variation of the game of Nim. The game begins with
+    $n$ matches. Two players take turns removing matches, one, two, or
+    three at a time. The player removing the last match loses. Use
+    strong induction to show that if each player plays the best
+    strategy possible, the first player wins if $n = 4j$, $4j+2$, or
+    $4j+3$ for some nonnegative integer $j$ and the second player wins
+    in the remaining case when $n = 4j+1$ for some nonnegative integer
+    $j$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{12}
+    Use strong induction to show that every positive integer $n$ can
+    be written as a sum of distinct powers of two, that is, as a sum
+    of a subset of the integers $2^0 = 1$, $2^1 = 2$, $2^2 = 4$, and so
+    on.
+    [\emph{Hint}: For the inductive step, separately consider the case
+    where $k+1$ is even and where it is odd. When it is even, note
+    that $(k+1)/2$ is an integer.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{13}
+    A jigsaw puzzle is put together by successively joining pieces
+    that fit together into blocks. A move is made each time a piece
+    is added to a block, or when two blocks are joined. Use strong
+    induction to prove that no matter how the moves are carried out,
+    exactly $n - 1$ moves are required to assemble a puzzle with $n$
+    pieces.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{15}
+    Prove that the first player has a winning strategy for the game of
+    Chomp, introduced in Example 12 in Section 1.8, if the initial
+    board is square.
+    [\emph{Hint}: Use strong induction to show that this strategy
+    works. For the first move, the first player chomps all cookies
+    except those in the left and top edges. On subsequent moves, after
+    the second player has chomped cookies on either the top or left
+    edge, the first player chomps cookies in the same relative
+    positions in the left or top edge, respectively.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Use strong induction to show that if a simple polygon with at
+    least four sides is triangulated, then at least two of the
+    triangles in the triangulation have two sides that border the
+    exterior of the polygon.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{19}
+    Pick's theorem says that the area of a simple polygon $P$ in the
+    plane with vertices that are all lattice points (that is, points
+    with integer coordinates) equals $I(P) + B(P)/2 - 1$, where $I(P)$
+    and $B(P)$ are the number of lattice points in the interior of $P$
+    and on the boundary of $P$, respectively. Use strong induction on
+    the number of vertices of $P$ to prove Pick's theorem.
+    [\emph{Hint}: For the basis step, first prove the theorem for
+    rectangles, then for right triangles, and finally for all
+    triangles by noting that the area of a triangle is the area of a
+    larger rectangle containing it with the areas of at most three
+    triangles subtracted. For the inductive step, take advantage of
+    Lemma 1.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{24}
+    \textit{Recall: a stable assignment pairs each suitor with a
+    suitee so that no suitor and suitee who are not paired with each
+    other both prefer each other to their current partners (as
+    defined in the preamble to Exercise 60 in Section 3.1).}
+
+    A stable assignment is called \emph{optimal for suitors} if no
+    stable assignment exists in which a suitor is paired with a
+    suitee whom this suitor prefers to the person to whom this suitor
+    is paired in this stable assignment. Use strong induction to show
+    that the deferred acceptance algorithm produces a stable
+    assignment that is optimal for suitors.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{27}
+    Show that if the statement $P(n)$ is true for infinitely many
+    positive integers $n$ and $P(n+1) \to P(n)$ is true for all
+    positive integers $n$, then $P(n)$ is true for all positive
+    integers $n$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{36}
+    The well-ordering property can be used to show that there is a
+    unique greatest common divisor of two positive integers. Let $a$
+    and $b$ be positive integers, and let $S$ be the set of positive
+    integers of the form $as + bt$, where $s$ and $t$ are integers.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $S$ is nonempty.
+        \item Use the well-ordering property to show that $S$ has a
+        smallest element $c$.
+        \item Show that if $d$ is a common divisor of $a$ and $b$,
+        then $d$ is a divisor of $c$.
+        \item Show that $c \mid a$ and $c \mid b$.
+        [\emph{Hint}: First, assume that $c \nmid a$. Then
+        $a = qc + r$, where $0 < r < c$. Show that $r \in S$,
+        contradicting the choice of $c$.]
+        \item Conclude from (c) and (d) that the greatest common
+        divisor of $a$ and $b$ exists. Finish the proof by showing
+        that this greatest common divisor is unique.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{39}
+    Can you use the well-ordering property to prove the statement:
+    ``Every positive integer can be described using no more than
+    fifteen English words''? Assume the words come from a particular
+    dictionary of English.
+    [\emph{Hint}: Suppose that there are positive integers that cannot
+    be described using no more than fifteen English words. By
+    well-ordering, the smallest positive integer that cannot be
+    described using no more than fifteen English words would then
+    exist.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{40}
+    Use the well-ordering property to show that if $x$ and $y$ are
+    real numbers with $x < y$, then there is a rational number $r$
+    with $x < r < y$.
+    [\emph{Hint}: Use the Archimedean property to find a positive
+    integer $A$ with $A > 1/(y-x)$. Then show that there is a rational
+    number $r$ with denominator $A$ strictly between $x$ and $y$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{42}
+    Show that the principle of mathematical induction and strong
+    induction are equivalent; that is, each can be shown to be valid
+    from the other.
+\end{exercise}
+
+\end{document}

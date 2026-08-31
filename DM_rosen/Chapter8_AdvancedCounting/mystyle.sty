@@ -1,0 +1,57 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mystyle}[2026/08/19 discrete-math shared style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{mathtools}
+\RequirePackage{enumitem}
+\RequirePackage{float}
+\RequirePackage{placeins}
+\RequirePackage[ruled,vlined,linesnumbered]{algorithm2e}
+\RequirePackage{geometry}
+
+\geometry{margin=2.5cm}
+
+% ---------- theorem-like environments ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+
+% ---------- exercise / solution ----------
+\newenvironment{exercise}[1]{%
+    \par\medskip\noindent
+    \textbf{Exercise #1}\par\nobreak
+}{%
+    \par\medskip
+}
+
+\newenvironment{solution}[1][]{%
+    \par\noindent\textit{Solution.}\ #1\quad
+}{%
+    \hfill$\blacksquare$\par\medskip
+}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcommand{\proofby}[1]{\noindent\textit{Proof (by #1).}\quad}
+
+% ---------- common math macros ----------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\power}[1]{\mathcal{P}(#1)}
+\DeclareMathOperator{\Collatz}{Collatz}
+
+\endinput

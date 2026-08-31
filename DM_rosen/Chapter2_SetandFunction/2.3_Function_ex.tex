@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 2.3: Functions\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{27}
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that a strictly decreasing function from $\mathbb{R}$
+        to itself is one-to-one.
+        \item Give an example of a decreasing function from $\mathbb{R}$
+        to itself that is not one-to-one.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    If $f$ and $f \circ g$ are onto, does it follow that $g$ is onto?
+    Justify your answer.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{41}
+    \textit{Recall (Exercise 40): if $f$ is a function from $A$ to $B$
+    and $S, T$ are subsets of $A$, then
+    $f(S \cap T) \subseteq f(S) \cap f(T)$.}
+    \begin{enumerate}[label=(\alph*)]
+        \item Give an example to show that the inclusion above may be
+        proper.
+        \item Show that if $f$ is one-to-one, the inclusion above is an
+        equality.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{45}
+    Let $f$ be a function from $A$ to $B$. Let $S$ be a subset of $B$.
+    Show that $f^{-1}(\overline{S}) = \overline{f^{-1}(S)}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{71}
+    Let $S$ be a subset of a universal set $U$. The characteristic
+    function $f_S$ of $S$ is the function from $U$ to the set $\{0, 1\}$
+    such that $f_S(x) = 1$ if $x$ belongs to $S$ and $f_S(x) = 0$ if $x$
+    does not belong to $S$. Let $A$ and $B$ be sets. Show that for all
+    $x \in U$,
+    \begin{enumerate}[label=(\alph*)]
+        \item $f_{A \cap B}(x) = f_A(x) \cdot f_B(x)$
+        \item $f_{A \cup B}(x) = f_A(x) + f_B(x) - f_A(x) \cdot f_B(x)$
+        \item $f_{\overline{A}}(x) = 1 - f_A(x)$
+        \item $f_{A \oplus B}(x) = f_A(x) + f_B(x) - 2 f_A(x) f_B(x)$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{75}
+    Prove that if $x$ is a positive real number, then
+    \begin{enumerate}[label=(\alph*)]
+        \item $\lfloor\sqrt{\lfloor x \rfloor}\rfloor = \lfloor\sqrt{x}\rfloor$.
+        \item $\lceil\sqrt{\lceil x \rceil}\rceil = \lceil\sqrt{x}\rceil$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{77}
+    For each of these partial functions, determine its domain,
+    codomain, domain of definition, and the set of values for which it
+    is undefined. Also, determine whether it is a total function.
+    \begin{enumerate}[label=(\alph*)]
+        \item $f : \mathbb{Z} \to \mathbb{R}$, $f(n) = 1/n$
+        \item $f : \mathbb{Z} \to \mathbb{Z}$, $f(n) = \lceil n/2 \rceil$
+        \item $f : \mathbb{Z} \times \mathbb{Z} \to \mathbb{Q}$,
+        $f(m, n) = m/n$
+        \item $f : \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}$,
+        $f(m, n) = mn$
+        \item $f : \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}$,
+        $f(m, n) = m - n$ if $m > n$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{78}
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that a partial function from $A$ to $B$ can be
+        viewed as a function $f^*$ from $A$ to $B \cup \{u\}$, where $u$
+        is not an element of $B$ and
+        \[
+        f^*(a) =
+        \begin{cases}
+            f(a) & \text{if } a \text{ belongs to the domain of
+            definition of } f \\
+            u & \text{if } f \text{ is undefined at } a.
+        \end{cases}
+        \]
+        \item Using the construction in (a), find the function $f^*$
+        corresponding to each partial function in Exercise 77.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{79}
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that if a set $S$ has cardinality $m$, where $m$ is a
+        positive integer, then there is a one-to-one correspondence
+        between $S$ and the set $\{1, 2, \dots, m\}$.
+        \item Show that if $S$ and $T$ are two sets each with $m$
+        elements, where $m$ is a positive integer, then there is a
+        one-to-one correspondence between $S$ and $T$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{80}
+    Show that a set $S$ is infinite if and only if there is a proper
+    subset $A$ of $S$ such that there is a one-to-one correspondence
+    between $A$ and $S$.
+\end{exercise}
+
+\end{document}

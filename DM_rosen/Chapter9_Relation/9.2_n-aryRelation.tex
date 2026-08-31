@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 9.2: n-ary Relations and Their Applications\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{9}
+    The 5-tuples in a 5-ary relation represent these attributes of all
+    people in the United States: name, Social Security number, street
+    address, city, state.
+    \begin{enumerate}[label=(\alph*)]
+        \item Determine a primary key for this relation.
+        \item Under what conditions would (name, street address) be a
+        composite key?
+        \item Under what conditions would (name, street address,
+        city) be a composite key?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{18}
+    How many components are there in the $n$-tuples in the table
+    obtained by applying the join operator $J_3$ to two tables with
+    5-tuples and 8-tuples, respectively?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{24}
+    Show that if $C$ is a condition that elements of the $n$-ary
+    relations $R$ and $S$ may satisfy, then
+    \[
+    \sigma_C(R - S) = \sigma_C(R) - \sigma_C(S).
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{25}
+    Show that if $R$ and $S$ are both $n$-ary relations, then
+    \[
+    P_{i_1, i_2, \dots, i_m}(R \cup S) = P_{i_1, i_2, \dots, i_m}(R)
+    \cup P_{i_1, i_2, \dots, i_m}(S).
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{27}
+    Give an example to show that if $R$ and $S$ are both $n$-ary
+    relations, then $P_{i_1, i_2, \dots, i_m}(R - S)$ may be different
+    from $P_{i_1, i_2, \dots, i_m}(R) - P_{i_1, i_2, \dots, i_m}(S)$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{32}
+    Show that an $n$-ary relation with a primary key can be thought of
+    as the graph of a function that maps values of the primary key to
+    $(n-1)$-tuples formed from values of the other domains.
+\end{exercise}
+
+\end{document}

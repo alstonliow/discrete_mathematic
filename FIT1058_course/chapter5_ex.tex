@@ -1,0 +1,248 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{FIT1058 --- Chapter 5: Predicate Logic\\ \large Exercise Solutions}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+
+% ======================================================================
+\begin{exercise}{5}
+    (six degrees of separation)
+
+    Consider the binary predicate $\text{knows}$ from p.\,68 in
+    \S\,2.14. The domain of each of its arguments is the set of all
+    people.
+
+    It has been claimed that, in the human social network, the
+    distance between any two people is at most 6. (See p.\,70 in
+    \S\,2.15.)
+
+    Write this claim in predicate logic, using just the predicate
+    $\text{knows}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{7}
+    For each of the following predicate logic statements, (i) identify
+    the predicates, functions, variables (including a suggested domain
+    for each) and constants used; (ii) state whether or not it is a
+    proposition, and if it is, whether it is true or false.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\forall x\ x^2\geq 0$
+        \item $x^2<0$
+        \item $\forall x\ 2x=x^2$
+        \item $x<0 \Rightarrow \forall y\big((0<y)\Rightarrow(x<y)\big)$
+        \item $\forall x\,\forall z\,\exists y\ (x<y)\wedge(y<z)$
+        \item $\exists x\,\exists y\ \neg(x\Rightarrow y)$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{8}
+    Consider the following predicate logic statement.
+    \[
+    \forall A\,\forall B\ (A\subseteq B)\Rightarrow(\mathcal{P}(A)\subseteq\mathcal{P}(B))
+    \]
+    What predicates, functions and variables does this statement use?
+    Restate, in words, the theorem that is being stated here.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{9}
+    Suppose that
+    \begin{itemize}
+        \item $W$ is a variable whose domain is the set of all English words,
+        \item $L$ is a variable whose domain is the set of all English letters,
+        \item $\text{WordContainsLetter}$ is a binary predicate which
+            takes an English word as its first argument, an English
+            letter as its second argument, and is True whenever that
+            word contains that letter. For example,
+            \[
+            \text{WordContainsLetter}(\text{quizzical}, z) \text{ is True},
+            \]
+            \[
+            \text{WordContainsLetter}(\text{quizzical}, e) \text{ is False}.
+            \]
+    \end{itemize}
+    \begin{enumerate}[label=(\alph*)]
+        \item Write the statement of Theorem 15 in predicate logic.
+        \item Now suppose you also have a unary predicate $\text{Vowel}$
+            whose domain is the set of English letters and which is
+            True when its argument is a vowel. Now write the statement
+            of Theorem 15 in predicate logic again, but using this new
+            predicate to write it more compactly this time.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+Write $\text{WordContainsLetter}(W,L)$ as $W(W,L)$.
+
+\medskip
+\noindent\textbf{(a)}
+\[
+\forall W\,\exists L\ \Big(\big(L=a\vee L=e\vee L=i\vee L=o\vee L=u\big)\wedge W(W,L)\Big)\ \vee\ W(W,y)
+\]
+
+\medskip
+\noindent\textbf{(b)} Writing $\text{Vowel}(L)$ as $V(L)$:
+\[
+\forall W\,\exists L\ \Big(V(L)\wedge W(W,L)\Big)\ \vee\ W(W,y)
+\]
+or, with the disjunction brought inside the scope of $\exists L$:
+\[
+\forall W\ \Big(\exists L\ \big(V(L)\wedge W(W,L)\big)\ \vee\ W(W,y)\Big)
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{10}
+    Suppose you have the positive integer properties $\text{Even}$ and
+    $\text{Prime}$, which are true precisely for even numbers and prime
+    numbers respectively, and that you also have the binary predicate
+    $\leq$ on $\mathbb{N}$. Write a predicate logic expression for the
+    statement
+
+    \begin{quote}
+        There are infinitely many odd prime numbers but only finitely
+        many even prime numbers.
+    \end{quote}
+\end{exercise}
+
+\begin{solution}
+Write $\text{Even}(n)$ as $E(n)$ and $\text{Prime}(n)$ as $P(n)$. By
+the domain assumption, any element that is not even is odd, so
+``odd'' is $\neg E(n)$, and ``odd prime'' is $P(n)\wedge\neg E(n)$.
+
+\medskip
+\noindent\textbf{Infinitely many odd primes.} There is no largest
+odd prime -- for any bound $b$, some odd prime exceeds it:
+\[
+R = \forall b\,\exists n\ \big(P(n)\wedge\neg E(n)\wedge b\leq n\big)
+\]
+
+\medskip
+\noindent\textbf{Only finitely many even primes.} There is a
+largest even prime $m$, and every even prime is at most $m$:
+\[
+S = \exists m\ \Big(P(m)\wedge E(m)\ \wedge\ \forall n\big(P(n)\wedge E(n)\Rightarrow n\leq m\big)\Big)
+\]
+
+\medskip
+\noindent\textbf{Final statement.}
+\[
+R\wedge S
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{11}
+    The ternary predicate $\text{Date}$ is defined for any
+    $(d,m,y)\in\mathbb{N}\times\mathbb{N}\times\mathbb{N}$, and is True
+    if $(d,m,y)$ represents a valid date in day-month-year format in
+    the Gregorian calendar, and is False otherwise.
+
+    Using $\text{Date}$ and $<$, write an expression in predicate logic
+    which is True if and only if $(d_1,m_1,y_1)$ and $(d_2,m_2,y_2)$
+    are both valid dates and the first date comes chronologically
+    before the second.
+\end{exercise}
+
+\begin{solution}
+Write $\text{Date}(d,m,y)$ as $D(d,m,y)$. $(d_1,m_1,y_1)$ comes
+chronologically before $(d_2,m_2,y_2)$ exactly when
+\[
+y_1<y_2, \quad\text{or}\quad y_1=y_2 \wedge m_1<m_2, \quad\text{or}\quad y_1=y_2\wedge m_1=m_2\wedge d_1<d_2.
+\]
+
+So the answer is
+\[
+D(d_1,m_1,y_1)\wedge D(d_2,m_2,y_2)\wedge\Big((y_1<y_2)\vee\big((y_1=y_2)\wedge(m_1<m_2)\big)\vee\big((y_1=y_2)\wedge(m_1=m_2)\wedge(d_1<d_2)\big)\Big)
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{12}
+    Suppose you have
+    \begin{itemize}
+        \item the positive integer predicate $\leq$;
+        \item the function $t\colon \{\text{programs}\}\times A^*\to\mathbb{N}$
+            defined for all programs $P$ and input strings $x\in A^*$
+            (where $A$ is an alphabet, \S\,1.5) by
+            \[
+            t(P,x) = \text{the time taken by program } P \text{ when run on input } x;
+            \]
+        \item the function $\text{len}\colon A^*\to\mathbb{N}_0$
+            defined for any string $x\in A^*$ by
+            \[
+            \text{len}(x) = \text{the length of the string } x;
+            \]
+        \item binary functions for multiplication and exponentiation on
+            the positive integers;
+        \item a string variable $x\in A^*$;
+        \item positive integer variables $c$ and $k$.
+    \end{itemize}
+    Write the following statement in predicate logic.
+    \begin{quote}
+        There exist integers $c$ and $k$ such that, for every input
+        string $x$, the time taken by program $P$ on input $x$ is at
+        most the product of $c$ and the $k$-th power of the length of
+        $x$.
+    \end{quote}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{13}
+    There are many theorems that assert that there is a unique object
+    that satisfies certain conditions. In this exercise, we look at how
+    to make such statements using predicate logic.
+
+    Suppose you want to say that there is a unique $x$ with property
+    $P(x)$. It's not enough to just write
+    \[
+    \exists x\ P(x),
+    \]
+    because that only enforces existence without guaranteeing
+    uniqueness. Sometimes, people use ``$\exists !$'' as a shorthand
+    for ``there exists a unique''. With that shorthand,
+    \[
+    \exists ! x\ P(x)
+    \]
+    means
+
+    \begin{quote}
+        There exists a unique $x$ such that $P(x)$ holds.
+    \end{quote}
+
+    How would you write this statement just using the tools available
+    to us in predicate logic, i.e., without using ``$!$''?
+\end{exercise}
+
+\begin{solution}
+\[
+\exists! x\ P(x) \;\equiv\; \exists x\ \Big(P(x)\wedge\big(\forall y\ (P(y)\Rightarrow x=y)\big)\Big)
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{14}
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that
+        \[
+        \exists X\big(P(X)\wedge Q(X)\big) \text{ implies } \big(\exists X\ P(X)\big)\wedge\big(\exists X\ Q(X)\big)
+        \]
+        \item Prove that
+        \[
+        \forall X\big(P(X)\vee Q(X)\big) \text{ is implied by } \big(\forall X\ P(X)\big)\vee\big(\forall X\ Q(X)\big)
+        \]
+        in two ways: (i) reason it through directly, (ii) use the
+        result from part (a) and what you've learned about the
+        relationship between existential and universal quantifiers.
+    \end{enumerate}
+\end{exercise}
+
+
+\end{document}

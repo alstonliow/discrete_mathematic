@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 2.2: Set Operations\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{15}
+    Prove the second De Morgan law in Table 1 by showing that if $A$ and
+    $B$ are sets, then $\overline{A \cup B} = \overline{A} \cap
+    \overline{B}$
+    \begin{enumerate}[label=(\alph*)]
+        \item by showing each side is a subset of the other side.
+        \item using a membership table.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Show that if $A$, $B$, and $C$ are sets, then
+    $\overline{A \cap B \cap C} = \overline{A} \cup \overline{B} \cup
+    \overline{C}$
+    \begin{enumerate}[label=(\alph*)]
+        \item by showing each side is a subset of the other side.
+        \item using a membership table.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{19}
+    Show that if $A$ and $B$ are sets, then
+    \begin{enumerate}[label=(\alph*)]
+        \item $A - B = A \cap \overline{B}$.
+        \item $(A \cap B) \cup (A \cap \overline{B}) = A$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{31}
+    Let $A$ and $B$ be subsets of a universal set $U$. Show that
+    $A \subseteq B$ if and only if $\overline{B} \subseteq \overline{A}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{37}
+    Show that if $A$ is a subset of a universal set $U$, then
+    \begin{enumerate}[label=(\alph*)]
+        \item $A \oplus A = \emptyset$.
+        \item $A \oplus \emptyset = A$.
+        \item $A \oplus U = \overline{A}$.
+        \item $A \oplus \overline{A} = U$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{41}
+    Suppose that $A$, $B$, and $C$ are sets such that
+    $A \oplus C = B \oplus C$. Must it be the case that $A = B$?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{51}
+    Find $\bigcup_{i=1}^{\infty} A_i$ and $\bigcap_{i=1}^{\infty} A_i$ if
+    for every positive integer $i$,
+    \begin{enumerate}[label=(\alph*)]
+        \item $A_i = \{-i, -i+1, \dots, -1, 0, 1, \dots, i-1, i\}$.
+        \item $A_i = \{-i, i\}$.
+        \item $A_i = [-i, i]$, that is, the set of real numbers $x$ with
+        $-i \leq x \leq i$.
+        \item $A_i = [i, \infty)$, that is, the set of real numbers $x$
+        with $x \geq i$.
+    \end{enumerate}
+\end{exercise}
+
+\end{document}

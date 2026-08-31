@@ -1,0 +1,124 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 6.5: Generalized Permutations and Combinations\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{30}
+    How many different strings can be made from the letters in
+    MISSISSIPPI, using all the letters?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{40}
+    How many ways are there to travel in $xyzw$ space from the origin
+    $(0,0,0,0)$ to the point $(4,3,5,4)$ by taking steps one unit in
+    the positive $x$, positive $y$, positive $z$, or positive $w$
+    direction?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{46}
+    A shelf holds 12 books in a row. How many ways are there to
+    choose five books so that no two adjacent books are chosen?
+    [\emph{Hint}: Represent the books that are chosen by bars and the
+    books not chosen by stars. Count the number of sequences of five
+    bars and seven stars so that no two bars are adjacent.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{48}
+    \textit{Recall: Theorem 3 states that the number of different
+    permutations of $n$ objects, where there are $n_1$
+    indistinguishable objects of type 1, $n_2$ indistinguishable
+    objects of type 2, \dots, and $n_k$ indistinguishable objects of
+    type $k$, is $n!/(n_1! n_2! \cdots n_k!)$. Theorem 4 states that
+    the number of ways to distribute $n$ distinguishable objects into
+    $k$ distinguishable boxes so that $n_i$ objects are placed into
+    box $i$, $i = 1, 2, \dots, k$, equals
+    $n!/(n_1! n_2! \cdots n_k!)$.}
+
+    Prove Theorem 4 by first setting up a one-to-one correspondence
+    between permutations of $n$ objects with $n_i$ indistinguishable
+    objects of type $i$, $i = 1, 2, 3, \dots, k$, and the
+    distributions of $n$ objects in $k$ boxes such that $n_i$ objects
+    are placed in box $i$, $i = 1, 2, 3, \dots, k$, and then applying
+    Theorem 3.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{49}
+    \textit{Recall: Theorem 2 states that there are
+    $\binom{n+r-1}{r} = \binom{n+r-1}{n-1}$ $r$-combinations from a
+    set with $n$ elements when repetition of elements is allowed.}
+
+    In this exercise we will prove Theorem 2 by setting up a
+    one-to-one correspondence between the set of $r$-combinations
+    with repetition allowed of $S = \{1, 2, 3, \dots, n\}$ and the
+    set of $r$-combinations of the set $T = \{1, 2, 3, \dots,
+    n+r-1\}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Arrange the elements in an $r$-combination, with
+        repetition allowed, of $S$ into an increasing sequence
+        $x_1 \leq x_2 \leq \cdots \leq x_r$. Show that the sequence
+        formed by adding $k-1$ to the $k$th term is strictly
+        increasing. Conclude that this sequence is made up of $r$
+        distinct elements from $T$.
+        \item Show that the procedure described in (a) defines a
+        one-to-one correspondence between the set of
+        $r$-combinations, with repetition allowed, of $S$ and the
+        $r$-combinations of $T$.
+        [\emph{Hint}: Show the correspondence can be reversed by
+        associating to the $r$-combination $\{x_1, x_2, \dots, x_r\}$
+        of $T$, with $1 \leq x_1 < x_2 < \cdots < x_r \leq n+r-1$,
+        the $r$-combination with repetition allowed from $S$, formed
+        by subtracting $k-1$ from the $k$th element.]
+        \item Conclude that there are $\binom{n+r-1}{r}$
+        $r$-combinations with repetition allowed from a set with $n$
+        elements.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{59}
+    How many ways are there to distribute five balls into three boxes
+    if each box must have at least one ball in it if
+    \begin{enumerate}[label=(\alph*)]
+        \item both the balls and boxes are labeled?
+        \item the balls are labeled, but the boxes are unlabeled?
+        \item the balls are unlabeled, but the boxes are labeled?
+        \item both the balls and boxes are unlabeled?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{61}
+    Suppose that a weapons inspector must inspect each of five
+    different sites twice, visiting one site per day. The inspector
+    is free to select the order in which to visit these sites, but
+    cannot visit site $X$, the most suspicious site, on two
+    consecutive days. In how many different orders can the inspector
+    visit these sites?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{63}
+    Prove the Multinomial Theorem: If $n$ is a positive integer, then
+    \[
+    (x_1 + x_2 + \cdots + x_m)^n = \sum_{n_1+n_2+\cdots+n_m=n}
+    C(n; n_1, n_2, \dots, n_m)\, x_1^{n_1} x_2^{n_2} \cdots
+    x_m^{n_m},
+    \]
+    where
+    \[
+    C(n; n_1, n_2, \dots, n_m) = \frac{n!}{n_1!\, n_2! \cdots n_m!}
+    \]
+    is a multinomial coefficient.
+\end{exercise}
+
+\end{document}

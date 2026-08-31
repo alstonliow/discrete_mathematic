@@ -1,0 +1,140 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 1.8: Proof Methods and Strategy\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{3}
+    Prove that if $x$ and $y$ are real numbers, then
+    $\max(x,y) + \min(x,y) = x + y$.
+    [\emph{Hint}: Use a proof by cases, with the two cases corresponding
+    to $x \geq y$ and $x < y$, respectively.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{7}
+    Prove the triangle inequality, which states that if $x$ and $y$ are
+    real numbers, then $|x| + |y| \geq |x + y|$ (where $|x|$ represents
+    the absolute value of $x$, which equals $x$ if $x \geq 0$ and equals
+    $-x$ if $x < 0$).
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{9}
+    Prove that there are 100 consecutive positive integers that are not
+    perfect squares. Is your proof constructive or nonconstructive?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{13}
+    Prove or disprove that there is a rational number $x$ and an
+    irrational number $y$ such that $x^y$ is irrational.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Suppose that $a$ and $b$ are odd integers with $a \neq b$. Show
+    there is a unique integer $c$ such that $|a - c| = |b - c|$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{21}
+    Prove that given a real number $x$ there exist unique numbers $n$
+    and $\ell$ such that $x = n - \ell$, $n$ is an integer, and
+    $0 \leq \ell < 1$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{23}
+    The \emph{harmonic mean} of two real numbers $x$ and $y$ equals
+    $2xy/(x+y)$. By computing the harmonic and geometric means of
+    different pairs of positive real numbers, formulate a conjecture
+    about their relative sizes and prove your conjecture.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{25}
+    Write the numbers $1, 2, \dots, 2n$ on a blackboard, where $n$ is
+    an odd integer. Pick any two of the numbers, $j$ and $k$, write
+    $|j - k|$ on the board and erase $j$ and $k$. Continue this process
+    until only one integer is written on the board. Prove that this
+    integer must be odd.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{29}
+    Prove that there is no positive integer $n$ such that
+    $n^2 + n^3 = 100$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{33}
+    Adapt the proof in Example 4 in Section 1.7 to prove that if
+    $n = abc$, where $a$, $b$, and $c$ are positive integers, then
+    $a \leq \sqrt[3]{n}$, $b \leq \sqrt[3]{n}$, or $c \leq \sqrt[3]{n}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    Prove that between every two rational numbers there is an
+    irrational number.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{37}
+    Let $S = x_1y_1 + x_2y_2 + \cdots + x_ny_n$, where
+    $x_1, x_2, \dots, x_n$ and $y_1, y_2, \dots, y_n$ are orderings of
+    two different sequences of positive real numbers, each containing
+    $n$ elements.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $S$ takes its maximum value over all orderings
+        of the two sequences when both sequences are sorted (so that
+        the elements in each sequence are in nondecreasing order).
+        \item Show that $S$ takes its minimum value over all orderings
+        of the two sequences when one sequence is sorted into
+        nondecreasing order and the other is sorted into nonincreasing
+        order.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{45}
+    Use a proof by exhaustion to show that a tiling using dominoes of a
+    $4 \times 4$ checkerboard with opposite corners removed does not
+    exist.
+    [\emph{Hint}: First show that you can assume that the squares in
+    the upper left and lower right corners are removed. Number the
+    squares of the original checkerboard from 1 to 16, starting in the
+    first row, moving right in this row, then starting in the leftmost
+    square in the second row and moving right, and so on. Remove
+    squares 1 and 16. To begin the proof, note that square 2 is
+    covered either by a domino laid horizontally, which covers squares
+    2 and 3, or vertically, which covers squares 2 and 6. Consider
+    each of these cases separately, and work through all the subcases
+    that arise.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{47}
+    Show that by removing two white squares and two black squares from
+    an $8 \times 8$ checkerboard (colored as in the text) you can make
+    it impossible to tile the remaining squares using dominoes.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{49}
+    \begin{enumerate}[label=(\alph*)]
+        \item Draw each of the five different tetrominoes, where a
+        tetromino is a polyomino consisting of four squares.
+        \item For each of the five different tetrominoes, prove or
+        disprove that you can tile a standard checkerboard using these
+        tetrominoes.
+    \end{enumerate}
+\end{exercise}
+
+\end{document}

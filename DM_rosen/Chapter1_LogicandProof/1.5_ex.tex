@@ -1,0 +1,477 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 1.5: Nested Quantifiers\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+
+% ======================================================================
+\begin{exercise}{1}
+    Translate these statements into English, where the domain for
+    each variable consists of all real numbers.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\forall x\,\exists y\,(x<y)$
+        \item $\forall x\,\forall y\,\big(((x\geq 0)\wedge(y\geq 0))\to(xy\geq 0)\big)$
+        \item $\forall x\,\forall y\,\exists z\,(xy=z)$
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\textbf{(a)} $\forall x\,\exists y\,(x<y)$
+
+For all $x$, there exists $y$ such that $x<y$. (For every real
+number, there is a larger real number.)
+
+\bigskip
+\noindent\textbf{(b)} $\forall x\,\forall y\,\big((x\geq0\wedge y\geq0)\Rightarrow xy\geq0\big)$
+
+For all real numbers $x$ and $y$, if $x$ and $y$ are both
+nonnegative, then their product $xy$ is nonnegative. (The product of
+two nonnegative real numbers is nonnegative.)
+
+\bigskip
+\noindent\textbf{(c)} $\forall x\,\forall y\,\exists z\,(xy=z)$
+
+For all $x$ and $y$, there exists $z$ such that $xy=z$. (Every pair
+of real numbers has a product.)
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{7}
+    Let $T(x,y)$ mean that student $x$ likes cuisine $y$, where the
+    domain for $x$ consists of all students at your school and the
+    domain for $y$ consists of all cuisines. Express each of these
+    statements by a simple English sentence.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\neg T(\text{Abdallah Hussein}, \text{Japanese})$
+        \item $\exists x\,T(x,\text{Korean})\wedge \forall x\,T(x,\text{Mexican})$
+        \item $\exists y\,\big(T(\text{Monique Arsenault}, y)\vee T(\text{Jay Johnson}, y)\big)$
+        \item $\forall x\,\forall z\,\exists y\,\big((x\neq z)\to \neg(T(x,y)\wedge T(z,y))\big)$
+        \item $\exists x\,\exists z\,\forall y\,\big(T(x,y)\leftrightarrow T(z,y)\big)$
+        \item $\forall x\,\forall z\,\exists y\,\big(T(x,y)\leftrightarrow T(z,y)\big)$
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+Let $T(x,y)$ mean ``student $x$ likes cuisine $y$.''
+
+\medskip
+\noindent\textbf{(a)} $\neg T(\text{Abdallah Hussein}, \text{Japanese})$
+
+Abdallah Hussein does not like Japanese cuisine.
+
+\medskip
+\noindent\textbf{(b)} $\exists x\,T(x,\text{Korean})\wedge \forall x\,T(x,\text{Mexican})$
+
+There is a student who likes Korean cuisine, and every student likes
+Mexican cuisine.
+
+\medskip
+\noindent\textbf{(c)} $\exists y\,\big(T(\text{Monique Arsenault}, y)\vee T(\text{Jay Johnson}, y)\big)$
+
+There is a cuisine that Monique Arsenault or Jay Johnson likes.
+
+\medskip
+\noindent\textbf{(d)} $\forall x\,\forall z\,\exists y\,\big((x\neq z)\to \neg(T(x,y)\wedge T(z,y))\big)$
+
+For any two different students, there is some cuisine that they
+don't both like.
+
+\medskip
+\noindent\textbf{(e)} $\exists x\,\exists z\,\forall y\,\big(T(x,y)\leftrightarrow T(z,y)\big)$
+
+There exist two students $x$ and $z$ such that, for every cuisine
+$y$, $x$ likes $y$ if and only if $z$ likes $y$. (There are two
+students with exactly the same cuisine preferences.)
+
+\medskip
+\noindent\textbf{(f)} $\forall x\,\forall z\,\exists y\,\big(T(x,y)\leftrightarrow T(z,y)\big)$
+
+For all students $x$ and $z$, there is some cuisine $y$ such that
+$x$ likes $y$ if and only if $z$ likes $y$. (This is trivially true
+for every pair of students, e.g.\ any cuisine both like or both
+dislike.)
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{9}
+    Let $L(x,y)$ be the statement ``$x$ loves $y$,'' where the domain
+    for both $x$ and $y$ consists of all people in the world. Use
+    quantifiers to express each of these statements.
+    \begin{enumerate}[label=(\alph*)]
+        \item Everybody loves Jerry.
+        \item Everybody loves somebody.
+        \item There is somebody whom everybody loves.
+        \item Nobody loves everybody.
+        \item There is somebody whom Lydia does not love.
+        \item There is somebody whom no one loves.
+        \item There is exactly one person whom everybody loves.
+        \item There are exactly two people whom Lynn loves.
+        \item Everyone loves himself or herself.
+        \item There is someone who loves no one besides himself or herself.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+Let $L(x,y)$ mean ``$x$ loves $y$,'' with domain all people.
+
+\medskip
+\noindent\textbf{(a)}
+\[
+\forall x\, L(x,\text{Jerry})
+\]
+
+\medskip
+\noindent\textbf{(b)}
+\[
+\forall x\,\exists y\, L(x,y)
+\]
+
+\medskip
+\noindent\textbf{(c)}
+\[
+\exists y\,\forall x\, L(x,y)
+\]
+
+\medskip
+\noindent\textbf{(d)}
+\[
+\neg\exists x\,\forall y\, L(x,y) \equiv \forall x\,\exists y\,\neg L(x,y)
+\]
+
+\medskip
+\noindent\textbf{(e)}
+\[
+\exists x\,\neg L(\text{Lydia},x)
+\]
+
+\medskip
+\noindent\textbf{(f)}
+\[
+\exists x\,\forall y\,\neg L(y,x)
+\]
+
+\medskip
+\noindent\textbf{(g)}
+
+\textit{At least one:}
+\[
+\exists x\,\forall y\, L(y,x)
+\]
+
+\textit{At most one:}
+\[
+\forall x_1\,\forall x_2\,\Big(\big(\forall y\, L(y,x_1)\wedge \forall y\, L(y,x_2)\big)\Rightarrow x_1=x_2\Big)
+\]
+
+\textit{Exactly one} (conjunction of the above):
+\[
+\exists x\,\forall y\, L(y,x)\ \wedge\ \forall x_1\,\forall x_2\,\Big(\big(\forall y\, L(y,x_1)\wedge \forall y\, L(y,x_2)\big)\Rightarrow x_1=x_2\Big)
+\]
+
+Using the uniqueness template $\exists! x\, P(x) \equiv \exists x\big(P(x)\wedge\forall z(P(z)\Rightarrow z=x)\big)$ with $P(x) \equiv \forall y\, L(y,x)$, this simplifies to:
+\[
+\exists x\,\Big(\forall y\, L(y,x)\ \wedge\ \forall z\big(\forall y\, L(y,z)\Rightarrow z=x\big)\Big)
+\]
+
+\medskip
+\noindent\textbf{(h)}
+
+\textit{At least two:}
+\[
+\exists x_1\,\exists x_2\,\big((x_1\neq x_2)\wedge L(\text{Lynn},x_1)\wedge L(\text{Lynn},x_2)\big)
+\]
+
+\textit{At most two:}
+\[
+\forall x_1\,\forall x_2\,\forall x_3\,\Big(\big(L(\text{Lynn},x_1)\wedge L(\text{Lynn},x_2)\wedge L(\text{Lynn},x_3)\big)\Rightarrow(x_1=x_2\vee x_1=x_3\vee x_2=x_3)\Big)
+\]
+
+\textit{Exactly two} (combining at least two with at most two, reusing $x_1,x_2$):
+\[
+\exists x_1\,\exists x_2\,\Big((x_1\neq x_2)\wedge L(\text{Lynn},x_1)\wedge L(\text{Lynn},x_2)
+\]
+\[
+\wedge\ \forall x_3\big(L(\text{Lynn},x_1)\wedge L(\text{Lynn},x_2)\wedge L(\text{Lynn},x_3)\Rightarrow(x_1=x_2\vee x_1=x_3\vee x_2=x_3)\big)\Big)
+\]
+
+\medskip
+\noindent\textbf{(i)}
+\[
+\forall x\, L(x,x)
+\]
+
+\medskip
+\noindent\textbf{(j)}
+\[
+\exists x\,\forall y\,\big(x\neq y \Rightarrow \neg L(x,y)\big)
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{13}
+    Let $M(x,y)$ be ``$x$ has sent $y$ an e-mail message'' and
+    $T(x,y)$ be ``$x$ has telephoned $y$,'' where the domain consists
+    of all students in your class. Use quantifiers to express each of
+    these statements. (Assume that all e-mail messages that were sent
+    are received, which is not the way things often work.)
+    \begin{enumerate}[label=(\alph*)]
+        \item Chou has never sent an e-mail message to Koko.
+        \item Arlene has never sent an e-mail message to or telephoned Sarah.
+        \item José has never received an e-mail message from Deborah.
+        \item Every student in your class has sent an e-mail message to Ken.
+        \item No one in your class has telephoned Nina.
+        \item Everyone in your class has either telephoned Avi or sent him an e-mail message.
+        \item There is a student in your class who has sent everyone else in your class an e-mail message.
+        \item There is someone in your class who has either sent an e-mail message or telephoned everyone else in your class.
+        \item There are two different students in your class who have sent each other e-mail messages.
+        \item There is a student who has sent himself or herself an e-mail message.
+        \item There is a student in your class who has not received an e-mail message from anyone else in the class and who has not been called by any other student in the class.
+        \item Every student in the class has either received an e-mail message or received a telephone call from another student in the class.
+        \item There are at least two students in your class such that one student has sent the other e-mail and the second student has telephoned the first student.
+        \item There are two different students in your class who between them have sent an e-mail message to or telephoned everyone else in the class.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+Let $M(x,y)$ mean ``$x$ has sent $y$ an e-mail message'' and $T(x,y)$
+mean ``$x$ has telephoned $y$.''
+
+\medskip
+\noindent\textbf{(a)}
+\[
+\neg M(\text{Chou},\text{Koko})
+\]
+
+\medskip
+\noindent\textbf{(b)}
+\[
+\neg\big(M(\text{Arlene},\text{Sarah})\vee T(\text{Arlene},\text{Sarah})\big)
+\]
+
+\medskip
+\noindent\textbf{(c)}
+\[
+\neg M(\text{Deborah},\text{José})
+\]
+
+\medskip
+\noindent\textbf{(d)}
+\[
+\forall x\, M(x,\text{Ken})
+\]
+
+\medskip
+\noindent\textbf{(e)}
+\[
+\forall x\,\neg T(x,\text{Nina})
+\]
+
+\medskip
+\noindent\textbf{(f)}
+\[
+\forall x\,\big(T(x,\text{Avi})\vee M(x,\text{Avi})\big)
+\]
+
+\medskip
+\noindent\textbf{(g)}
+\[
+\exists x\,\forall y\,\big(x\neq y \Rightarrow M(x,y)\big)
+\]
+
+\medskip
+\noindent\textbf{(h)}
+\[
+\exists x\,\forall y\,\big(x\neq y \Rightarrow (M(x,y)\vee T(x,y))\big)
+\]
+
+\medskip
+\noindent\textbf{(i)}
+\[
+\exists x\,\exists y\,\big(x\neq y\wedge M(x,y)\wedge M(y,x)\big)
+\]
+
+\medskip
+\noindent\textbf{(j)}
+\[
+\exists x\, M(x,x)
+\]
+
+\medskip
+\noindent\textbf{(k)}
+\[
+\exists x\,\forall y\,\big((x\neq y)\Rightarrow(\neg M(y,x)\wedge \neg T(y,x))\big)
+\]
+
+\medskip
+\noindent\textbf{(l)}
+\[
+\forall x\,\exists y\,\big(x\neq y\wedge(T(y,x)\vee M(y,x))\big)
+\]
+
+\medskip
+\noindent\textbf{(m)}
+\[
+\exists x_1\,\exists x_2\,\big(M(x_1,x_2)\wedge T(x_2,x_1)\big)
+\]
+
+\medskip
+\noindent\textbf{(n)}
+\[
+\exists x_1\,\exists x_2\,\forall y\,\Big((x_1\neq x_2\wedge x_1\neq y\wedge x_2\neq y)
+\]
+\[
+\Rightarrow\big(M(x_1,y)\vee M(x_2,y)\vee T(x_1,y)\vee T(x_2,y)\big)\Big)
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{17}
+    Express each of these system specifications using predicates,
+    quantifiers, and logical connectives, if necessary.
+    \begin{enumerate}[label=(\alph*)]
+        \item Every user has access to exactly one mailbox.
+        \item There is a process that continues to run during all error conditions only if the kernel is working correctly.
+        \item All users on the campus network can access all websites whose url has a .edu extension.
+        \item There are exactly two systems that monitor every remote server.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+
+\medskip
+\noindent\textbf{(a)} Let $A(x,y)$: ``user $x$ has access to mailbox $y$.''
+\[
+\forall x\,\exists y\,\Big(A(x,y)\wedge\forall z\big(A(x,z)\Rightarrow y=z\big)\Big)
+\]
+
+\medskip
+\noindent\textbf{(b)} Let $C(x,y)$: ``process $x$ continues to run during error condition $y$'';
+$K$: ``the kernel is working correctly.''
+\[
+\exists x\,\Big(\big(\forall y\, C(x,y)\big)\Rightarrow K\Big)
+\]
+
+\medskip
+\noindent\textbf{(c)} Let $A(x,y)$: ``user $x$ on the campus can access website $y$'';
+$U(y)$: ``website $y$ has a .edu extension.''
+\[
+\forall x\,\forall y\,\big(U(y)\Rightarrow A(x,y)\big)
+\]
+
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{21}
+    Use predicates, quantifiers, logical connectives, and mathematical
+    operators to express the statement that every positive integer is
+    the sum of the squares of four integers.
+\end{exercise}
+
+\begin{solution}
+\[
+\forall x\,\Big(x>0\ \Rightarrow\ \exists y_1\,\exists y_2\,\exists y_3\,\exists y_4\,\big(x=y_1^2+y_2^2+y_3^2+y_4^2\big)\Big)
+\]
+\end{solution}
+
+% ======================================================================
+\begin{exercise}{23}
+    Express each of these mathematical statements using predicates,
+    quantifiers, logical connectives, and mathematical operators.
+    \begin{enumerate}[label=(\alph*)]
+        \item The product of two negative real numbers is positive.
+        \item The difference of a real number and itself is zero.
+        \item Every positive real number has exactly two square roots.
+        \item A negative real number does not have a square root that is a real number.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{31}
+    Express the negations of each of these statements so that all
+    negation symbols immediately precede predicates.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\forall x\,\exists y\,\forall z\,T(x,y,z)$
+        \item $\forall x\,\exists y\,P(x,y)\vee\forall x\,\exists y\,Q(x,y)$
+        \item $\forall x\,\exists y\,\big(P(x,y)\wedge\exists z\,R(x,y,z)\big)$
+        \item $\forall x\,\exists y\,\big(P(x,y)\to Q(x,y)\big)$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{37}
+    Express each of these statements using quantifiers. Then form the
+    negation of the statement so that no negation is to the left of a
+    quantifier. Next, express the negation in simple English. (Do not
+    simply use the phrase ``It is not the case that.'')
+    \begin{enumerate}[label=(\alph*)]
+        \item Every student in this class has taken exactly two mathematics classes at this school.
+        \item Someone has visited every country in the world except Libya.
+        \item No one has climbed every mountain in the Himalayas.
+        \item Every movie actor has either been in a movie with Kevin Bacon or has been in a movie with someone who has been in a movie with Kevin Bacon.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{45}
+    Determine the truth value of the statement $\forall x\,\exists y\,(xy=1)$
+    if the domain for the variables consists of
+    \begin{enumerate}[label=(\alph*)]
+        \item the nonzero real numbers.
+        \item the nonzero integers.
+        \item the positive real numbers.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{47}
+    Show that the two statements $\neg\exists x\,\forall y\,P(x,y)$
+    and $\forall x\,\exists y\,\neg P(x,y)$, where both quantifiers
+    over the first variable in $P(x,y)$ have the same domain, and
+    both quantifiers over the second variable in $P(x,y)$ have the
+    same domain, are logically equivalent.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{49}
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $\forall x\,P(x)\wedge\exists x\,Q(x)$ is
+        logically equivalent to $\forall x\,\exists y\,\big(P(x)\wedge Q(y)\big)$,
+        where all quantifiers have the same nonempty domain.
+        \item Show that $\forall x\,P(x)\vee\exists x\,Q(x)$ is
+        equivalent to $\forall x\,\exists y\,\big(P(x)\vee Q(y)\big)$,
+        where all quantifiers have the same nonempty domain.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{51}
+    A statement is in \emph{prenex normal form} (PNF) if and only if
+    it is of the form
+    \[
+    Q_1x_1\,Q_2x_2\cdots Q_kx_k\ P(x_1,x_2,\dots,x_k),
+    \]
+    where each $Q_i$, $i=1,2,\dots,k$, is either the existential
+    quantifier or the universal quantifier, and $P(x_1,\dots,x_k)$ is
+    a predicate involving no quantifiers. For example,
+    $\exists x\,\forall y\,\big(P(x,y)\wedge Q(y)\big)$ is in prenex
+    normal form, whereas $\exists x\,P(x)\vee\forall x\,Q(x)$ is not
+    (because the quantifiers do not all occur first).
+
+    Every statement formed from propositional variables, predicates,
+    $T$, and $F$ using logical connectives and quantifiers is
+    equivalent to a statement in prenex normal form.
+
+    Show how to transform an arbitrary statement to a statement in
+    prenex normal form that is equivalent to the given statement.
+
+    \textit{Note: A formal solution of this exercise requires use of
+    structural induction, covered in Section 5.3.}
+\end{exercise}
+
+
+\end{document}

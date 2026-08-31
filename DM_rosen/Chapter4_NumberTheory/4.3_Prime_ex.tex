@@ -1,0 +1,177 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 4.3: Primes and Greatest Common Divisors\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{6}
+    How many zeros are there at the end of $100!$?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{10}
+    Show that if $2^m + 1$ is an odd prime, then $m = 2^n$ for some
+    nonnegative integer $n$.
+    [\emph{Hint}: First show that the polynomial identity
+    $x^m + 1 = (x^k+1)(x^{k(t-1)} - x^{k(t-2)} + \cdots - x^k + 1)$
+    holds, where $m = kt$ and $t$ is odd.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{11}
+    Show that $\log_2 3$ is an irrational number. Recall that an
+    irrational number is a real number $x$ that cannot be written as
+    the ratio of two integers.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{12}
+    Prove that for every positive integer $n$, there are $n$
+    consecutive composite integers.
+    [\emph{Hint}: Consider the $n$ consecutive integers starting with
+    $(n+1)! + 2$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{13}
+    Prove or disprove that there are three consecutive odd positive
+    integers that are primes, that is, odd primes of the form $p$,
+    $p+2$, and $p+4$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{18}
+    We call a positive integer \emph{perfect} if it equals the sum of
+    its positive divisors other than itself.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that 6 and 28 are perfect.
+        \item Show that $2^{p-1}(2^p - 1)$ is a perfect number when
+        $2^p - 1$ is prime.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{19}
+    Show that if $2^n - 1$ is prime, then $n$ is prime.
+    [\emph{Hint}: Use the identity
+    $2^{ab} - 1 = (2^a - 1) \cdot (2^{a(b-1)} + 2^{a(b-2)} + \cdots +
+    2^a + 1)$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{21}
+    \textit{Recall: the value of the Euler $\varphi$-function at the
+    positive integer $n$ is defined to be the number of positive
+    integers less than or equal to $n$ that are relatively prime to
+    $n$.}
+
+    Find these values of the Euler $\varphi$-function.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\varphi(4)$.
+        \item $\varphi(10)$.
+        \item $\varphi(13)$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{22}
+    Show that $n$ is prime if and only if $\varphi(n) = n - 1$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{31}
+    Show that if $a$ and $b$ are positive integers, then
+    $ab = \gcd(a,b) \cdot \operatorname{lcm}(a,b)$.
+    [\emph{Hint}: Use the prime factorizations of $a$ and $b$ and the
+    formulae for $\gcd(a,b)$ and $\operatorname{lcm}(a,b)$ in terms
+    of these factorizations.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{32}
+    Use the Euclidean algorithm to find
+    \begin{enumerate}[label=(\alph*)]
+        \item $\gcd(1,5)$.
+        \item $\gcd(100,101)$.
+        \item $\gcd(123,277)$.
+        \item $\gcd(1529,14039)$.
+        \item $\gcd(1529,14038)$.
+        \item $\gcd(11111,111111)$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{36}
+    Show that if $a$ and $b$ are both positive integers, then
+    \[
+    (2^a - 1) \bmod (2^b - 1) = 2^{a \bmod b} - 1.
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{37}
+    Use Exercise 36 to show that if $a$ and $b$ are positive
+    integers, then
+    \[
+    \gcd(2^a - 1, 2^b - 1) = 2^{\gcd(a,b)} - 1.
+    \]
+    [\emph{Hint}: Show that the remainders obtained when the
+    Euclidean algorithm is used to compute
+    $\gcd(2^a-1, 2^b-1)$ are of the form $2^r - 1$, where $r$ is a
+    remainder arising when the Euclidean algorithm is used to find
+    $\gcd(a,b)$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{49}
+    Prove that the product of any three consecutive integers is
+    divisible by 6.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{51}
+    Prove or disprove that $n^2 - 79n + 1601$ is prime whenever $n$
+    is a positive integer.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{55}
+    Adapt the proof in the text that there are infinitely many primes
+    to prove that there are infinitely many primes of the form
+    $4k+3$, where $k$ is a nonnegative integer.
+    [\emph{Hint}: Suppose that there are only finitely many such
+    primes $q_1, q_2, \dots, q_n$, and consider the number
+    $4q_1 q_2 \cdots q_n - 1$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{56}
+    Prove that the set of positive rational numbers is countable by
+    setting up a function that assigns to a rational number $p/q$
+    with $\gcd(p,q) = 1$ the base 11 number formed by the decimal
+    representation of $p$ followed by the base 11 digit $A$, which
+    corresponds to the decimal number 10, followed by the decimal
+    representation of $q$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{57}
+    Prove that the set of positive rational numbers is countable by
+    showing that the function $K$ is a one-to-one correspondence
+    between the set of positive rational numbers and the set of
+    positive integers if
+    \[
+    K(m/n) = p_1^{2a_1} p_2^{2a_2} \cdots p_s^{2a_s}\,
+    q_1^{2b_1-1} q_2^{2b_2-1} \cdots q_t^{2b_t-1},
+    \]
+    where $\gcd(m,n) = 1$ and the prime-power factorizations of $m$
+    and $n$ are $m = p_1^{a_1} p_2^{a_2} \cdots p_s^{a_s}$ and
+    $n = q_1^{b_1} q_2^{b_2} \cdots q_t^{b_t}$.
+\end{exercise}
+
+\end{document}

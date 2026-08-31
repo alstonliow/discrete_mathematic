@@ -1,0 +1,214 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 4.4: Solving Congruences\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{7}
+    Show that if $a$ and $m$ are relatively prime positive integers,
+    then the inverse of $a$ modulo $m$ is unique modulo $m$.
+    [\emph{Hint}: Assume that there are two solutions $b$ and $c$ of
+    the congruence $ax \equiv 1 \pmod{m}$. Use Theorem 7 of Section
+    4.3 to show that $b \equiv c \pmod{m}$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{15}
+    Show that if $m$ is an integer greater than 1 and
+    $ac \equiv bc \pmod{m}$, then
+    $a \equiv b \pmod{m/\gcd(c,m)}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Show that if $p$ is prime, the only solutions of
+    $x^2 \equiv 1 \pmod{p}$ are integers $x$ such that
+    $x \equiv 1 \pmod{p}$ or $x \equiv -1 \pmod{p}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{18}
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that if $p$ is a prime, the positive integers less
+        than $p$, except 1 and $p-1$, can be split into $(p-3)/2$
+        pairs of integers such that each pair consists of integers
+        that are inverses of each other.
+        [\emph{Hint}: Use the result of Exercise 17.]
+        \item From part (a) conclude that $(p-1)! \equiv -1
+        \pmod{p}$ whenever $p$ is prime. This result is known as
+        \emph{Wilson's theorem}.
+        \item What can we conclude if $n$ is a positive integer such
+        that $(n-1)! \not\equiv -1 \pmod{n}$?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{19}
+    This exercise outlines a proof of Fermat's little theorem.
+    \begin{enumerate}[label=(\alph*)]
+        \item Suppose that $a$ is not divisible by the prime $p$.
+        Show that no two of the integers
+        $1 \cdot a, 2 \cdot a, \dots, (p-1)a$ are congruent modulo
+        $p$.
+        \item Conclude from part (a) that the product of
+        $1, 2, \dots, p-1$ is congruent modulo $p$ to the product of
+        $a, 2a, \dots, (p-1)a$. Use this to show that
+        $(p-1)! \equiv a^{p-1}(p-1)! \pmod{p}$.
+        \item Use Theorem 7 of Section 4.3 to show from part (b)
+        that $a^{p-1} \equiv 1 \pmod{p}$ if $p \nmid a$.
+        [\emph{Hint}: Use Lemma 3 of Section 4.3 to show that $p$
+        does not divide $(p-1)!$ and then use Theorem 7 of Section
+        4.3. Alternatively, use Wilson's theorem from Exercise
+        18(b).]
+        \item Use part (c) to show that $a^p \equiv a \pmod{p}$ for
+        all integers $a$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{22}
+    Solve the system of congruences $x \equiv 3 \pmod{6}$ and
+    $x \equiv 4 \pmod{7}$ using the method of back substitution.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{26}
+    Find all solutions, if any, to the system of congruences
+    $x \equiv 5 \pmod{6}$, $x \equiv 3 \pmod{10}$, and
+    $x \equiv 8 \pmod{15}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{29}
+    Let $m_1, m_2, \dots, m_n$ be pairwise relatively prime integers
+    greater than or equal to 2. Show that if $a \equiv b
+    \pmod{m_i}$ for $i = 1, 2, \dots, n$, then $a \equiv b
+    \pmod{m}$, where $m = m_1 m_2 \cdots m_n$. (This result will be
+    used in Exercise 30 to prove the Chinese remainder theorem.
+    Consequently, do not use the Chinese remainder theorem to prove
+    it.)
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{30}
+    Complete the proof of the Chinese remainder theorem by showing
+    that the simultaneous solution of a system of linear
+    congruences modulo pairwise relatively prime moduli is unique
+    modulo the product of these moduli.
+    [\emph{Hint}: Assume that $x$ and $y$ are two simultaneous
+    solutions. Show that $m_i \mid x - y$ for all $i$. Using
+    Exercise 29, conclude that $m = m_1 m_2 \cdots m_n \mid x - y$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    Use Fermat's little theorem to show that if $p$ is prime and
+    $p \nmid a$, then $a^{p-2}$ is an inverse of $a$ modulo $p$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{40}
+    Show with the help of Fermat's little theorem that if $n$ is a
+    positive integer, then 42 divides $n^7 - n$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{41}
+    Show that if $p$ is an odd prime, then every divisor of the
+    Mersenne number $2^p - 1$ is of the form $2kp + 1$, where $k$ is
+    a nonnegative integer.
+    [\emph{Hint}: Use Fermat's little theorem and Exercise 37 of
+    Section 4.3.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{44}
+    \textit{Recall: let $n$ be a positive integer and let
+    $n - 1 = 2^s t$, where $s$ is a nonnegative integer and $t$ is an
+    odd positive integer. We say that $n$ passes \emph{Miller's
+    test} for the base $b$ if either $b^t \equiv 1 \pmod{n}$ or
+    $b^{2^j t} \equiv -1 \pmod{n}$ for some $j$ with
+    $0 \leq j \leq s-1$.}
+
+    Show that if $n$ is prime and $b$ is a positive integer with
+    $n \nmid b$, then $n$ passes Miller's test to the base $b$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{48}
+    \textit{Recall: a composite integer $m$ is a \emph{Carmichael
+    number} if it is a pseudoprime to every base $a$ relatively
+    prime to it, that is, $a^{m-1} \equiv 1 \pmod{m}$ for every $a$
+    with $\gcd(a,m) = 1$.}
+
+    Show that if $n = p_1 p_2 \cdots p_k$, where $p_1, p_2, \dots,
+    p_k$ are distinct primes that satisfy $p_j - 1 \mid n - 1$ for
+    $j = 1, 2, \dots, k$, then $n$ is a Carmichael number.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{54}
+    \textit{Recall: a primitive root of a prime $p$ is an integer
+    $r$ such that every integer not divisible by $p$ is congruent to
+    a power of $r$ modulo $p$.}
+
+    Show that 2 is a primitive root of 19.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{56}
+    Let $p$ be an odd prime and $r$ a primitive root of $p$. Show
+    that if $a$ and $b$ are positive integers in $\mathbb{Z}_p$, then
+    \[
+    \log_r(ab) \equiv \log_r a + \log_r b \pmod{p-1}.
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{58}
+    \textit{Recall: an integer $a$ is a \emph{quadratic residue} of
+    $m$ if $\gcd(a,m) = 1$ and the congruence $x^2 \equiv a
+    \pmod{m}$ has a solution.}
+
+    Which integers are quadratic residues of 11?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{59}
+    Show that if $p$ is an odd prime and $a$ is an integer not
+    divisible by $p$, then the congruence $x^2 \equiv a \pmod{p}$
+    has either no solutions or exactly two incongruent solutions
+    modulo $p$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{62}
+    \textit{Recall: if $p$ is an odd prime and $a$ is an integer not
+    divisible by $p$, the Legendre symbol $\left(\dfrac{a}{p}\right)$
+    is defined to be 1 if $a$ is a quadratic residue of $p$ and
+    $-1$ otherwise.}
+
+    Prove Euler's criterion, which states that if $p$ is an odd
+    prime and $a$ is a positive integer not divisible by $p$, then
+    \[
+    \left(\frac{a}{p}\right) \equiv a^{(p-1)/2} \pmod{p}.
+    \]
+    [\emph{Hint}: If $a$ is a quadratic residue modulo $p$, apply
+    Fermat's little theorem; otherwise, apply Wilson's theorem,
+    given in Exercise 18(b).]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{64}
+    Show that if $p$ is an odd prime, then $-1$ is a quadratic
+    residue of $p$ if $p \equiv 1 \pmod{4}$, and $-1$ is not a
+    quadratic residue of $p$ if $p \equiv 3 \pmod{4}$.
+    [\emph{Hint}: Use Exercise 62.]
+\end{exercise}
+
+\end{document}

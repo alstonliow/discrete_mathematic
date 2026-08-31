@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 8.6: Applications of Inclusion--Exclusion\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{5}
+    Find the number of primes less than 200 using the principle of
+    inclusion--exclusion.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{6}
+    An integer is called \emph{squarefree} if it is not divisible by
+    the square of a positive integer greater than 1. Find the number
+    of squarefree positive integers less than 100.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{8}
+    How many onto functions are there from a set with seven elements
+    to one with five elements?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{14}
+    What is the probability that none of 10 people receives the
+    correct hat if a hatcheck person hands their hats back randomly?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    How many ways can the digits 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 be
+    arranged so that no even digit is in its original position?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{18}
+    Use a combinatorial argument to show that the sequence $\{D_n\}$,
+    where $D_n$ denotes the number of derangements of $n$ objects,
+    satisfies the recurrence relation
+    \[
+    D_n = (n-1)(D_{n-1} + D_{n-2})
+    \]
+    for $n \geq 2$.
+    [\emph{Hint}: Note that there are $n-1$ choices for the first
+    element $k$ of a derangement. Consider separately the derangements
+    that start with $k$ that do and do not have 1 in the $k$th
+    position.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{19}
+    Use Exercise 18 to show that
+    \[
+    D_n = nD_{n-1} + (-1)^n
+    \]
+    for $n \geq 1$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{23}
+    Use the principle of inclusion--exclusion to derive a formula for
+    $\varphi(n)$ when the prime factorization of $n$ is
+    $n = p_1^{a_1} p_2^{a_2} \cdots p_m^{a_m}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{24}
+    Show that if $n$ is a positive integer, then
+    \[
+    n! = \binom{n}{0} D_n + \binom{n}{1} D_{n-1} + \cdots +
+    \binom{n}{n-1} D_1 + \binom{n}{n} D_0,
+    \]
+    where $D_k$ is the number of derangements of $k$ objects.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{27}
+    \textit{Recall (Theorem 1): the number of onto functions from a
+    set with $m$ elements to a set with $n$ elements is
+    \[
+    n^m - \binom{n}{1}(n-1)^m + \binom{n}{2}(n-2)^m - \cdots +
+    (-1)^{n-1}\binom{n}{n-1} \cdot 1^m.
+    \]}
+
+    Prove Theorem 1.
+\end{exercise}
+
+\end{document}

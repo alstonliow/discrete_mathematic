@@ -1,0 +1,265 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 8.1: Applications of Recurrence Relations\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{11}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a recurrence relation for the number of ways to
+        climb $n$ stairs if the person climbing the stairs can take
+        one stair or two stairs at a time.
+        \item What are the initial conditions?
+        \item In how many ways can this person climb a flight of
+        eight stairs?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    \textit{A string that contains only 0s, 1s, and 2s is called a
+    ternary string.}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a recurrence relation for the number of ternary
+        strings of length $n$ that do not contain consecutive symbols
+        that are the same.
+        \item What are the initial conditions?
+        \item How many ternary strings of length six do not contain
+        consecutive symbols that are the same?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{18}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a recurrence relation for the number of ternary
+        strings of length $n$ that contain two consecutive symbols
+        that are the same.
+        \item What are the initial conditions?
+        \item How many ternary strings of length six contain
+        consecutive symbols that are the same?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{23}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the recurrence relation satisfied by $S_n$, where
+        $S_n$ is the number of regions into which three-dimensional
+        space is divided by $n$ planes if every three of the planes
+        meet in one point, but no four of the planes go through the
+        same point.
+        \item Find $S_n$ using iteration.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{26}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a recurrence relation for the number of ways to
+        completely cover a $2 \times n$ checkerboard with
+        $1 \times 2$ dominoes.
+        [\emph{Hint}: Consider separately the coverings where the
+        position in the top right corner of the checkerboard is
+        covered by a domino positioned horizontally and where it is
+        covered by a domino positioned vertically.]
+        \item What are the initial conditions for the recurrence
+        relation in part (a)?
+        \item How many ways are there to completely cover a
+        $2 \times 17$ checkerboard with $1 \times 2$ dominoes?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{28}
+    Show that the Fibonacci numbers satisfy the recurrence relation
+    $f_n = 5f_{n-4} + 3f_{n-5}$ for $n = 5, 6, 7, \dots$, together with
+    the initial conditions $f_0 = 0$, $f_1 = 1$, $f_2 = 1$, $f_3 = 2$,
+    and $f_4 = 3$. Use this recurrence relation to show that $f_{5n}$
+    is divisible by 5, for $n = 1, 2, 3, \dots$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{29}
+    Let $S(m,n)$ denote the number of onto functions from a set with
+    $m$ elements to a set with $n$ elements. Show that $S(m,n)$
+    satisfies the recurrence relation
+    \[
+    S(m,n) = n^m - \sum_{k=1}^{n-1} \binom{n}{k} S(m,k)
+    \]
+    whenever $m \geq n$ and $n > 1$, with the initial condition
+    $S(m,1) = 1$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{30}
+    \textit{Recall (Example 5): $C_n$ denotes the number of ways to
+    parenthesize a product of $n+1$ numbers so as to determine the
+    order of multiplication; $C_0 = 1$ and
+    $C_n = \sum_{k=0}^{n-1} C_k C_{n-1-k}$ for $n \geq 1$.}
+    \begin{enumerate}[label=(\alph*)]
+        \item Write out all the ways the product
+        $x_0 \cdot x_1 \cdot x_2 \cdot x_3 \cdot x_4$ can be
+        parenthesized to determine the order of multiplication.
+        \item Use the recurrence relation developed in Example 5 to
+        calculate $C_4$, the number of ways to parenthesize the
+        product of five numbers so as to determine the order of
+        multiplication. Verify that you listed the correct number of
+        ways in part (a).
+        \item Check your result in part (b) by finding $C_4$, using
+        the closed formula for $C_n$ mentioned in the solution of
+        Example 5.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{32}
+    In the Tower of Hanoi puzzle, suppose our goal is to transfer all
+    $n$ disks from peg 1 to peg 3, but we cannot move a disk directly
+    between pegs 1 and 3. Each move of a disk must be a move involving
+    peg 2. As usual, we cannot place a disk on top of a smaller disk.
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a recurrence relation for the number of moves
+        required to solve the puzzle for $n$ disks with this added
+        restriction.
+        \item Solve this recurrence relation to find a formula for
+        the number of moves required to solve the puzzle for $n$
+        disks.
+        \item How many different arrangements are there of the $n$
+        disks on three pegs so that no disk is on top of a smaller
+        disk?
+        \item Show that every allowable arrangement of the $n$ disks
+        occurs in the solution of this variation of the puzzle.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    \textit{Recall the Josephus problem: $n$ people, numbered 1 to
+    $n$, stand around a circle. In each stage, every second person
+    still left alive is eliminated until only one survives. Denote
+    the number of the survivor by $J(n)$.}
+
+    Show that $J(n)$ satisfies the recurrence relation
+    $J(2n) = 2J(n) - 1$ and $J(2n+1) = 2J(n) + 1$, for $n \geq 1$, and
+    $J(1) = 1$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{41}
+    \textit{Recall the Reve's puzzle: the variation of the Tower of
+    Hanoi puzzle with four pegs and $n$ disks. The Frame--Stewart
+    algorithm moves the disks from peg 1 to peg 4 by choosing an
+    integer $k$ with $1 \leq k \leq n$, recursively moving the $n-k$
+    smallest disks to peg 2 (using all four pegs), then moving the
+    $k$ largest disks to peg 4 (using the three-peg algorithm, without
+    the peg holding the $n-k$ smallest disks), and finally recursively
+    moving the $n-k$ smallest disks to peg 4.}
+
+    Show that if $R(n)$ is the number of moves used by the
+    Frame--Stewart algorithm to solve the Reve's puzzle with $n$
+    disks, where $k$ is chosen to be the smallest integer with
+    $n \leq k(k+1)/2$, then $R(n)$ satisfies the recurrence relation
+    $R(n) = 2R(n-k) + 2k - 1$, with $R(0) = 0$ and $R(1) = 1$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{45}
+    Show that $R(n)$ (the number of moves used by the Frame--Stewart
+    algorithm, from Exercise 41) is $O(\sqrt{n}\, 2^{\sqrt{n}})$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{52}
+    \textit{Recall: the backward differences of a sequence $\{a_n\}$
+    are defined recursively by $\nabla a_n = a_n - a_{n-1}$ and
+    $\nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}$.}
+
+    Show that any recurrence relation for the sequence $\{a_n\}$ can
+    be written in terms of $a_n, \nabla a_n, \nabla^2 a_n, \dots$. The
+    resulting equation involving the sequence and its differences is
+    called a \emph{difference equation}.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{56}
+    In this exercise we will develop a dynamic programming algorithm
+    for finding the maximum sum of consecutive terms of a sequence of
+    real numbers. That is, given a sequence of real numbers
+    $a_1, a_2, \dots, a_n$, the algorithm computes the maximum sum
+    $\sum_{i=j}^{k} a_i$ where $1 \leq j \leq k \leq n$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that if all terms of the sequence are nonnegative,
+        this problem is solved by taking the sum of all terms. Then,
+        give an example where the maximum sum of consecutive terms is
+        not the sum of all terms.
+        \item Let $M(k)$ be the maximum of the sums of consecutive
+        terms of the sequence ending at $a_k$. That is,
+        $M(k) = \max_{1 \leq j \leq k} \sum_{i=j}^{k} a_i$. Explain
+        why the recurrence relation $M(k) = \max(M(k-1)+a_k, a_k)$
+        holds for $k = 2, \dots, n$.
+        \item Use part (b) to develop a dynamic programming algorithm
+        for solving this problem.
+        \item Show each step your algorithm from part (c) uses to
+        find the maximum sum of consecutive terms of the sequence
+        $2, -3, 4, 1, -2, 3$.
+        \item Show that the worst-case complexity in terms of the
+        number of additions and comparisons of your algorithm from
+        part (c) is linear.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{57}
+    Dynamic programming can be used to develop an algorithm for
+    solving the matrix-chain multiplication problem. This is the
+    problem of determining how the product $A_1 A_2 \cdots A_n$ can be
+    computed using the fewest integer multiplications, where
+    $A_1, A_2, \dots, A_n$ are $m_1 \times m_2$, $m_2 \times m_3$,
+    $\dots$, $m_n \times m_{n+1}$ matrices, respectively, and each
+    matrix has integer entries. Recall that by the associative law,
+    the product does not depend on the order in which the matrices
+    are multiplied.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that the brute-force method of determining the
+        minimum number of integer multiplications needed to solve a
+        matrix-chain multiplication problem has exponential
+        worst-case complexity.
+        [\emph{Hint}: Do this by first showing that the order of
+        multiplication of matrices is specified by parenthesizing the
+        product, then use the Catalan-number count of parenthesizations
+        (Exercise 30) together with its exponential lower bound.]
+        \item Denote by $A_{ij}$ the product $A_i A_{i+1} \cdots A_j$,
+        and $M(i,j)$ the minimum number of integer multiplications
+        required to find $A_{ij}$. Show that if the least number of
+        integer multiplications are used to compute $A_{ij}$, where
+        $i < j$, by splitting the product into the product of $A_i$
+        through $A_k$ and the product of $A_{k+1}$ through $A_j$,
+        then the first $k$ terms must be parenthesized so that
+        $A_{i,k}$ is computed in the optimal way using $M(i,k)$
+        integer multiplications and $A_{k+1,j}$ must be parenthesized
+        so that $A_{k+1,j}$ is computed in the optimal way using
+        $M(k+1,j)$ integer multiplications.
+        \item Explain why part (b) leads to the recurrence relation
+        \[
+        M(i,j) = \min_{i \leq k < j} \big(M(i,k) + M(k+1,j) + m_i
+        m_{k+1} m_{j+1}\big) \quad \text{if } 1 \leq i < j \leq n.
+        \]
+        \item Use the recurrence relation in part (c) to construct an
+        efficient algorithm for determining the order the $n$
+        matrices should be multiplied to use the minimum number of
+        integer multiplications. Store the partial results $M(i,j)$
+        as you find them so that your algorithm will not have
+        exponential complexity.
+        \item Show that your algorithm from part (d) has $O(n^3)$
+        worst-case complexity in terms of multiplications of
+        integers.
+    \end{enumerate}
+\end{exercise}
+
+\end{document}

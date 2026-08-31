@@ -1,0 +1,120 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 9.5: Equivalence Relations\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{9}
+    Suppose that $A$ is a nonempty set, and $f$ is a function that has
+    $A$ as its domain. Let $R$ be the relation on $A$ consisting of
+    all ordered pairs $(x,y)$ such that $f(x) = f(y)$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $R$ is an equivalence relation on $A$.
+        \item What are the equivalence classes of $R$?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{10}
+    Suppose that $A$ is a nonempty set and $R$ is an equivalence
+    relation on $A$. Show that there is a function $f$ with $A$ as its
+    domain such that $(x,y) \in R$ if and only if $f(x) = f(y)$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{15}
+    Let $R$ be the relation on the set of ordered pairs of positive
+    integers such that $((a,b),(c,d)) \in R$ if and only if
+    $a + d = b + c$. Show that $R$ is an equivalence relation.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{16}
+    Let $R$ be the relation on the set of ordered pairs of positive
+    integers such that $((a,b),(c,d)) \in R$ if and only if
+    $ad = bc$. Show that $R$ is an equivalence relation.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{25}
+    Show that the relation $R$ on the set of all bit strings such that
+    $s\,R\,t$ if and only if $s$ and $t$ contain the same number of
+    1s is an equivalence relation.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{54}
+    \textit{A partition $P_1$ is called a \emph{refinement} of the
+    partition $P_2$ if every set in $P_1$ is a subset of one of the
+    sets in $P_2$.}
+
+    Suppose that $R_1$ and $R_2$ are equivalence relations on a set
+    $A$. Let $P_1$ and $P_2$ be the partitions that correspond to
+    $R_1$ and $R_2$, respectively. Show that $R_1 \subseteq R_2$ if
+    and only if $P_1$ is a refinement of $P_2$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{56}
+    Suppose that $R_1$ and $R_2$ are equivalence relations on the set
+    $S$. Determine whether each of these combinations of $R_1$ and
+    $R_2$ must be an equivalence relation.
+    \begin{enumerate}[label=(\alph*)]
+        \item $R_1 \cup R_2$
+        \item $R_1 \cap R_2$
+        \item $R_1 \oplus R_2$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{58}
+    Each bead on a bracelet with three beads is either red, white, or
+    blue. Define the relation $R$ between bracelets as: $(B_1, B_2)$,
+    where $B_1$ and $B_2$ are bracelets, belongs to $R$ if and only if
+    $B_2$ can be obtained from $B_1$ by rotating it or rotating it and
+    then reflecting it.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $R$ is an equivalence relation.
+        \item What are the equivalence classes of $R$?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{60}
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $R$ be the relation on the set of functions from
+        $\mathbb{Z}^+$ to $\mathbb{Z}^+$ such that $(f,g)$ belongs to
+        $R$ if and only if $f$ is $\Theta(g)$ (see Section 3.2). Show
+        that $R$ is an equivalence relation.
+        \item Describe the equivalence class containing $f(n) = n^2$
+        for the equivalence relation of part (a).
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{63}
+    Do we necessarily get an equivalence relation when we form the
+    transitive closure of the symmetric closure of the reflexive
+    closure of a relation?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{68}
+    Let $p(n)$ denote the number of different equivalence relations on
+    a set with $n$ elements (and, by Theorem 2, the number of
+    partitions of a set with $n$ elements). Show that $p(n)$ satisfies
+    the recurrence relation
+    \[
+    p(n) = \sum_{j=0}^{n-1} \binom{n-1}{j} p(n-j-1)
+    \]
+    and the initial condition $p(0) = 1$. (\emph{Note}: The numbers
+    $p(n)$ are called \emph{Bell numbers} after the American
+    mathematician E. T. Bell.)
+\end{exercise}
+
+\end{document}

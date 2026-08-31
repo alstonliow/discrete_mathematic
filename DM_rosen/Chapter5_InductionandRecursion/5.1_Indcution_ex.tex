@@ -1,0 +1,196 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 5.1: Mathematical Induction\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{25}
+    Prove that if $h > -1$, then $1 + nh \leq (1+h)^n$ for all
+    nonnegative integers $n$. This is called \emph{Bernoulli's
+    inequality}.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{27}
+    Prove that for every positive integer $n$,
+    \[
+    1 + \frac{1}{\sqrt{2}} + \frac{1}{\sqrt{3}} + \cdots +
+    \frac{1}{\sqrt{n}} > 2\big(\sqrt{n+1} - 1\big).
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{29}
+    \textit{In this and the next exercise, $H_n$ denotes the $n$th
+    harmonic number, $H_n = 1 + \frac12 + \frac13 + \cdots +
+    \frac1n$.}
+
+    Prove that $H_{2^n} \leq 1 + n$ whenever $n$ is a nonnegative
+    integer.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{30}
+    Prove that
+    \[
+    H_1 + H_2 + \cdots + H_n = (n+1)H_n - n.
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    Prove that $n^2 - 1$ is divisible by $8$ whenever $n$ is an odd
+    positive integer.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{37}
+    Prove that if $n$ is a positive integer, then $133$ divides
+    $11^{n+1} + 12^{2n-1}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{40}
+    Prove that if $A_1, A_2, \dots, A_n$ and $B$ are sets, then
+    \[
+    (A_1 \cap A_2 \cap \cdots \cap A_n) \cup B
+    = (A_1 \cup B) \cap (A_2 \cup B) \cap \cdots \cap (A_n \cup B).
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{46}
+    Prove that a set with $n$ elements has $n(n-1)(n-2)/6$ subsets
+    containing exactly three elements whenever $n$ is an integer
+    greater than or equal to $3$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{52}
+    Suppose that $m$ and $n$ are positive integers with $m > n$ and
+    $f$ is a function from $\{1, 2, \dots, m\}$ to $\{1, 2, \dots, n\}$.
+    Use mathematical induction on the variable $n$ to show that $f$ is
+    not one-to-one.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{53}
+    Use mathematical induction to show that $n$ people can divide a
+    cake (where each person gets one or more separate pieces of the
+    cake) so that the cake is divided fairly, that is, in the sense
+    that each person thinks he or she got at least $(1/n)$th of the
+    cake.
+    [\emph{Hint}: For the inductive step, take a fair division of the
+    cake among the first $k$ people, have each person divide their
+    share into what this person thinks are $k+1$ equal portions, and
+    then have the $(k+1)$st person select a portion from each of the
+    $k$ people. When showing this produces a fair division for $k+1$
+    people, suppose that person $k+1$ thinks that person $i$ got
+    $p_i$ of the cake where $\sum_{i=1}^{k} p_i = 1$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{55}
+    A knight on a chessboard can move one space horizontally (in
+    either direction) and two spaces vertically (in either direction)
+    or two spaces horizontally (in either direction) and one space
+    vertically (in either direction). Suppose that we have an infinite
+    chessboard, made up of all squares $(m, n)$ where $m$ and $n$ are
+    nonnegative integers that denote the row number and the column
+    number of the square, respectively. Use mathematical induction to
+    show that a knight starting at $(0,0)$ can visit every square
+    using a finite sequence of moves.
+    [\emph{Hint}: Use induction on the variable $s = m + n$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{61}
+    Show that
+    \[
+    \big[(p_1 \to p_2) \wedge (p_2 \to p_3) \wedge \cdots \wedge
+    (p_{n-1} \to p_n)\big]
+    \to \big[(p_1 \wedge p_2 \wedge \cdots \wedge p_{n-1}) \to p_n\big]
+    \]
+    is a tautology whenever $p_1, p_2, \dots, p_n$ are propositions,
+    where $n \geq 2$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{62}
+    Show that $n$ lines separate the plane into $(n^2+n+2)/2$ regions
+    if no two of these lines are parallel and no three pass through a
+    common point.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{63}
+    Let $a_1, a_2, \dots, a_n$ be positive real numbers. The
+    \emph{arithmetic mean} of these numbers is defined by
+    $A = (a_1 + a_2 + \cdots + a_n)/n$, and the \emph{geometric mean}
+    of these numbers is defined by $G = (a_1 a_2 \cdots a_n)^{1/n}$.
+    Use mathematical induction to prove that $A \geq G$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{65}
+    Show that if $n$ is a positive integer, then
+    \[
+    \sum_{\{a_1, \dots, a_k\} \subseteq \{1, 2, \dots, n\}}
+    \frac{1}{a_1 a_2 \cdots a_k} = n.
+    \]
+    (Here the sum is over all nonempty subsets of the set of the $n$
+    smallest positive integers.)
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{68}
+    A guest at a party is a \emph{celebrity} if this person is known
+    by every other guest, but knows none of them. There is at most
+    one celebrity at a party, for if there were two, they would know
+    each other. A particular party may have no celebrity. Your
+    assignment is to find the celebrity, if one exists, at a party, by
+    asking only one type of question---asking a guest whether they
+    know a second guest. Everyone must answer your questions
+    truthfully. That is, if Alice and Bob are two people at the
+    party, you can ask Alice whether she knows Bob; she must answer
+    correctly.
+
+    Use mathematical induction to show that if there are $n$ people at
+    the party, then you can find the celebrity, if there is one, with
+    $3(n-1)$ questions.
+    [\emph{Hint}: First ask a question to eliminate one person as a
+    celebrity. Then use the inductive hypothesis to identify a
+    potential celebrity. Finally, ask two more questions to determine
+    whether that person is actually a celebrity.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{71}
+    \textit{Suppose there are $n$ people in a group, each aware of a
+    scandal no one else in the group knows about. These people
+    communicate by telephone; when two people in the group talk, they
+    share information about all scandals each knows about. The
+    gossip problem asks for $G(n)$, the minimum number of telephone
+    calls that are needed for all $n$ people to learn about all the
+    scandals.}
+
+    Prove that $G(n) = 2n - 4$ for $n \geq 4$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{73}
+    Show that if $I_1, I_2, \dots, I_n$ is a collection of open
+    intervals on the real number line, $n \geq 2$, and every pair of
+    these intervals has a nonempty intersection, that is,
+    $I_i \cap I_j \neq \emptyset$ whenever $1 \leq i \leq n$ and
+    $1 \leq j \leq n$, then the intersection of all these sets is
+    nonempty, that is, $I_1 \cap I_2 \cap \cdots \cap I_n \neq
+    \emptyset$.
+\end{exercise}
+
+\end{document}

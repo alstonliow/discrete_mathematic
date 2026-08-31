@@ -1,0 +1,82 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 2.1: Sets\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{11}
+    Determine whether each of these statements is true or false.
+    \begin{enumerate}[label=(\alph*)]
+        \item $x \in \{x\}$
+        \item $\{x\} \subseteq \{x\}$
+        \item $\{x\} \in \{x\}$
+        \item $\{x\} \in \{\{x\}\}$
+        \item $\emptyset \subseteq \{x\}$
+        \item $\emptyset \in \{x\}$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Suppose that $A$, $B$, and $C$ are sets such that $A \subseteq B$ and
+    $B \subseteq C$. Show that $A \subseteq C$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{23}
+    How many elements does each of these sets have where $a$ and $b$ are
+    distinct elements?
+    \begin{enumerate}[label=(\alph*)]
+        \item $\mathcal{P}(\{a, b, \{a, b\}\})$
+        \item $\mathcal{P}(\{\emptyset, a, \{a\}, \{\{a\}\}\})$
+        \item $\mathcal{P}(\mathcal{P}(\emptyset))$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{31}
+    Let $A$ be a set. Show that $\emptyset \times A = A \times \emptyset
+    = \emptyset$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{37}
+    How many different elements does $A^n$ have when $A$ has $m$
+    elements and $n$ is a positive integer?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{45}
+    The defining property of an ordered pair is that two ordered pairs
+    are equal if and only if their first elements are equal and their
+    second elements are equal. Surprisingly, instead of taking the
+    ordered pair as a primitive concept, we can construct ordered pairs
+    using basic notions from set theory. Show that if we define the
+    ordered pair $(a,b)$ to be $\{\{a\},\{a,b\}\}$, then $(a,b) = (c,d)$
+    if and only if $a = c$ and $b = d$.
+    [\emph{Hint}: First show that $\{\{a\},\{a,b\}\} = \{\{c\},\{c,d\}\}$
+    if and only if $a = c$ and $b = d$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{46}
+    This exercise presents Russell's paradox. Let $S$ be the set that
+    contains a set $x$ if the set $x$ does not belong to itself, so that
+    $S = \{x \mid x \notin x\}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show the assumption that $S$ is a member of $S$ leads to a
+        contradiction.
+        \item Show the assumption that $S$ is not a member of $S$ leads
+        to a contradiction.
+    \end{enumerate}
+    By parts (a) and (b) it follows that the set $S$ cannot be defined as
+    it was. This paradox can be avoided by restricting the types of
+    elements that sets can have.
+\end{exercise}
+
+\end{document}

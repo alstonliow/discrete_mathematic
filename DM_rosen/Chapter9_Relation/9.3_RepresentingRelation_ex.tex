@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 9.3: Representing Relations\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{10}
+    How many nonzero entries does the matrix representing the
+    relation $R$ on $A = \{1, 2, 3, \dots, 1000\}$ consisting of the
+    first 1000 positive integers have if $R$ is
+    \begin{enumerate}[label=(\alph*)]
+        \item $\{(a,b) \mid a \leq b\}$?
+        \item $\{(a,b) \mid a = b \pm 1\}$?
+        \item $\{(a,b) \mid a + b = 1000\}$?
+        \item $\{(a,b) \mid a + b \leq 1001\}$?
+        \item $\{(a,b) \mid a \neq 0\}$?
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{14}
+    Let $R_1$ and $R_2$ be relations on a set $A$ represented by the
+    matrices
+    \[
+    M_{R_1} = \begin{bmatrix} 0 & 1 & 0 \\ 1 & 1 & 1 \\ 1 & 0 & 0 \end{bmatrix}
+    \quad \text{and} \quad
+    M_{R_2} = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 1 & 1 \end{bmatrix}.
+    \]
+    Find the matrices that represent
+    \begin{enumerate}[label=(\alph*)]
+        \item $R_1 \cup R_2$.
+        \item $R_1 \cap R_2$.
+        \item $R_2 \circ R_1$.
+        \item $R_1 \circ R_1$.
+        \item $R_1 \oplus R_2$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{15}
+    Let $R$ be the relation represented by the matrix
+    \[
+    M_R = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 1 & 0 \end{bmatrix}.
+    \]
+    Find the matrices that represent
+    \begin{enumerate}[label=(\alph*)]
+        \item $R^2$.
+        \item $R^3$.
+        \item $R^4$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Let $R$ be a relation on a set $A$ with $n$ elements. If there are
+    $k$ nonzero entries in $M_R$, the matrix representing $R$, how
+    many nonzero entries are there in $M_{\overline{R}}$, the matrix
+    representing $\overline{R}$, the complement of $R$?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{29}
+    How can the directed graph of a relation $R$ on a finite set $A$
+    be used to determine whether a relation is asymmetric?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    Show that if $M_R$ is the matrix representing the relation $R$,
+    then $M_R^{[n]}$ is the matrix representing the relation $R^n$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{36}
+    Given the directed graphs representing two relations, how can the
+    directed graph of the union, intersection, symmetric difference,
+    difference, and composition of these relations be found?
+\end{exercise}
+
+\end{document}

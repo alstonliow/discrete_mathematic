@@ -1,0 +1,132 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 8.4: Generating Functions\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{17}
+    In how many ways can 25 identical donuts be distributed to four
+    police officers so that each officer gets at least three but no
+    more than seven donuts?
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{26}
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $1/(1 - x - x^2 - x^3 - x^4 - x^5 - x^6)$ is
+        the generating function for the number of ways that the sum
+        $n$ can be obtained when a die is rolled repeatedly and the
+        order of the rolls matters.
+        \item Use part (a) to find the number of ways to roll a total
+        of 8 when a die is rolled repeatedly, and the order of the
+        rolls matters.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{39}
+    Use generating functions to find an explicit formula for the
+    Fibonacci numbers.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{40}
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that if $n$ is a positive integer, then
+        \[
+        \binom{2n}{n} = (-4)^n \binom{-1/2}{n}.
+        \]
+        \item Use the extended binomial theorem and part (a) to show
+        that the coefficient of $x^n$ in the expansion of
+        $(1-4x)^{-1/2}$ is $\binom{2n}{n}$ for all nonnegative
+        integers $n$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{41}
+    (Calculus required) Let $\{C_n\}$ be the sequence of Catalan
+    numbers, that is, the solution to the recurrence relation
+    $C_n = \sum_{k=0}^{n-1} C_k C_{n-k-1}$ with $C_0 = C_1 = 1$ (see
+    Example 5 in Section 8.1).
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that if $G(x)$ is the generating function for the
+        sequence of Catalan numbers, then $xG(x)^2 - G(x) + 1 = 0$.
+        Conclude (using the initial conditions) that
+        $G(x) = (1 - \sqrt{1-4x})/(2x)$.
+        \item Use Exercise 40 to conclude that
+        \[
+        G(x) = \sum_{n=0}^{\infty} \frac{1}{n+1} \binom{2n}{n} x^n,
+        \]
+        so that
+        \[
+        C_n = \frac{1}{n+1} \binom{2n}{n}.
+        \]
+        \item Show that $C_n \geq 2^{n-1}$ for all positive integers
+        $n$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{43}
+    Use generating functions to prove Vandermonde's identity:
+    \[
+    \binom{m+n}{r} = \sum_{k=0}^{r} \binom{m}{r-k} \binom{n}{k},
+    \]
+    whenever $m$, $n$, and $r$ are nonnegative integers with $r$ not
+    exceeding either $m$ or $n$.
+    [\emph{Hint}: Look at the coefficient of $x^r$ in both sides of
+    $(1+x)^{m+n} = (1+x)^m (1+x)^n$.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{49}
+    A coding system encodes messages using strings of octal (base 8)
+    digits. A codeword is considered valid if and only if it contains
+    an even number of 7s.
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a linear nonhomogeneous recurrence relation for
+        the number of valid codewords of length $n$. What are the
+        initial conditions?
+        \item Solve this recurrence relation using Theorem 6 in
+        Section 8.2.
+        \item Solve this recurrence relation using generating
+        functions.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{56}
+    \textit{Recall: $p(n)$, the number of partitions of $n$, is the
+    coefficient of $x^n$ in the formal power series expansion of
+    $1/((1-x)(1-x^2)(1-x^3)\cdots)$.}
+
+    (Requires calculus) Use the generating function of $p(n)$ to show
+    that $p(n) \leq e^{C\sqrt{n}}$ for some constant $C$. [Hardy and
+    Ramanujan showed that
+    $p(n) \sim e^{\pi\sqrt{2/3}\sqrt{n}}/(4\sqrt{3}n)$, which means
+    that the ratio of $p(n)$ and the right-hand side approaches 1 as
+    $n$ approaches infinity.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{57}
+    \textit{Recall: the probability generating function for a random
+    variable $X$ such that $X(s)$ is a nonnegative integer for all
+    $s \in S$ is $G_X(x) = \sum_{k=0}^{\infty} p(X(s)=k)\, x^k$.}
+
+    (Requires calculus) Show that if $G_X$ is the probability
+    generating function for such a random variable $X$, then
+    \begin{enumerate}[label=(\alph*)]
+        \item $G_X(1) = 1$.
+        \item $E(X) = G_X'(1)$.
+        \item $V(X) = G_X''(1) + G_X'(1) - G_X'(1)^2$.
+    \end{enumerate}
+\end{exercise}
+
+\end{document}

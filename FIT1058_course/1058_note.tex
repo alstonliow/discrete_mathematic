@@ -3464,24 +3464,49 @@ Variables: one Boolean per guest. Rules:
 \label{sec:4-19}
 % CN 4.19
 
-\begin{note}[At most $k$ of $n$ variables true]
-Equivalent to: every set of $k+1$ variables has at least one false, i.e.\ at least one negated literal true. Conjunction over all $\binom{n}{k+1}$ subsets of size $k+1$ of the disjunction of their negations.
-\end{note}
+\begin{definition}[At most $k$ of $n$ variables true]
+For variables $x_1,\dots,x_n$:
+\[
+\text{``at most } k \text{ true''} \ \equiv\ \bigwedge_{\substack{S\subseteq\{1,\dots,n\} \\ |S|=k+1}} \ \bigvee_{i\in S} \neg x_i.
+\]
+\end{definition}
+\begin{proof}[Why this is correct]
+``At most $k$ true'' fails iff at least $k+1$ variables are true, i.e.\ iff some set $S$ of size $k+1$ has \emph{all} its variables true, i.e.\ iff some $S$ has $\bigvee_{i\in S}\neg x_i$ false. So ``at most $k$ true'' holds iff \emph{every} size-$(k{+}1)$ set $S$ has $\bigvee_{i\in S}\neg x_i$ true -- exactly the conjunction above. There are $\binom{n}{k+1}$ such sets $S$.
+\end{proof}
 
-\begin{note}[At least $k$ of $n$ variables true]
-Equivalent to: every set of $n-k+1$ variables has at least one true. Conjunction over all $\binom{n}{n-k+1}$ subsets of the disjunction of the (unnegated) literals.
-\end{note}
+\begin{definition}[At least $k$ of $n$ variables true]
+\[
+\text{``at least } k \text{ true''} \ \equiv\ \bigwedge_{\substack{S\subseteq\{1,\dots,n\} \\ |S|=n-k+1}} \ \bigvee_{i\in S} x_i.
+\]
+\end{definition}
+\begin{proof}[Why this is correct]
+``At least $k$ true'' fails iff at most $k-1$ are true, iff at least $n-k+1$ are false, iff some set $S$ of size $n-k+1$ has \emph{all} its variables false, iff some $S$ has $\bigvee_{i\in S}x_i$ false. So ``at least $k$ true'' holds iff every size-$(n{-}k{+}1)$ set $S$ has $\bigvee_{i\in S}x_i$ true. There are $\binom{n}{n-k+1}$ such sets.
+\end{proof}
 
-\begin{note}[Exactly $k$]
-Conjunction of the ``at least $k$'' and ``at most $k$'' expressions.
-\end{note}
+\begin{definition}[Exactly $k$]
+\[
+\text{``exactly } k \text{ true''} \ \equiv\ \text{``at least } k\text{''} \ \wedge\ \text{``at most } k\text{''}.
+\]
+\end{definition}
 
 \begin{example}
-At most $2$ of $w,x,y,z$ true:
+At most $2$ of $w,x,y,z$ true ($n=4,k=2$, so $\binom{4}{3}=4$ conjuncts, one per $3$-subset of $\{w,x,y,z\}$):
 \[
 (\neg w\vee\neg x\vee\neg y)\wedge(\neg w\vee\neg x\vee\neg z)\wedge(\neg w\vee\neg y\vee\neg z)\wedge(\neg x\vee\neg y\vee\neg z).
 \]
 \end{example}
+
+\begin{note}[Cost, and a linear-size alternative]
+The encodings above have size $\Theta\big(\binom{n}{k+1}\big)$ or $\Theta\big(\binom{n}{n-k+1}\big)$ -- exponential in the worst case ($k\approx n/2$). Sinz (2005) gives a \emph{sequential-counter} encoding using $O(nk)$ auxiliary variables and $O(nk)$ clauses: auxiliary variables $s_{i,j}$ track ``at least $j$ of $x_1,\dots,x_i$ are true,'' updated via
+\[
+s_{i,j} \implies s_{i+1,j}, \qquad (x_{i+1}\wedge s_{i,j}) \implies s_{i+1,j+1},
+\]
+avoiding the combinatorial blow-up of the direct encoding above.
+\end{note}
+
+\begin{note}[Reference]
+C.\ Sinz, ``Towards an Optimal CNF Encoding of Boolean Cardinality Constraints,'' \emph{Principles and Practice of Constraint Programming (CP 2005)}, LNCS 3709, pp.\ 827--831.
+\end{note}
 
 \subsection{Universal sets of operations}
 \label{sec:4-20}
@@ -4065,6 +4090,10 @@ The converse implication does \emph{not} hold in general.
 Suppose $\exists x\,\forall y\,P(x,y)$: fix such an $x_0$, so $P(x_0,y)$ holds for every $y$. Then for any $y$, taking $x=x_0$ witnesses $\exists x\,P(x,y)$ -- so $\forall y\,\exists x\,P(x,y)$ holds. The dating example above (with $D$ not symmetric enough to reverse) shows the converse can fail.
 \end{proof}
 
+\paragraph{Quantifier--connective pitfall.***} $\forall$ pairs with
+$\Rightarrow$; $\exists$ pairs with $\wedge$ --- the other way round
+lets a trivial witness make the statement true for the wrong reason.
+
 \subsection{Predicate logic expressions}
 \label{sec:5-11}
 % CN 5.11 / Rosen 1.4
@@ -4119,6 +4148,26 @@ The sub-expression from the quantifier to the end of its innermost enclosing par
 \begin{example}[Two disjoint scopes, same variable name]
 In $(\forall X\, P(X)) \wedge (\forall X\, Q(X))$, the two $X$'s are entirely independent -- like distinct local variables in a program that happen to share a name.
 \end{example}
+
+\paragraph{At least / at most / exactly $n$ (predicate logic).}
+At least $n$:
+\[
+\exists x_1\cdots x_n\Big(\bigwedge_{i<j}x_i\neq x_j \wedge \bigwedge_i P(x_i)\Big)
+\]
+At most $n$:
+\[
+\forall x_1\cdots x_{n+1}\Big(\bigwedge_i P(x_i)\Rightarrow \bigvee_{i<j}x_i=x_j\Big)
+\]
+Exactly $n$: conjunction of both.
+
+\paragraph{The uniqueness quantifier $\exists!$.} $\exists!\,x\,P(x)$
+means ``there is a unique $x$ such that $P(x)$.'' Without ``$!$'':
+\[
+\exists!\,x\,P(x) \;\equiv\; \exists x\,\Big(P(x)\wedge\forall z\big(P(z)\Rightarrow z=x\big)\Big)
+\]
+General template for ``exactly one thing satisfies $P$'':
+existence ($P(x)$) $\wedge$ uniqueness (anything satisfying $P$
+equals $x$). \emph{(CN Ch.5 Problem 4; Rosen \S1.5 Ex.\ 52.)}
 
 \subsection{Duality between quantifiers}
 \label{sec:5-13}

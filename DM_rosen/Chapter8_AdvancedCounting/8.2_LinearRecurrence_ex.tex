@@ -1,0 +1,186 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 8.2: Solving Linear Recurrence Relations\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{1}
+    Determine which of these are linear homogeneous recurrence
+    relations with constant coefficients. Also, find the degree of
+    those that are.
+    \begin{enumerate}[label=(\alph*)]
+        \item $a_n = 3a_{n-1} + 4a_{n-2} + 5a_{n-3}$
+        \item $a_n = 2n\,a_{n-1} + a_{n-2}$
+        \item $a_n = a_{n-1} + a_{n-4}$
+        \item $a_n = a_{n-1} + 2$
+        \item $a_n = a_{n-1}^2 + a_{n-2}$
+        \item $a_n = a_{n-2}$
+        \item $a_n = a_{n-1} + n$
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{10}
+    Prove Theorem 2.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Prove this identity relating the Fibonacci numbers and the
+    binomial coefficients:
+    \[
+    f_{n+1} = \binom{n}{0} + \binom{n-1}{1} + \cdots + \binom{n-k}{k},
+    \]
+    where $n$ is a positive integer and $k = \lfloor n/2 \rfloor$.
+    [\emph{Hint}: Let
+    $a_n = \binom{n}{0} + \binom{n-1}{1} + \cdots + \binom{n-k}{k}$.
+    Show that the sequence $\{a_n\}$ satisfies the same recurrence
+    relation and initial conditions satisfied by the sequence of
+    Fibonacci numbers.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{24}
+    Consider the nonhomogeneous linear recurrence relation
+    $a_n = 2a_{n-1} + 2^n$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $a_n = n2^n$ is a solution of this recurrence
+        relation.
+        \item Use Theorem 5 to find all solutions of this recurrence
+        relation.
+        \item Find the solution with $a_0 = 2$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{36}
+    Let $a_n$ be the sum of the first $n$ perfect squares, that is,
+    $a_n = \sum_{k=1}^{n} k^2$. Show that the sequence $\{a_n\}$
+    satisfies the linear nonhomogeneous recurrence relation
+    $a_n = a_{n-1} + n^2$ and the initial condition $a_1 = 1$. Use
+    Theorem 6 to determine a formula for $a_n$ by solving this
+    recurrence relation.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{38}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the characteristic roots of the linear homogeneous
+        recurrence relation $a_n = 2a_{n-1} - 2a_{n-2}$. [\emph{Note}:
+        These are complex numbers.]
+        \item Find the solution of the recurrence relation in part
+        (a) with $a_0 = 1$ and $a_1 = 2$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{40}
+    Solve the simultaneous recurrence relations
+    \[
+    a_n = 3a_{n-1} + 2b_{n-1}, \qquad b_n = a_{n-1} + 2b_{n-1}
+    \]
+    with $a_0 = 1$ and $b_0 = 2$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{41}
+    \begin{enumerate}[label=(\alph*)]
+        \item Use the formula found in Example 4 for $f_n$, the $n$th
+        Fibonacci number, to show that $f_n$ is the integer closest
+        to
+        \[
+        \frac{1}{\sqrt{5}} \left( \frac{1+\sqrt{5}}{2} \right)^n.
+        \]
+        \item Determine for which $n$, $f_n$ is greater than
+        $\frac{1}{\sqrt{5}} \left( \frac{1+\sqrt{5}}{2} \right)^n$
+        and for which $n$, $f_n$ is less than
+        $\frac{1}{\sqrt{5}} \left( \frac{1+\sqrt{5}}{2} \right)^n$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{44}
+    (Linear algebra required) Let $A_n$ be the $n \times n$ matrix
+    with 2s on its main diagonal, 1s in all positions next to a
+    diagonal element, and 0s everywhere else. Find a recurrence
+    relation for $d_n$, the determinant of $A_n$. Solve this
+    recurrence relation to find a formula for $d_n$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{45}
+    Suppose that each pair of a genetically engineered species of
+    rabbits left on an island produces two new pairs of rabbits at
+    the age of 1 month and six new pairs of rabbits at the age of 2
+    months and every month afterward. None of the rabbits ever die or
+    leave the island.
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a recurrence relation for the number of pairs of
+        rabbits on the island $n$ months after one newborn pair is
+        left on the island.
+        \item By solving the recurrence relation in (a) determine the
+        number of pairs of rabbits on the island $n$ months after one
+        pair is left on the island.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{48}
+    Show that the recurrence relation
+    \[
+    f(n) a_n = g(n) a_{n-1} + h(n),
+    \]
+    for $n \geq 1$, and with $a_0 = C$, can be reduced to a recurrence
+    relation of the form
+    \[
+    b_n = b_{n-1} + Q(n) h(n),
+    \]
+    where $b_n = g(n+1) Q(n+1) a_n$, with
+    \[
+    Q(n) = \frac{f(1) f(2) \cdots f(n-1)}{g(1) g(2) \cdots g(n)}.
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{50}
+    It can be shown that $C_n$, the average number of comparisons
+    made by the quick sort algorithm when sorting $n$ elements in
+    random order, satisfies the recurrence relation
+    \[
+    C_n = n + 1 + \frac{2}{n} \sum_{k=0}^{n-1} C_k
+    \]
+    for $n = 1, 2, \dots$, with initial condition $C_0 = 0$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $\{C_n\}$ also satisfies the recurrence
+        relation $nC_n = (n+1)C_{n-1} + 2n$ for $n = 1, 2, \dots$.
+        \item Use Exercise 48 to solve the recurrence relation in
+        part (a) to find an explicit formula for $C_n$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+
+\begin{exercise}{51}
+    Prove Theorem 4.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{52}
+    Prove Theorem 6.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{53}
+    Solve the recurrence relation $T(n) = n\,T(n/2)^2$ with initial
+    condition $T(1) = 6$ when $n = 2^k$ for some integer $k$.
+    [\emph{Hint}: Let $n = 2^k$ and then make the substitution
+    $a_k = \log T(2^k)$ to obtain a linear nonhomogeneous recurrence
+    relation.]
+\end{exercise}
+
+\end{document}

@@ -1,0 +1,94 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 6.4: Binomial Coefficients and Identities\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{21}
+    Prove that if $n$ and $k$ are integers with $1 \leq k \leq n$,
+    then $k\binom{n}{k} = n\binom{n-1}{k-1}$,
+    \begin{enumerate}[label=(\alph*)]
+        \item using a combinatorial proof.
+        [\emph{Hint}: Show that the two sides of the identity count
+        the number of ways to select a subset with $k$ elements from
+        a set with $n$ elements and then an element of this subset.]
+        \item using an algebraic proof based on the formula for
+        $\binom{n}{r}$ given in Theorem 2 in Section 6.3.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{24}
+    Show that if $p$ is a prime and $k$ is an integer such that
+    $1 \leq k \leq p-1$, then $p$ divides $\binom{p}{k}$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{27}
+    Prove the \emph{hockeystick identity}
+    \[
+    \sum_{k=0}^{r} \binom{n+k}{k} = \binom{n+r+1}{r}
+    \]
+    whenever $n$ and $r$ are positive integers,
+    \begin{enumerate}[label=(\alph*)]
+        \item using a combinatorial argument.
+        \item using Pascal's identity.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{31}
+    Show that a nonempty set has the same number of subsets with an
+    odd number of elements as it does subsets with an even number of
+    elements.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{32}
+    Prove the binomial theorem using mathematical induction.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{33}
+    In this exercise we will count the number of paths in the $xy$
+    plane between the origin $(0,0)$ and point $(m,n)$, where $m$
+    and $n$ are nonnegative integers, such that each path is made up
+    of a series of steps, where each step is a move one unit to the
+    right or a move one unit upward. (No moves to the left or
+    downward are allowed.)
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that each path of the type described can be
+        represented by a bit string consisting of $m$ 0s and $n$ 1s,
+        where a 0 represents a move one unit to the right and a 1
+        represents a move one unit upward.
+        \item Conclude from part (a) that there are $\binom{m+n}{n}$
+        paths of the desired type.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{36}
+    Use Exercise 33 to prove Pascal's identity.
+    [\emph{Hint}: Show that a path of the type described in Exercise
+    33 from $(0,0)$ to $(n+1-k, k)$ passes through either
+    $(n+1-k, k-1)$ or $(n-k, k)$, but not through both.]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{38}
+    Give a combinatorial proof that if $n$ is a positive integer then
+    \[
+    \sum_{k=0}^{n} k^2 \binom{n}{k} = n(n+1)2^{n-2}.
+    \]
+    [\emph{Hint}: Show that both sides count the ways to select a
+    subset of a set of $n$ elements together with two not necessarily
+    distinct elements from this subset. Furthermore, express the
+    right-hand side as $n(n-1)2^{n-2} + n2^{n-1}$.]
+\end{exercise}
+
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage{mystyle}
+
+\title{Rosen --- \S 2.6: Matrices\\ \large Selected Exercises}
+\author{Alston}
+\date{Semester 2, 2026}
+
+\begin{document}
+\maketitle
+
+% ======================================================================
+\begin{exercise}{13}
+    In this exercise we show that matrix multiplication is associative.
+    Suppose that $A$ is an $m \times p$ matrix, $B$ is a $p \times k$
+    matrix, and $C$ is a $k \times n$ matrix. Show that
+    $A(BC) = (AB)C$.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{17}
+    Let $A$ and $B$ be two $n \times n$ matrices. Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item $(A + B)^t = A^t + B^t$.
+        \item $(AB)^t = B^t A^t$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{19}
+    Let $A$ be the $2 \times 2$ matrix
+    \[
+    A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}.
+    \]
+    Show that if $ad - bc \neq 0$, then
+    \[
+    A^{-1} = \begin{bmatrix}
+        \dfrac{d}{ad-bc} & \dfrac{-b}{ad-bc} \\[2ex]
+        \dfrac{-c}{ad-bc} & \dfrac{a}{ad-bc}
+    \end{bmatrix}.
+    \]
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{21}
+    Let $A$ be an invertible matrix. Show that
+    $(A^n)^{-1} = (A^{-1})^n$ whenever $n$ is a positive integer.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{23}
+    Suppose that $A$ is an $n \times n$ matrix where $n$ is a positive
+    integer. Show that $A + A^t$ is symmetric.
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{31}
+    In this exercise we show that the meet and join operations are
+    commutative. Let $A$ and $B$ be $m \times n$ zero--one matrices.
+    Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item $A \vee B = B \vee A$.
+        \item $B \wedge A = A \wedge B$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{33}
+    We will establish distributive laws of the meet over the join
+    operation in this exercise. Let $A$, $B$, and $C$ be $m \times n$
+    zero--one matrices. Show that
+    \begin{enumerate}[label=(\alph*)]
+        \item $A \vee (B \wedge C) = (A \vee B) \wedge (A \vee C)$.
+        \item $A \wedge (B \vee C) = (A \wedge B) \vee (A \wedge C)$.
+    \end{enumerate}
+\end{exercise}
+
+% ======================================================================
+\begin{exercise}{35}
+    In this exercise we will show that the Boolean product of
+    zero--one matrices is associative. Assume that $A$ is an
+    $m \times p$ zero--one matrix, $B$ is a $p \times k$ zero--one
+    matrix, and $C$ is a $k \times n$ zero--one matrix. Show that
+    $A \odot (B \odot C) = (A \odot B) \odot C$.
+\end{exercise}
+
+\end{document}
