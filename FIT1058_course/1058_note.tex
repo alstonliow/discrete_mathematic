@@ -292,10 +292,6 @@ Count \emph{ordered} choices of $k$ distinct elements from $n$: $n$ options for 
 \]
 \end{proof}
 
-\begin{example}
-$\binom{n}{0} = \binom{n}{n} = 1$ (only one way to choose nothing, or everything); $\binom{n}{1} = \binom{n}{n-1} = n$.
-\end{example}
-
 \subsection{Complement and set difference}
 \label{sec:1-11}
 % CN 1.11 / Rosen 2.2
@@ -689,25 +685,6 @@ The \emph{graph} of $f$ is $\{(x, f(x)) : x \in \dom(f)\}$, the set of all argum
 A function on the finite domain $\{1,2,3,4\}$ can be given as a finite graph, e.g.\ $\{(1,a),(2,a),(3,b),(4,c)\}$ (its image is $\{a,b,c\}$, a proper subset of a larger codomain). A function on an infinite domain typically needs a rule rather than a listed graph: the squaring function on $\Z$ has graph $\{(x,x^2):x\in\Z\}$.
 \end{example}
 
-
-\subsection{Functions in computer science}
-\label{sec:2-2}
-% CN 2.2
-
-\subsubsection{Functions from analysis}
-\label{sec:2-2-1}
-% CN 2.2.1
-\begin{note}
-In software development, \emph{analysis} produces a precise specification of \emph{what} must be done -- often expressible as a mathematical function. \emph{Design} then produces an \emph{algorithm} for computing it (\emph{how}); \emph{implementation} turns that algorithm into code.
-\end{note}
-
-\subsubsection{Functions in mathematics and programming}
-\label{sec:2-2-2}
-% CN 2.2.2
-\begin{note}
-Two senses of ``function'' coexist: the \emph{mathematical} sense (domain, codomain, rule -- no algorithm implied), and the \emph{programming} sense (a named block of code that computes something). Unless flagged otherwise (``Python function'', ``algorithmic function''), we use the mathematical sense throughout.
-\end{note}
-
 \subsection{Notation}
 \label{sec:2-3}
 % CN 2.3 / Rosen 2.3
@@ -773,10 +750,6 @@ For $x \in \R$:
 \]
 \end{definition}
 
-\begin{definition}[Partial function]
-A \emph{partial function} $f$ from $A$ to $B$ assigns \emph{at most one} element of $B$ to each element of $A$; the subset of $A$ where $f$ is actually defined is $\dom(f)$ (possibly a proper subset of $A$).
-\end{definition}
-
 \begin{note}[Contrast with CN's \S\ref{sec:2-1-1}]
 CN's definition of a function already \emph{is} what Rosen calls a \emph{total} function: $\dom(f)$ equals the declared domain exactly, with no gaps. Rosen's ``partial function from $A$ to $B$'' allows $\dom(f)\subsetneq A$ -- a total function on the smaller set $\dom(f)\subseteq A$.
 \end{note}
@@ -784,11 +757,6 @@ CN's definition of a function already \emph{is} what Rosen calls a \emph{total} 
 \begin{example}
 $f:\R\to\R$, $f(x)=1/x$ is a partial function on $\R$ (undefined at $0$); as a \emph{total} function it is $f:\R\setminus\{0\}\to\R$ -- same rule, different declared domain (CN's \S\ref{sec:2-1-1} view of the domain as an exact promise).
 \end{example}
-
-\bigskip
-\begin{note}[Where partiality actually shows up -- harder]
-Partial functions are essential in computability theory: a program $P$ computing a function of its input may not halt on every input. The function $f_P(x) = $ ``output of $P$ on input $x$, if $P$ halts'' is a genuine partial function -- $\dom(f_P)$ is exactly the set of inputs on which $P$ halts, and this set can itself be uncomputable (the Halting Problem: no algorithm decides, for arbitrary $P,x$, whether $x\in\dom(f_P)$).
-\end{note}
 
 \subsection{Functions with multiple arguments and values}
 \label{sec:2-5}
@@ -1395,36 +1363,6 @@ s(R) = R \cup R^{-1}.
 Transitive closure $R^+$ was already defined above: $R^+=\bigcup_{i=1}^\infty R^{(i)}$.
 \end{note}
 
-\begin{theorem}[Warshall's algorithm -- harder, computes $R^+$ efficiently]
-Let $A=\{a_1,\dots,a_n\}$, $M_0=M_R$. Define $M_k$ from $M_{k-1}$ by:
-\[
-(M_k)_{ij} = (M_{k-1})_{ij} \ \vee\ \big((M_{k-1})_{ik} \wedge (M_{k-1})_{kj}\big),
-\]
-i.e.\ allow paths that route through $a_k$ as an intermediate vertex. Then $M_n = M_{R^+}$.
-\end{theorem}
-
-\begin{algorithm}[H]
-\SetAlgoLined
-\KwIn{Zero-one matrix $M$ of relation $R$ on $\{a_1,\dots,a_n\}$}
-\KwOut{Zero-one matrix of $R^+$}
-\For{$k\gets1$ \KwTo $n$}{
-    \For{$i\gets1$ \KwTo $n$}{
-        \For{$j\gets1$ \KwTo $n$}{
-            $M_{ij}\gets M_{ij}\vee(M_{ik}\wedge M_{kj})$\;
-        }
-    }
-}
-\Return{$M$}\;
-\caption{Warshall's algorithm}
-\end{algorithm}
-\begin{proof}[Proof idea]
-$(M_k)_{ij}=1$ iff there is a path $a_i \to a_j$ using only intermediate vertices from $\{a_1,\dots,a_k\}$. Induction on $k$: base case $k=0$ is exactly $R$ itself; the update rule captures ``either a path avoiding $a_k$ already existed, or one exists routing through $a_k$.'' At $k=n$, $(M_n)_{ij}=1$ iff \emph{any} path $a_i\to a_j$ exists -- exactly $R^+$.
-\end{proof}
-
-\begin{note}[Efficiency]
-Computing $R^+$ via $\bigcup_i R^{(i)}$ directly can cost $O(n^4)$; Warshall's algorithm computes the same $R^+$ in $O(n^3)$.
-\end{note}
-
 \subsection{Equivalence relations}
 \label{sec:2-16}
 % CN 2.16 / Rosen 9.5
@@ -1477,65 +1415,6 @@ If $y \in Y \setminus X$: since $X$ is an equivalence class and $y \notin X$, $(
 So every element of $A$ lies in exactly one equivalence class -- the classes are nonempty (by definition), pairwise disjoint (part (b)), and cover $A$ (part (a)): a partition.
 \end{proof}
 
-\begin{definition}[Partial order]
-$R$ on $A$ is a \emph{partial order} iff reflexive, antisymmetric, and transitive. $(A,R)$ is then a \emph{partially ordered set} (\emph{poset}), often written $(A,\preceq)$.
-\end{definition}
-
-\begin{example}
-$(\Z,\le)$; $(\mathcal P(S),\subseteq)$ for any set $S$ (\S\ref{sec:1-6}); $(\Z^+, \mid)$ where $a\mid b$ means $a$ divides $b$.
-\end{example}
-
-\begin{definition}[Comparable, total order, chain]
-$a,b\in A$ are \emph{comparable} if $a\preceq b$ or $b\preceq a$. If \emph{every} pair is comparable, $\preceq$ is a \emph{total} (or \emph{linear}) order and $A$ is a \emph{chain}.
-\end{definition}
-
-\begin{note}
-$(\Z,\le)$ is a total order; $(\mathcal P(S),\subseteq)$ is generally \emph{not} (e.g.\ $\{1\}$ and $\{2\}$ are incomparable in $\mathcal P(\{1,2\})$) -- exactly why \S\ref{sec:1-7}'s maximal/maximum distinction was necessary.
-\end{note}
-
-\begin{definition}[Hasse diagram]
-A drawing of a finite poset: vertices $=A$, an edge drawn upward from $a$ to $b$ exactly when $a\prec b$ and there is no $c$ with $a\prec c\prec b$ (a \emph{covering} relation) -- omitting all edges implied by reflexivity/transitivity.
-\end{definition}
-
-\begin{example}
-For $\mathcal P(\{1,2,3\})$ under $\subseteq$: $\emptyset$ at the bottom, the three singletons above it, the three pairs above those, $\{1,2,3\}$ at the top.
-\end{example}
-
-\begin{center}
-\begin{tikzpicture}[node distance=1.4cm, every node/.style={draw,circle,inner sep=1pt,minimum size=6mm}]
-\node (e) at (0,0) {$\emptyset$};
-\node (1) at (-2,1.4) {$\{1\}$};
-\node (2) at (0,1.4) {$\{2\}$};
-\node (3) at (2,1.4) {$\{3\}$};
-\node (12) at (-2,2.8) {$\{1,2\}$};
-\node (13) at (0,2.8) {$\{1,3\}$};
-\node (23) at (2,2.8) {$\{2,3\}$};
-\node (123) at (0,4.2) {$\{1,2,3\}$};
-\draw (e)--(1) (e)--(2) (e)--(3);
-\draw (1)--(12) (2)--(12) (1)--(13) (3)--(13) (2)--(23) (3)--(23);
-\draw (12)--(123) (13)--(123) (23)--(123);
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small Hasse diagram of $(\mathcal P(\{1,2,3\}),\subseteq)$
-\end{center}
-
-\begin{definition}[Upper/lower bound, LUB, GLB -- harder]
-For $S\subseteq A$: $u\in A$ is an \emph{upper bound} of $S$ if $s\preceq u$ for all $s\in S$; a \emph{least upper bound} (LUB, or \emph{join} $\vee$) is an upper bound $\preceq$ every other upper bound. Dually for \emph{lower bound} and \emph{greatest lower bound} (GLB, \emph{meet} $\wedge$).
-\end{definition}
-
-\begin{definition}[Lattice]
-A poset in which every pair $a,b$ has both a LUB and a GLB.
-\end{definition}
-
-\begin{example}
-$(\mathcal P(S),\subseteq)$ is a lattice: $A\vee B = A\cup B$, $A\wedge B = A\cap B$ (\S\ref{sec:1-12}).
-\end{example}
-
-\begin{note}
-$(\Z^+,\mid)$ is also a lattice: $\vee = \mathrm{lcm}$, $\wedge=\gcd$.
-\end{note}
-
 \subsection{Relations}
 \label{sec:2-17}
 % CN 2.17 / Rosen 9.2
@@ -1551,50 +1430,6 @@ R \subseteq A_1 \times A_2 \times \cdots \times A_n,
 \]
 i.e.\ a set of $n$-tuples $(x_1,\dots,x_n)$ with $x_i \in A_i$ for each $i$. Each $A_i$ is the $i$-th \emph{domain}; $n$ is the \emph{degree}. An $n$-ary relation is also called an \emph{$n$-ary predicate}.
 \end{definition}
-
-\begin{example}
-$(\text{first name}, \text{middle name}, \text{surname})$ triples form a ternary relation. $(\text{day},\text{month},\text{year})$ likewise. Points in $\R^3$ form a ternary relation on $\R$.
-\end{example}
-
-\begin{note}[Connection to tables and databases, Rosen]
-An $n$-ary relation's tuples correspond to the \emph{rows} of an $n$-column table; each domain $A_i$ (analogous to a function's codomain -- allowed to contain more than what actually appears) corresponds to a \emph{column} or \emph{attribute}. This correspondence is the basis of \emph{relational databases}: a database table \emph{is} an $n$-ary relation, its columns are attributes, and a \emph{key} (or combination of attributes forming a key) is one that uniquely determines each tuple -- analogous to how, in a binary relation that happens to be a function, the first coordinate uniquely determines the second.
-\end{note}
-
-\begin{definition}[Database, Rosen \S9.2.2]
-A \emph{database} is (in this model) an $n$-ary relation, its tuples called \emph{records}, its domains $A_1,\dots,A_n$ called \emph{fields} or \emph{attributes}. A \emph{primary key} is a domain (or combination of domains) whose value(s) uniquely determine each record -- i.e.\ no two distinct tuples agree on it.
-\end{definition}
-
-\begin{definition}[Selection operator, Rosen \S9.2.3]
-For an $n$-ary relation $R$ and a condition $C$ on $n$-tuples, the \emph{selection operator} $s_C$ maps $R$ to
-\[
-s_C(R) = \{(a_1,\dots,a_n) \in R : C(a_1,\dots,a_n) \text{ holds}\}.
-\]
-(Rows satisfying the condition -- SQL's \texttt{WHERE}.)
-\end{definition}
-
-\begin{definition}[Projection, Rosen \S9.2.3]
-For $1 \le i_1 < i_2 < \cdots < i_m \le n$, the \emph{projection} $P_{i_1,\dots,i_m}$ maps each $n$-tuple to the $m$-tuple of its selected components:
-\[
-P_{i_1,\dots,i_m}(a_1,\dots,a_n) = (a_{i_1}, a_{i_2}, \dots, a_{i_m}).
-\]
-(Columns kept, duplicates then removed -- SQL's \texttt{SELECT}, confusingly named the opposite of the relational-algebra term.)
-\end{definition}
-
-\begin{note}
-Projection can reduce the number of tuples: distinct $n$-tuples that agree on all $m$ retained components collapse to one $m$-tuple.
-\end{note}
-
-\begin{definition}[Join, Rosen \S9.2.3]
-Let $R$ have degree $m$, $S$ have degree $n$, and fix $p \le m,n$. The \emph{join} $J_p(R,S)$ is the relation of degree $m+n-p$ consisting of all $(m+n-p)$-tuples
-\[
-(a_1,\dots,a_{m-p},\ c_1,\dots,c_p,\ b_1,\dots,b_{n-p})
-\]
-such that $(a_1,\dots,a_{m-p},c_1,\dots,c_p) \in R$ and $(c_1,\dots,c_p,b_1,\dots,b_{n-p}) \in S$ -- i.e.\ tuples of $R$ and $S$ are merged wherever their last $p$ / first $p$ components agree.
-\end{definition}
-
-\begin{note}[Applications, Rosen \S9.2.4]
-$n$-ary relations underlie \emph{data mining}: a store's transaction database (each transaction an $n$-ary tuple of purchased items) can be queried with selection/projection/join to find frequent itemsets, association rules, etc.
-\end{note}
 
 \subsection{Counting relations}
 \label{sec:2-18}
@@ -1628,132 +1463,6 @@ Identical argument: an $n$-ary relation is a subset of $A_1\times\cdots\times A_
 \begin{example}[Counting relations with a given property, Rosen-style]
 Reflexive relations on $A$ with $|A|=m$: the $m$ diagonal pairs $(a,a)$ are forced \emph{in}, leaving $m^2 - m$ off-diagonal pairs free to choose independently, so there are $2^{m^2-m}$ reflexive relations on $A$.
 \end{example}
-
-\subsection{Matrices (Rosen \S\ref{sec:2-6} -- extension, beyond CN syllabus)}
-
-\begin{definition}[Matrix]
-An $m\times n$ matrix $A=[a_{ij}]$ is a rectangular array with $m$ rows, $n$ columns, entries $a_{ij}$ ($1\le i\le m,\ 1\le j\le n$). $A$ is \emph{square} if $m=n$.
-\end{definition}
-
-\begin{definition}[Addition, scalar multiplication]
-For same-size $A,B$:
-\[
-(A+B)_{ij}=a_{ij}+b_{ij}.
-\]
-For scalar $c$:
-\[
-(cA)_{ij}=c\,a_{ij}.
-\]
-Addition is defined only when $A,B$ have identical dimensions.
-\end{definition}
-
-\bigskip
-\begin{definition}[Matrix multiplication]
-For $A$ ($m\times k$) and $B$ ($k\times n$), the product $AB$ is $m\times n$, with entry $(i,j)$ given by
-\[
-(AB)_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{ik}b_{kj} = \sum_{l=1}^{k} a_{il}b_{lj}
-\]
--- the dot product of row $i$ of $A$ with column $j$ of $B$. Defined only when the number of columns of $A$ equals the number of rows of $B$.
-\end{definition}
-
-\begin{example}
-\[
-\begin{pmatrix}1&2\\3&4\end{pmatrix}
-\begin{pmatrix}5&6\\7&8\end{pmatrix}
-=
-\begin{pmatrix}1\cdot5+2\cdot7 & 1\cdot6+2\cdot8\\ 3\cdot5+4\cdot7 & 3\cdot6+4\cdot8\end{pmatrix}
-=
-\begin{pmatrix}19&22\\43&50\end{pmatrix}.
-\]
-\end{example}
-
-\begin{theorem}
-Matrix multiplication is associative: $(AB)C = A(BC)$ whenever the products are defined.
-\end{theorem}
-\begin{proof}
-Let $A$ be $m\times k$, $B$ be $k\times l$, $C$ be $l\times n$. Both $(AB)C$ and $A(BC)$ are $m\times n$.
-
-For entry $(i,j)$ of $(AB)C$: first $(AB)_{ip} = a_{i1}b_{1p}+\cdots+a_{ik}b_{kp}$ for each $p$, then
-\[
-\big((AB)C\big)_{ij} = \sum_{p=1}^{l} (AB)_{ip}\, c_{pj} = \sum_{p=1}^{l}\left(\sum_{q=1}^{k} a_{iq}b_{qp}\right)c_{pj} = \sum_{q=1}^{k}\sum_{p=1}^{l} a_{iq}b_{qp}c_{pj}.
-\]
-
-For entry $(i,j)$ of $A(BC)$: first $(BC)_{qj} = b_{q1}c_{1j}+\cdots+b_{ql}c_{lj}$ for each $q$, then
-\[
-\big(A(BC)\big)_{ij} = \sum_{q=1}^{k} a_{iq}\,(BC)_{qj} = \sum_{q=1}^{k} a_{iq}\left(\sum_{p=1}^{l} b_{qp}c_{pj}\right) = \sum_{q=1}^{k}\sum_{p=1}^{l} a_{iq}b_{qp}c_{pj}.
-\]
-
-Both expand to the same triple sum $\sum_{q,p} a_{iq}b_{qp}c_{pj}$ (finite sums may be freely reordered/regrouped), so $(AB)C=A(BC)$.
-\end{proof}
-
-\begin{theorem}
-Matrix multiplication is \emph{not} commutative in general.
-\end{theorem}
-\begin{proof}
-\[
-\begin{pmatrix}1&1\\0&0\end{pmatrix}\begin{pmatrix}1&0\\1&0\end{pmatrix} = \begin{pmatrix}2&0\\0&0\end{pmatrix}, \qquad
-\begin{pmatrix}1&0\\1&0\end{pmatrix}\begin{pmatrix}1&1\\0&0\end{pmatrix} = \begin{pmatrix}1&1\\1&1\end{pmatrix}.
-\]
-Different results, so $AB\neq BA$ here.
-\end{proof}
-
-\bigskip
-\begin{definition}[Identity matrix]
-$I_n$ is $n\times n$ with $1$s on the diagonal, $0$s elsewhere: $(I_n)_{ij} = 1$ if $i=j$, else $0$.
-\end{definition}
-
-\begin{theorem}
-For $A$ ($m\times n$): $I_mA=A$ and $AI_n=A$.
-\end{theorem}
-
-\begin{definition}[Transpose]
-$A^t$: $(A^t)_{ij}=a_{ji}$ -- rows and columns swapped.
-\end{definition}
-
-\begin{theorem}
-$(A+B)^t = A^t+B^t$; $(AB)^t = B^tA^t$ (order reverses).
-\end{theorem}
-
-\begin{definition}[Symmetric matrix]
-$A$ is \emph{symmetric} if $A=A^t$ (equivalently $a_{ij}=a_{ji}$ for all $i,j$; requires $A$ square).
-\end{definition}
-
-\bigskip
-\begin{definition}[Zero-one matrices, meet/join/Boolean product, Rosen -- harder, sets up \S\ref{sec:2-15}/9.4]
-For matrices with entries in $\{0,1\}$:
-\[
-(A\wedge B)_{ij}=a_{ij}\wedge b_{ij} \quad \text{(meet)}, \qquad (A\vee B)_{ij}=a_{ij}\vee b_{ij} \quad \text{(join)}.
-\]
-Boolean product:
-\[
-(A\odot B)_{ij} = (a_{i1}\wedge b_{1j}) \vee (a_{i2}\wedge b_{2j}) \vee \cdots \vee (a_{ik}\wedge b_{kj}) = \bigvee_{l=1}^{k} (a_{il}\wedge b_{lj}).
-\]
-An entry is $1$ iff \emph{some} $l$ has $a_{il}=b_{lj}=1$ -- same shape as ordinary matrix multiplication with $(\vee,\wedge)$ in place of $(+,\times)$.
-\end{definition}
-
-\begin{example}
-\[
-A=\begin{pmatrix}1&0\\1&1\end{pmatrix}, \quad B=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
-\]
-\[
-A\wedge B = \begin{pmatrix}0&0\\1&0\end{pmatrix}, \qquad A\vee B = \begin{pmatrix}1&1\\1&1\end{pmatrix}, \qquad A\odot B = \begin{pmatrix}0&1\\1&1\end{pmatrix}.
-\]
-For $(A\odot B)_{11}$: $(a_{11}\wedge b_{11})\vee(a_{12}\wedge b_{21}) = (1\wedge0)\vee(0\wedge1)=0$. For $(A\odot B)_{21}$: $(1\wedge0)\vee(1\wedge1)=1$.
-\end{example}
-
-\begin{theorem}[Connection to relations, Rosen]
-Let $A$ be the zero-one matrix of relation $R\subseteq X\times Y$ (\S\ref{sec:2-13}: $a_{ij}=1\iff(x_i,y_j)\in R$), $B$ that of $S\subseteq Y\times Z$. Then $A\odot B$ is exactly the matrix of $S\circ R$ (\S\ref{sec:2-15}).
-\end{theorem}
-\begin{proof}
-\[
-(A\odot B)_{ij}=1 \iff \exists l:\ a_{il}=1 \wedge b_{lj}=1 \iff \exists y_l:\ (x_i,y_l)\in R \wedge (y_l,z_j)\in S \iff (x_i,z_j)\in S\circ R,
-\]
-matching the definition of relation composition exactly (\S\ref{sec:2-15}).
-\end{proof}
-
-\begin{note}[Iterating for closures]
-Writing $A^{[n]} = A\odot A\odot\cdots\odot A$ ($n$ copies) gives the matrix of $R^{(n)}$. For finite $A$ ($n\times n$ zero-one matrix), the join $A\vee A^{[2]}\vee\cdots\vee A^{[n]}$ (only $n$ terms needed, since further terms add nothing new) gives the matrix of the transitive closure $R^+$ (\S\ref{sec:2-15}) -- this is the basis of \emph{Warshall's algorithm}, computed far more efficiently than by literally forming all powers.
-\end{note}
 
 % ============================================================
 % CHAPTER 3 --- PROOFS  (CN Ch.3, §3.1-3.15)
@@ -1876,53 +1585,12 @@ A single \emph{witness} suffices: exhibit one $x \in D$ and verify $P(x)$ holds.
 A \emph{universal statement} asserts $\forall x \in D,\ P(x)$: \emph{everything} in $D$ has the property.
 \end{definition}
 
-\begin{theorem}
-Every English word has a vowel or a `y'.
-\end{theorem}
-\begin{proof}[Proof sketch]
-One could, in principle, check every English word individually (`aardvark' has a vowel; `aardwolf' has a vowel; \dots; `syzygy' has a `y'; \dots) -- but $D$ here has tens of thousands of members, making case-by-case verification impractical (and hopeless for an infinite $D$).
-\end{proof}
-
-\begin{note}[Proving $\forall x \in D,\ P(x)$]
-Checking every case individually only works for small, finite $D$ -- and not even then, practically. Instead: let $x$ be an \emph{arbitrary, generic} element of $D$ (no properties assumed beyond $x \in D$), and show $P(x)$ follows from that alone. Since the argument uses nothing specific to the particular $x$ chosen, it applies to \emph{every} element of $D$ simultaneously. This is the technique already used, e.g., in \S\ref{sec:1-6} (``let $x \in A$, show $x \in B$'') and in \S\ref{sec:3-1}'s Theorem 13 proof (``let $X \in \mathcal{P}(A)$'').
-\end{note}
-
-\begin{note}[Disproof is the mirror image]
-To \emph{disprove} a universal statement $\forall x \in D,\ P(x)$ (i.e.\ prove its negation $\exists x \in D,\ \neg P(x)$), a single \emph{counterexample} suffices -- disproof of a universal is existential proof of its negation. Conversely, disproving an existential statement $\exists x \in D,\ P(x)$ requires proving the universal $\forall x \in D,\ \neg P(x)$ -- generally the harder direction, since no single case can rule out all possibilities.
-\end{note}
-
-\begin{theorem}[Uniqueness example]
-There is exactly one real number $x$ such that $2x+3=7$.
-\end{theorem}
-\begin{proof}
-\textbf{Existence}: $x=2$ satisfies $2(2)+3=7$.
-
-\textbf{Uniqueness}: suppose $x_1,x_2$ both satisfy $2x+3=7$. Then $2x_1+3=2x_2+3$, so $2x_1=2x_2$, so $x_1=x_2$.
-
-So exactly one such $x$ exists.
-\end{proof}
-
-\begin{note}[The uniqueness pattern]
-Assume two witnesses $x_1,x_2$ both satisfy the property; derive $x_1=x_2$. Combined with a separate existence argument, this proves ``exactly one.''
-\end{note}
-
-\begin{example}[A plausible-looking false universal claim]
-Claim: ``every prime $p$ satisfies $2^p-1$ is prime'' (a \emph{Mersenne prime} for every prime exponent).
-\end{example}
-\begin{proof}[Disproof by counterexample]
-$p=11$ is prime, but $2^{11}-1 = 2047 = 23\times89$, not prime. So the universal claim is false -- a single counterexample suffices, despite the pattern holding for $p=2,3,5,7$ ($2^p-1=3,7,31,127$, all prime).
-\end{proof}
-
-\begin{note}
-This is a genuine cautionary example: checking several small cases can be misleading. $p=2,3,5,7$ all work, and it's tempting to conjecture the pattern continues -- but $p=11$ already breaks it.
-\end{note}
-
 \subsection{Finding proofs}
 \label{sec:3-4}
 % CN 3.4 / Rosen 1.7-1.8
 
 \begin{note}[No algorithm for finding proofs]
-There is no systematic method for discovering proofs, for deep theoretical reasons (Gödel 1931, Church 1936, Turing 1936). Finding proofs draws on logical reasoning, familiarity with the objects involved, practice, creativity, and persistence -- not a fixed recipe.
+There is no systematic method for discovering proofs.
 \end{note}
 
 \begin{note}[Strategy: proving $A \subseteq B$]
@@ -1972,26 +1640,6 @@ This list is not exhaustive, and real proofs frequently mix several of these -- 
 ``For all $x\in\emptyset$, $x^2<0$.'' True vacuously: $\emptyset$ has no members, so the implication ``$x\in\emptyset \implies x^2<0$'' is never tested against an actual counterexample.
 \end{example}
 
-\begin{example}[Trivial proof]
-``If $n>0$, then $n^2+1>0$.'' The conclusion $n^2+1>0$ holds for \emph{every} real $n$ regardless of the hypothesis, so the implication is trivially true.
-\end{example}
-
-\bigskip
-\begin{theorem}[Contraposition example]
-If $n^2$ is even, then $n$ is even.
-\end{theorem}
-\begin{proof}[Proof by contraposition]
-We prove the contrapositive: if $n$ is odd, then $n^2$ is odd. Suppose $n=2k+1$ for some $k\in\Z$. Then
-\[
-n^2 = (2k+1)^2 = 4k^2+4k+1 = 2(2k^2+2k)+1,
-\]
-which is odd. By \S\ref{sec:3-2}'s contrapositive theorem, this proves the original statement.
-\end{proof}
-
-\begin{note}
-Contraposition was the right tool here because ``$n$ is odd'' gives a concrete algebraic form ($2k+1$) to compute with, while ``$n^2$ is even'' does not directly hand you a useful form for $n$ itself.
-\end{note}
-
 \subsection{Proof by symbolic manipulation}
 \label{sec:3-6}
 % CN 3.6 / Rosen (equational reasoning, throughout Ch.1-2)
@@ -2012,14 +1660,6 @@ A chain of equations, each step justified by a known law (axiom or previously pr
 &= x^2 - y^2 && \text{(additive cancellation)}.
 \end{align*}
 \end{proof}
-
-\begin{note}[Direction is arbitrary]
-The proof above started from the \emph{right}-hand side and worked toward the left -- equally valid as starting from the left. Pick whichever direction is more natural for the specific identity.
-\end{note}
-
-\begin{note}[Examples already seen in this note]
-This is exactly the technique behind: the De Morgan's-law proof via set-builder notation (\S\ref{sec:1-11}), the chained-identity proof $\overline{A\cup(B\cap C)} = (\overline{C}\cup\overline{B})\cap\overline{A}$ (\S\ref{sec:1-11}), and the symmetric-difference identities $A\triangle B = \overline{A\triangle B}$ etc.\ (\S\ref{sec:1-13}) -- each is a sequence of equalities, each step citing a specific law.
-\end{note}
 
 \subsection{Proof by construction}
 \label{sec:3-7}
@@ -2052,13 +1692,6 @@ This is the smallest such number -- hence its fame as the ``taxicab number,'' fr
 \subsection{Proof by cases}
 \label{sec:3-8}
 % CN 3.8 / Rosen: proof by cases / exhaustive proof
-\begin{note}[Pattern]
-Identify finitely many cases covering every possibility, and prove the theorem separately in each -- each case-proof is a subproof. Cases may overlap (though this can signal redundant effort), but together they must be \emph{exhaustive}: every object the theorem concerns must fall into at least one case.
-\end{note}
-
-\begin{note}[Typical shape]
-Often a theorem concerns an \emph{infinite} set, split into a small number of cases, at least one of which still covers infinitely many objects -- the reasoning within that case must be general enough to apply to all of them, not just verify a few instances.
-\end{note}
 
 \begin{theorem}[Nonconstructive existence via cases, Rosen]
 There exist irrational numbers $x, y$ such that $x^y$ is rational.
@@ -2079,32 +1712,6 @@ Either way, such $x,y$ exist.
 
 \begin{note}[Strikingly nonconstructive]
 This proves the statement true \emph{without ever determining which case actually holds} -- we don't know, from this proof alone, whether $\sqrt2^{\sqrt2}$ itself is rational or irrational. (It is, in fact, irrational -- even transcendental, by the Gelfond--Schneider theorem -- but that fact is not needed here.) This is the clearest illustration of the constructive/nonconstructive distinction from \S\ref{sec:3-5}.
-\end{note}
-
-\bigskip
-\begin{definition}[Chomp]
-A rectangular grid of cookies; players alternate taking a cookie and every cookie above-and-to-the-right of it (relative to a fixed corner); the top-left cookie is poisoned; whoever takes it loses.
-\end{definition}
-
-\begin{example}[Chomp -- Rosen \S\ref{sec:1-8}, nonconstructive existence via strategy-stealing]
-On any rectangular Chomp board with more than one cookie, the \emph{first} player has a winning strategy.
-\end{example}
-\begin{proof}
-Consider the first player's opening move: take just the bottom-right cookie.
-
-\textbf{Case 1}: this opening move is part of \emph{some} winning strategy for the first player. Then the first player has a winning strategy -- done.
-
-\textbf{Case 2}: this opening move is \emph{not} part of any winning strategy for the first player. Then the second player, facing the resulting position, must have a winning response $r$. But now imagine the first player had opened with exactly that move $r$ instead (a legal first move, since it was a legal move for the second player from a position that only has more cookies removed than the empty-except-poison start). By the same argument, whatever position $r$ leads to, the first player is now in the position the second player would have been in Case 2 -- with a winning strategy available.
-
-Either way, the first player wins.
-\end{proof}
-
-\begin{note}[Why this is nonconstructive]
-The proof establishes a winning strategy \emph{exists} for the first player without ever revealing what it is -- indeed, for most board sizes, no explicit winning strategy is known at all. This is the sharpest possible illustration of the constructive/nonconstructive distinction (\S\ref{sec:3-5}): the theorem is proved, but the object it asserts exists (the strategy) remains, in general, unknown.
-\end{note}
-
-\begin{note}[Strategy-stealing, the technique]
-The argument never analyzes what the winning strategy actually \emph{does} -- it only argues that \emph{if} the second player had a winning response, the first player could ``steal'' it by playing that same move first. This strategy-stealing pattern appears throughout combinatorial game theory whenever a game has the property that having extra pieces on the board never hurts a player (true for Chomp, since eaten cookies only shrink future options for both sides equally).
 \end{note}
 
 \subsection{Proof by contradiction}
@@ -2174,14 +1781,6 @@ To prove $S(n)$ holds for all $n \in \N$ (or all $n \ge n_0$):
 Conclude $S(n)$ holds for all $n$.
 \end{note}
 
-\begin{note}[Why this works]
-$S(1)$ holds (base case). Then:
-\[
-S(1) \implies S(2), \qquad S(2) \implies S(3), \qquad S(3) \implies S(4), \qquad \dots
-\]
-Induction packages this infinite chain of modus ponens applications into a single finite argument, rather than an informal ``and so on forever.''
-\end{note}
-
 \bigskip
 \begin{theorem}[Generalized De Morgan's law, CN Thm 18]
 For all $n \in \N$ and sets $A_1,\dots,A_n$:
@@ -2248,10 +1847,6 @@ $F\neq\emptyset$ by assumption, so by well-ordering, $F$ has a least element $m$
 So $F=\emptyset$: $S(n)$ holds for all $n$.
 \end{proof}
 
-\begin{note}
-This is why induction and well-ordering are often called \emph{equivalent} principles over $\N$ -- each can be used to derive the other, and most texts (Rosen included) simply take one as an axiom and prove the other as a consequence.
-\end{note}
-
 \bigskip
 \begin{definition}[Principle of strong induction, formal statement]
 To prove $S(n)$ for all $n\ge n_0$:
@@ -2268,48 +1863,6 @@ Strong induction's hypothesis is more generous (all of $S(n_0),\dots,S(k)$, not 
 \subsection{Induction: more examples}
 \label{sec:3-11}
 % CN 3.11 / Rosen 5.1, 5.2
-
-\begin{theorem}[Sum of the first $n$ positive integers, CN Thm 19]
-For all $n \ge 1$:
-\[
-1 + 2 + \cdots + n = \frac{n(n+1)}{2}.
-\]
-\end{theorem}
-\begin{proof}
-\textbf{Base case} ($n=1$): LHS $=1$, RHS $=1\cdot2/2=1$.
-
-\textbf{Inductive step}: assume $1+\cdots+k = k(k+1)/2$ for some $k\ge1$. Then
-\[
-1+\cdots+k+(k+1) = \frac{k(k+1)}{2} + (k+1) = (k+1)\left(\frac{k}{2}+1\right) = \frac{(k+1)(k+2)}{2},
-\]
-which is the formula for $n=k+1$.
-
-By induction, the formula holds for all $n \ge 1$.
-\end{proof}
-
-\bigskip
-\begin{theorem}[$2^n > n^2$ for $n \ge 5$, Rosen -- inequality with nontrivial base]
-For every integer $n \ge 5$: $2^n > n^2$.
-\end{theorem}
-\begin{proof}
-\textbf{Base case} ($n=5$): $2^5 = 32 > 25 = 5^2$.
-
-\textbf{Inductive step}: let $k \ge 5$, assume $2^k > k^2$. We want $2^{k+1} > (k+1)^2$.
-\[
-2^{k+1} = 2\cdot 2^k > 2k^2 \qquad \text{(inductive hypothesis)}.
-\]
-It suffices to show $2k^2 \ge (k+1)^2$ for $k \ge 5$:
-\[
-2k^2 - (k+1)^2 = k^2 - 2k - 1 = (k-1)^2 - 2,
-\]
-which is positive whenever $(k-1)^2 > 2$, i.e.\ certainly for $k \ge 5$. So $2k^2 > (k+1)^2$, hence $2^{k+1} > 2k^2 > (k+1)^2$.
-
-By induction, $2^n > n^2$ for all $n \ge 5$.
-\end{proof}
-
-\begin{note}[Why the base case matters here]
-The inequality is \emph{false} for $n=1,2,3,4$. Getting the base case right -- and matching it to where the inductive step's algebra actually works -- is essential; a careless choice of base case can make the whole proof invalid even though the inductive step itself is correctly argued.
-\end{note}
 
 \bigskip
 \begin{theorem}[Bernoulli's inequality, Rosen]
@@ -2364,170 +1917,9 @@ Since $1+n/2 \to \infty$ as $n\to\infty$, this proves the harmonic series diverg
 \end{note}
 
 \bigskip
-\begin{theorem}[Counting subsets, Rosen -- revisits \S\ref{sec:1-8} with a picture]
-A set with $n$ elements has $2^n$ subsets.
-\end{theorem}
-\begin{proof}
-\textbf{Base case} ($n=0$): $\emptyset$ has exactly $1=2^0$ subset (itself).
-
-\textbf{Inductive step}: assume a $k$-element set has $2^k$ subsets. A $(k+1)$-element set $S=T\cup\{x\}$ (with $|T|=k$, $x\notin T$) has subsets falling into two kinds: those not containing $x$ (exactly the $2^k$ subsets of $T$), and those containing $x$ (each is $\{x\}\cup U$ for a subset $U$ of $T$, again $2^k$ of them). Total: $2^k+2^k=2^{k+1}$.
-
-By induction, an $n$-element set has $2^n$ subsets.
-\end{proof}
-
-\begin{center}
-\begin{tikzpicture}[level distance=1.3cm, sibling distance=1.6cm,
-  every node/.style={circle,draw,fill=white,inner sep=1.5pt,font=\scriptsize}]
-\node {$\emptyset$}
-  child { node {$\{a\}$}
-    child { node {$\{a,b\}$} }
-    child { node {$\{a\}$} }
-  }
-  child { node {$\emptyset$}
-    child { node {$\{b\}$} }
-    child { node {$\emptyset$} }
-  };
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small Building all subsets of $\{a,b\}$ by deciding ``include $a$?'' then ``include $b$?'' -- each level doubles the count
-\end{center}
-
-\bigskip
 \begin{definition}[Depth of a set of intervals, Rosen]
 For lectures given as time intervals, the \emph{depth} is the maximum number that mutually overlap at any single instant.
 \end{definition}
-
-\begin{theorem}[Greedy lecture-scheduling algorithm is optimal, Rosen]
-Sorting lectures by start time and greedily assigning each to the first available room needs exactly $\mathrm{depth}$ rooms -- optimal, since no schedule can use fewer than $\mathrm{depth}$ rooms.
-\end{theorem}
-
-\begin{algorithm}[H]
-\SetAlgoLined
-\KwIn{Lectures as intervals $[s_1,f_1],\dots,[s_n,f_n]$}
-\KwOut{Room assignment using $\mathrm{depth}$ rooms}
-sort lectures by increasing start time $s_i$\;
-rooms $\gets$ empty list\;
-\ForEach{lecture $L$ in sorted order}{
-    \eIf{some room in rooms is free at $L$'s start time}{
-        assign $L$ to any such free room\;
-    }{
-        open a new room, assign $L$ to it\;
-    }
-}
-\caption{Greedy lecture scheduling}
-\end{algorithm}
-\begin{proof}[Proof sketch, induction on the number of lectures scheduled]
-\textbf{Base case}: the first lecture needs $1$ room; $1\le\mathrm{depth}$.
-
-\textbf{Inductive step}: suppose the first $k$ lectures (in start-time order) have been assigned using at most $\mathrm{depth}$ rooms. When lecture $k+1$ arrives, if all currently-open rooms are busy at that moment, the number of busy rooms equals the number of lectures overlapping at that instant -- at most $\mathrm{depth}$. If exactly $\mathrm{depth}$ rooms are busy, opening one more room suffices and keeps the total at $\mathrm{depth}$; if fewer are busy, an existing free room is reused.
-
-By induction, the greedy algorithm never needs more than $\mathrm{depth}$ rooms -- matching the lower bound, hence optimal.
-\end{proof}
-
-\begin{center}
-\begin{tikzpicture}[x=0.9cm,y=0.7cm]
-\foreach \x in {0,...,10} \draw[gray!40] (\x,0) -- (\x,-3.5);
-\draw[thick,blue] (0,0) -- (3,0) node[midway,above] {\scriptsize $L_1$};
-\draw[thick,blue] (2,-1) -- (5,-1) node[midway,above] {\scriptsize $L_2$};
-\draw[thick,blue] (4,-2) -- (7,-2) node[midway,above] {\scriptsize $L_3$};
-\draw[thick,blue] (1,-3) -- (6,-3) node[midway,above] {\scriptsize $L_4$};
-\draw[->] (-0.3,-3.7) -- (10.3,-3.7) node[right] {\scriptsize time};
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small $L_1$ and $L_4$ overlap $L_2$; $L_4$ overlaps $L_3$ too -- depth $=2$ at every instant, so $2$ rooms suffice
-\end{center}
-
-\bigskip
-\begin{theorem}[Odd pie fight -- creative induction]
-An odd number $n$ of people stand at pairwise distinct distances. Each simultaneously throws a pie at their \emph{nearest} neighbor. Then at least one person is not hit.
-\end{theorem}
-\begin{proof}
-Induction on odd $n$ (i.e.\ $n=2m+1$, induct on $m\ge1$).
-
-\textbf{Base case} ($n=3$): let $A,B,C$ be the three people. Some pair -- say $A,B$ -- is the \emph{closest} pair overall. Then $A,B$ pie each other; $C$'s pie goes to whichever of $A,B$ is closer to $C$. Either way, $A$ or $B$ is hit twice and $C$ isn't hit -- a survivor exists.
-
-\textbf{Inductive step}: assume the claim for $n=2k+1$ people, and consider $n=2k+3$. Find the overall closest pair $A,B$ -- they pie each other. Remove $A,B$: the other $2k+1$ people still throw pies among themselves at mutually distinct distances -- a valid instance of the same problem. By the inductive hypothesis, this group has a survivor, who also survives in the full group.
-
-By induction, every odd $n$ has a survivor.
-\end{proof}
-
-\begin{center}
-\begin{tikzpicture}[>={Stealth[length=2mm]}]
-\coordinate (A) at (0,0);
-\coordinate (B) at (1.5,0.3);
-\coordinate (C) at (3.5,1.5);
-\fill (A) circle (2pt) node[below] {$A$};
-\fill (B) circle (2pt) node[below] {$B$};
-\fill (C) circle (2pt) node[above] {$C$};
-\draw[->,thick] (A) -- (B);
-\draw[->,thick] (B) -- (A);
-\draw[->,thick] (C) -- (B);
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small Base case $n=3$: $A,B$ are the closest pair and pie each other; $C$ pies $B$ -- $A$ survives
-\end{center}
-
-\begin{note}
-False for even $n$: e.g.\ $4$ people can be arranged in two mutual-nearest-neighbor pairs, hitting everyone.
-\end{note}
-
-\bigskip
-\begin{theorem}[Deficient chessboard tiling, ordinary induction -- Rosen \S\ref{sec:5-1}]
-For every $n\ge1$, a $2^n\times2^n$ chessboard with any \emph{one} square removed can be exactly tiled by L-trominoes.
-\end{theorem}
-\begin{proof}
-\textbf{Base case} ($n=1$): a $2\times2$ board minus one square is exactly one L-tromino.
-
-\textbf{Inductive step}: assume every deficient $2^k\times2^k$ board can be tiled. Consider a deficient $2^{k+1}\times2^{k+1}$ board, split into four $2^k\times2^k$ quadrants.
-
-The missing square lies in exactly one quadrant -- deficient, tileable by the inductive hypothesis. Place one L-tromino at the very center, covering the corner cell of \emph{each} of the other three quadrants nearest the center -- making each of those quadrants deficient too.
-
-One central tromino plus four tiled quadrants tiles the whole board.
-
-By induction (using only $P(k)\Rightarrow P(k+1)$ -- this is \emph{ordinary}, not strong, induction, despite the recursive flavor), the claim holds for all $n\ge1$.
-\end{proof}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.55]
-\draw[thick] (0,0) rectangle (8,8);
-\draw[thick] (4,0) -- (4,8);
-\draw[thick] (0,4) -- (8,4);
-\fill[gray!30] (0.5,6.5) rectangle (1.5,7.5);
-\node at (0.7,7.9) [font=\tiny] {missing};
-\fill[orange!60] (3.5,3.5) rectangle (4.5,4.5);
-\fill[orange!60] (3.5,4.5) rectangle (4.5,5.5);
-\fill[orange!60] (4.5,3.5) rectangle (5.5,4.5);
-\node at (2,2) [font=\tiny] {Q3 (deficient by tromino)};
-\node at (6,2) [font=\tiny] {Q4 (deficient by tromino)};
-\node at (6,6) [font=\tiny] {Q2 (deficient by tromino)};
-\node at (2,6) [font=\tiny] {Q1 (already deficient)};
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small One tromino at the center makes the other three quadrants deficient too
-\end{center}
-
-\bigskip
-\begin{theorem}[Postage stamp problem, Rosen -- strong induction]
-Every integer $n \ge 12$ can be formed using only $4$-cent and $5$-cent stamps.
-\end{theorem}
-\begin{proof}
-\textbf{Base cases} ($n=12,13,14,15$):
-\[
-12=4+4+4, \qquad 13=4+4+5, \qquad 14=4+5+5, \qquad 15=5+5+5.
-\]
-
-\textbf{Inductive step}: let $k \ge 15$, and suppose every integer from $12$ to $k$ can be formed. Consider $k+1$. Since $k+1 \ge 16$, we have $k+1-4 \ge 12$, so by the strong inductive hypothesis, $k+1-4$ can be formed. Add one more $4$-cent stamp to form $k+1$.
-
-By strong induction, every $n \ge 12$ can be formed.
-\end{proof}
-
-\begin{note}[Why strong induction, not weak]
-The step for $k+1$ reaches back to $k+1-4$, which for small $k$ is \emph{not} simply $k$ or $k-1$ -- ordinary induction, which only hands you $S(k)$, isn't enough here.
-\end{note}
 
 \bigskip
 \begin{theorem}[Existence of prime factorization -- classic strong induction example]
@@ -2561,16 +1953,6 @@ Consider $S = \{a-dq : q\in\Z,\ a-dq\ge0\}$. $S\subseteq\N$ and $S\neq\emptyset$
 We claim $r<d$. If not, $r-d = a-d(q_0+1) \in S$, but $r-d<r$, contradicting minimality of $r$.
 
 So $r<d$, and $q=q_0$ gives $a=dq+r$ with $0\le r<d$.
-\end{proof}
-
-\bigskip
-\begin{example}[Game-strategy example, Rosen -- strong induction, non-numeric]
-Two players alternately remove $1$ or $2$ stones from a pile; the player taking the last stone wins. Claim: the first player wins whenever $n\not\equiv0\pmod3$, and loses whenever $n\equiv0\pmod3$.
-\end{example}
-\begin{proof}[Proof sketch, strong induction on $n$]
-\textbf{Base cases}: $n=1,2$: first player wins. $n=3$: whatever the first player takes, the opponent wins -- first player loses.
-
-\textbf{Inductive step}: assume the claim for all pile sizes less than $n$. If $n\equiv0\pmod3$: any move leaves $n-1$ or $n-2$, neither $\equiv0\pmod3$, so the opponent wins -- first player loses. If $n\not\equiv0\pmod3$: the first player can always leave a multiple of $3$, putting the opponent in a losing position.
 \end{proof}
 
 \bigskip
@@ -2626,25 +2008,6 @@ By strong induction, the claim holds for all $n\ge3$.
 \begin{center}
 \small A hexagon triangulated by $3$ diagonals into $4$ triangles
 \end{center}
-
-\bigskip
-\begin{theorem}[The matchstick game -- Rosen \S\ref{sec:5-2}, Example 4, strong induction]
-Two piles start with $n$ matches each. Players alternate turns; each turn, remove any positive number of matches from \emph{one} pile. The player who removes the last match wins. Then the \emph{second} player can always force a win, for every $n\ge1$.
-\end{theorem}
-\begin{proof}
-Let $P(n)$: ``if both piles start with $n$ matches, the second player can force a win.''
-
-\textbf{Base case} ($n=1$): the first player must remove the single match from one pile; the second takes the other and wins.
-
-\textbf{Inductive step}: let $k\ge1$, suppose $P(1),\dots,P(k)$ hold. Whatever the first player does -- removing $r$ matches from one pile -- the second mirrors on the other pile.
-
-\begin{itemize}
-    \item If $r=k+1$: the second empties the other pile, winning immediately.
-    \item If $r<k+1$: both piles now have equal size $k+1-r\le k$ -- by $P(k+1-r)$, the second player can force a win from there.
-\end{itemize}
-
-Either way, the second player wins. By strong induction, $P(n)$ holds for all $n\ge1$.
-\end{proof}
 
 \bigskip
 \begin{theorem}[Round-robin tournament ranking -- classic strong induction example]
@@ -2746,42 +2109,6 @@ $S \subseteq A\times B$ contains an injection with domain $A$ $\iff$ $|X|\le|S(X
 
 \begin{note}[Why this matters]
 This gives easily \emph{verifiable} evidence in both directions: a ``yes'' is witnessed by the injection itself (checkable directly); a ``no'' is witnessed by a single offending set $X$ with $|X|>|S(X)|$ -- no need to search the whole space of possible assignments. This is a defect-form statement of \emph{Hall's marriage theorem}.
-\end{note}
-
-\subsection{Mathematical induction and statistical induction}
-\label{sec:3-13}
-% CN 3.13
-
-\begin{note}
-\emph{Statistical induction} (drawing general conclusions from data, typically under randomness, tolerating some error) is unrelated to \emph{mathematical induction} despite the shared name. Statistical induction is not logical deduction and cannot serve as a proof step; mathematical induction is a rigorous deductive technique. Don't conflate the two.
-\end{note}
-
-\subsection{Programs and proofs}
-\label{sec:3-14}
-% CN 3.14 / Rosen 5.4-5.5
-
-\begin{note}[The analogy, point by point]
-\begin{itemize}
-    \item \textbf{Statements}: a program is a sequence of statements in a programming language; a proof is a sequence of statements in mathematical language (augmented by precise natural language).
-    \item \textbf{Variables}: both use named references to objects; program variables have allocated memory, proof variables do not.
-    \item \textbf{Sequential dependence}: a program statement uses only the most recently computed value of a variable, never a later one; a proof statement is justified only by \emph{earlier} statements, never later ones.
-    \item \textbf{Branching}: an if-statement picks a branch by a logical condition; proof by cases (\S\ref{sec:3-8}) covers all situations via a finite set of logical conditions.
-    \item \textbf{Calling other code}: a program calls other functions/programs; a proof invokes previously proved theorems.
-    \item \textbf{Repetition}: a program repeats via loops or recursion; a proof repeats (in effect) via mathematical induction.
-    \item \textbf{Bugs}: a program with a bug may crash on some inputs but still work on others; a proof with a genuine gap is \emph{not a proof at all} -- it must be repaired, or the claim may simply be false.
-\end{itemize}
-\end{note}
-
-\begin{note}[Loops $\leftrightarrow$ induction, Rosen \S\ref{sec:5-5}]
-Proving a loop computes the correct result typically uses a \emph{loop invariant}: a statement $I$ that (i) holds before the loop begins, and (ii) if true before an iteration, remains true after it -- exactly the base case and inductive step of mathematical induction, applied to ``iteration number.'' If $I$ also implies the desired postcondition once the loop terminates, this establishes \emph{partial correctness}.
-\end{note}
-
-\begin{note}[Recursion $\leftrightarrow$ structural induction, Rosen \S\ref{sec:5-3}-5.4]
-Proving a recursive function correct mirrors proving a recursively-defined structure has some property: verify the function is correct on the base case(s) of the recursion, then verify that, \emph{assuming} correctness on smaller/simpler inputs (the recursive calls), the function is correct on the current input -- the direct analogue of an inductive hypothesis.
-\end{note}
-
-\begin{note}[Programming paradigms]
-Just as learning multiple programming paradigms (procedural, object-oriented, logic, functional) improves programming skill generally, learning to write rigorous proofs -- a distinct ``paradigm'' of precise reasoning -- transfers back to writing better, more carefully-reasoned programs.
 \end{note}
 
 % ============================================================
@@ -3113,15 +2440,6 @@ By induction, the claim holds for all $n$.
 \begin{note}[Analogy with symmetric difference]
 $x \in A_1 \triangle \cdots \triangle A_n \iff (x\in A_1)\oplus\cdots\oplus(x\in A_n)$ (\S\ref{sec:1-13}).
 \end{note}
-
-\bigskip
-\begin{example}[Knights and knaves, Rosen -- a harder puzzle]
-On an island, every inhabitant is either a \emph{knight} (always tells the truth) or a \emph{knave} (always lies). $A$ says: ``$B$ is a knave.'' $B$ says: ``$A$ and $I$ are of opposite types.''
-
-Let $a$ = ``$A$ is a knight'', $b$ = ``$B$ is a knight.'' $A$'s statement, if $A$ is a knight, must be true, and if $A$ is a knave, must be false -- i.e.\ $a \iff \neg b$. $B$'s statement ``$A,B$ are opposite types'' is $a \oplus b$; by the same reasoning, $b \iff (a\oplus b)$.
-
-From $a \iff \neg b$: exactly one of $a,b$ is true. Substitute into $b \iff (a\oplus b)$: since exactly one of $a,b$ is true, $a\oplus b$ is true, so this forces $b$ true, hence $a$ false. So $A$ is a knave, $B$ is a knight.
-\end{example}
 
 \subsection{Tautologies and logical equivalence}
 \label{sec:4-12}
@@ -3489,25 +2807,6 @@ For variables $x_1,\dots,x_n$:
 \]
 \end{definition}
 
-\begin{example}
-At most $2$ of $w,x,y,z$ true ($n=4,k=2$, so $\binom{4}{3}=4$ conjuncts, one per $3$-subset of $\{w,x,y,z\}$):
-\[
-(\neg w\vee\neg x\vee\neg y)\wedge(\neg w\vee\neg x\vee\neg z)\wedge(\neg w\vee\neg y\vee\neg z)\wedge(\neg x\vee\neg y\vee\neg z).
-\]
-\end{example}
-
-\begin{note}[Cost, and a linear-size alternative]
-The encodings above have size $\Theta\big(\binom{n}{k+1}\big)$ or $\Theta\big(\binom{n}{n-k+1}\big)$ -- exponential in the worst case ($k\approx n/2$). Sinz (2005) gives a \emph{sequential-counter} encoding using $O(nk)$ auxiliary variables and $O(nk)$ clauses: auxiliary variables $s_{i,j}$ track ``at least $j$ of $x_1,\dots,x_i$ are true,'' updated via
-\[
-s_{i,j} \implies s_{i+1,j}, \qquad (x_{i+1}\wedge s_{i,j}) \implies s_{i+1,j+1},
-\]
-avoiding the combinatorial blow-up of the direct encoding above.
-\end{note}
-
-\begin{note}[Reference]
-C.\ Sinz, ``Towards an Optimal CNF Encoding of Boolean Cardinality Constraints,'' \emph{Principles and Practice of Constraint Programming (CP 2005)}, LNCS 3709, pp.\ 827--831.
-\end{note}
-
 \subsection{Universal sets of operations}
 \label{sec:4-20}
 % CN 4.20 / Rosen 1.1 (Sheffer stroke)
@@ -3567,10 +2866,6 @@ x+(y\cdot z)=(x+y)\cdot(x+z),\ x\cdot(y+z)=(x\cdot y)+(x\cdot z) &\quad \text{(d
 \end{align*}
 \end{definition}
 
-\begin{note}[Two familiar instances]
-$B=\{0,1\}$ with $+=\vee,\ \cdot=\wedge,\ \overline{x}=\neg x$ (propositional logic, \S\ref{sec:4-15}) is a Boolean algebra; so is $B=\mathcal P(S)$ with $+=\cup,\ \cdot=\cap,\ \overline{X}=S\setminus X$ (\S\ref{sec:1-11}-1.12). Every law in \S\ref{sec:4-15}'s table has a direct set-theoretic mirror in \S\ref{sec:1-11}-1.12, and vice versa -- both are instances of the same abstract structure.
-\end{note}
-
 \begin{theorem}[Duality principle]
 Every identity in a Boolean algebra remains true if $+\leftrightarrow\cdot$ and $0\leftrightarrow1$ are swapped throughout (its \emph{dual}).
 \end{theorem}
@@ -3618,10 +2913,6 @@ Every Boolean function $f\not\equiv0$ can be written as a sum (OR) of minterms.
 For each input $(a_1,\dots,a_n)\in\{0,1\}^n$ with $f(a_1,\dots,a_n)=1$, form the minterm $m = y_1\cdot y_2\cdots y_n$ where $y_i=x_i$ if $a_i=1$, else $y_i=\overline{x_i}$. This $m$ equals $1$ exactly at that one input (every other input disagrees with $a_i$ in some coordinate, making that literal $0$, hence the whole product $0$). Summing (OR-ing) all such minterms, one per input where $f=1$: the result is $1$ exactly at those inputs and $0$ elsewhere -- matching $f$ everywhere.
 \end{proof}
 
-\begin{note}
-This is exactly \S\ref{sec:4-16}'s DNF, restated with "minterm" as the formal name for each DNF disjunct, and now with a proof that the construction always succeeds (\S\ref{sec:4-16} only worked one example).
-\end{note}
-
 \subsubsection{Logic gates}
 % Rosen 12.3
 
@@ -3668,66 +2959,6 @@ s = x\oplus y\oplus c_{\mathrm{in}}, \qquad c_{\mathrm{out}} = (x\cdot y)+(c_{\m
 An $n$-bit adder chains $n$ full adders, feeding each one's $c_{\mathrm{out}}$ into the next's $c_{\mathrm{in}}$ (\emph{ripple-carry adder}) -- this is exactly how integer addition is implemented at the hardware level, and it is a direct physical realization of \S\ref{sec:6-6}/6.7's recursive definitions: $s_i,c_{i+1}$ each depend only on $x_i,y_i,c_i$, exactly a recurrence in $i$.
 \end{note}
 
-\subsubsection{Minimization of circuits}
-% Rosen 12.4
-
-\begin{note}[Motivation]
-Different sum-of-products expressions for the same function can need very different numbers of gates -- minimization finds an equivalent expression with fewest literals/terms, directly reducing circuit cost.
-\end{note}
-
-\begin{definition}[Karnaugh map (K-map)]
-A grid of cells, one per minterm, arranged so that \emph{adjacent} cells (including wraparound) differ in exactly one variable. Circling a rectangular block of $2^k$ adjacent $1$-cells corresponds to a single product term with $k$ fewer literals than a minterm.
-\end{definition}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.8]
-\draw (0,0) grid (4,4);
-\node at (-0.5,3.5) {$00$}; \node at (-0.5,2.5) {$01$}; \node at (-0.5,1.5) {$11$}; \node at (-0.5,0.5) {$10$};
-\node at (0.5,4.3) {$00$}; \node at (1.5,4.3) {$01$}; \node at (2.5,4.3) {$11$}; \node at (3.5,4.3) {$10$};
-\node[left] at (-1,3.5) {\small $wx$};
-\node[above] at (2,4.6) {\small $yz$};
-\node at (0.5,3.5) {1}; \node at (1.5,3.5) {0}; \node at (2.5,3.5) {0}; \node at (3.5,3.5) {1};
-\node at (0.5,2.5) {1}; \node at (1.5,2.5) {0}; \node at (2.5,2.5) {0}; \node at (3.5,2.5) {1};
-\node at (0.5,1.5) {0}; \node at (1.5,1.5) {0}; \node at (2.5,1.5) {0}; \node at (3.5,1.5) {0};
-\node at (0.5,0.5) {0}; \node at (1.5,0.5) {0}; \node at (2.5,0.5) {0}; \node at (3.5,0.5) {0};
-\draw[thick,red] (0,2) rectangle (1,4);
-\draw[thick,blue] (3,2) rectangle (4,4);
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small $4$-variable K-map: red block gives $\overline{x}\,\overline{y}\,\overline{z}$, blue block gives $\overline{x}yz$ -- both size-$2$ blocks (one variable eliminated each)
-\end{center}
-
-\begin{note}[Reading off blocks]
-A block of size $2^k$ eliminates exactly $k$ variables from its minterm (the $k$ variables that differ across the block's cells); the surviving literals are read from whichever value ($0\to$negated, $1\to$plain) is constant across the whole block.
-\end{note}
-
-\begin{definition}[Don't-care condition]
-An input combination that (by problem constraints) never actually occurs; marked `d' or `$\times$' on the K-map, and can be treated as either $0$ or $1$ -- whichever helps form a larger block.
-\end{definition}
-
-\bigskip
-\begin{note}[Quine-McCluskey algorithm, Rosen -- harder, systematic alternative]
-K-maps become impractical beyond $4$--$5$ variables (grids too large to draw/read visually). The \emph{Quine-McCluskey algorithm} systematizes the same idea.
-\end{note}
-
-\begin{algorithm}[H]
-\SetAlgoLined
-\KwIn{List of minterms as bit strings}
-\KwOut{Set of prime implicants covering every minterm}
-terms $\gets$ minterms, each unmarked\;
-\While{some pair in terms differs in exactly one bit}{
-    \ForEach{pair $(t_1,t_2)$ differing in exactly one bit}{
-        mark $t_1,t_2$ as combined\;
-        add $t_1$ with that bit replaced by ``--'' to newTerms\;
-    }
-    terms $\gets$ newTerms (duplicates removed)\;
-}
-primeImplicants $\gets$ all terms never marked combined\;
-select a minimal subset of primeImplicants covering every original minterm (set-cover)\;
-\Return{selected subset}\;
-\caption{Quine-McCluskey algorithm}
-\end{algorithm}
 
 % ============================================================
 % CHAPTER 5 --- PREDICATE LOGIC  (CN Ch.5, §5.1-5.15)
@@ -3783,10 +3014,6 @@ An object belonging to the domain of some variable -- a specific, named member o
 E.g.\ ``let $x\in\Z$'' declares $x$ with domain $\Z$; a Boolean variable always has domain $\{T,F\}$.
 \end{note}
 
-\begin{note}[Math vs.\ programming variables, Rosen]
-A programming variable occupies memory and is restricted to finite/representable values; a mathematical variable has no memory association and its domain may be infinite.
-\end{note}
-
 \subsection{Predicates and variables}
 \label{sec:5-3}
 % CN 5.3 / Rosen 1.4
@@ -3802,10 +3029,6 @@ An expression with $\ge1$ free variable is not a proposition (no truth value). O
 \begin{note}[Domain matching is mandatory]
 Any value or variable placed into an argument of a predicate must belong to that argument's declared domain -- mismatched domains make the expression ill-formed, not just false.
 \end{note}
-
-\begin{example}
-$\mathrm{Parent}(\text{Alan Turing}, X)$ with $X$ a free variable, domain $\mathbb P$ (people): not a proposition. Substituting $X=$``Sara Turing'' gives the proposition $\mathrm{Parent}(\text{Alan Turing},\text{Sara Turing})$, true.
-\end{example}
 
 \begin{note}[Prefix vs.\ infix notation, Rosen]
 Newly defined predicates typically use prefix notation, $R(a,b)$; predicates for ordering/equality/equivalence conventionally use infix notation, $a<b$, $a=b$ (\S\ref{sec:2-5}).
@@ -3882,14 +3105,6 @@ is a term of domain $\mathbb P$. Consequently,
 is also a term of domain $\mathbb P$.
 \end{example}
 
-\begin{example}[Not terms]
-$2+3+$ (malformed), $x{+}{+}$ (undefined operation here), $\log x$ (if $\log$ is not among the available functions), $z$ (if $z$ is neither a declared variable nor constant).
-\end{example}
-
-\begin{note}
-Only terms whose domain matches an argument's declared domain may be plugged into that argument -- of a function \emph{or} a predicate; the same matching rule applies uniformly at every level of nesting.
-\end{note}
-
 \subsection{Building logical expressions with predicates}
 \label{sec:5-5}
 % CN 5.5 / Rosen 1.4
@@ -3909,10 +3124,6 @@ A predicate logic expression's free variables are the union of the free variable
 \begin{example}
 $(1<i)\wedge(i<n)$ has free variables $i,n$. $\mathrm{Parent}(X,Y)\iff\big(Y=\mathrm{MotherOf}(X)\big)\vee\big(Y=\mathrm{FatherOf}(X)\big)$ has free variables $X,Y$.
 \end{example}
-
-\begin{note}[Boolean algebra applies unchanged]
-Every law from Chapter 4 (De Morgan's, distributive, etc.) applies to predicate logic expressions exactly as to propositions -- since fixing values for all free variables reduces any predicate expression to an ordinary proposition, and the laws hold for \emph{every} such assignment.
-\end{note}
 
 \subsection{Existential quantifier}
 \label{sec:5-6}
@@ -3950,18 +3161,6 @@ If $x$ does not appear in $P$, $\exists x\, P$ is equivalent to $P$ itself (the 
 Quantifiers apply only to variables, never to constants: $\exists 5$ or $\exists\text{Annie}$ are ill-formed.
 \end{note}
 
-\bigskip
-\begin{example}[Rosen -- harder: nested quantifiers and negation]
-Let $P(x,y)$ mean ``$x+y=0$'' on domain $\R$. Consider $\exists x\, \forall y\, P(x,y)$ vs.\ $\forall y\, \exists x\, P(x,y)$.
-\[
-\exists x\, \forall y\, P(x,y): \text{one fixed } x \text{ that works for \emph{every} } y \text{ -- false (no single } x \text{ satisfies } x+y=0 \text{ for all } y\text{)}.
-\]
-\[
-\forall y\, \exists x\, P(x,y): \text{for each } y, \text{ some } x \text{ (possibly depending on } y\text{) works -- true, take } x=-y.
-\]
-This shows quantifier \emph{order} genuinely matters -- covered fully in \S\ref{sec:5-10}.
-\end{example}
-
 \subsection{Restricting existentially quantified variables}
 \label{sec:5-7}
 % CN 5.7 / Rosen 1.4 (restricted quantifiers)
@@ -3971,20 +3170,6 @@ To assert ``some $X$ satisfying $R(X)$ also satisfies $P(X)$'':
 \[
 \exists X:\ R(X) \wedge P(X).
 \]
-\end{note}
-
-\begin{example}[Correct vs.\ a common wrong attempt]
-``Some computer is human'':
-\[
-\text{correct: } \exists X:\ \mathrm{computer}(X)\wedge\mathrm{human}(X), \qquad
-\text{wrong: } \exists X:\ \mathrm{computer}(X)\implies\mathrm{human}(X).
-\]
-The wrong version says ``something is not a computer, or is human'' -- true of any non-computer, regardless of computers at all, so it fails to capture the intended restriction.
-\end{example}
-
-\bigskip
-\begin{note}[Rosen's restricted-quantifier shorthand]
-Rosen writes $\exists X \in D\, [\dots]$ or $\exists X<0\, [\dots]$ directly as shorthand for the conjunction above, folding the restriction into the quantifier notation itself rather than writing it as an explicit $\wedge$.
 \end{note}
 
 \subsection{Universal quantifier}
@@ -4019,19 +3204,6 @@ To assert ``every $X$ satisfying $R(X)$ also satisfies $P(X)$'':
 \]
 \end{note}
 
-\begin{example}[Correct vs.\ a common wrong attempt]
-``Every computer is human'':
-\[
-\text{correct: } \forall X:\ \mathrm{computer}(X)\implies\mathrm{human}(X), \qquad
-\text{wrong: } \forall X:\ \mathrm{computer}(X)\wedge\mathrm{human}(X).
-\]
-The wrong version says ``everything is both a computer and human'' -- forces non-computers to also be human computers, which was never intended.
-\end{example}
-
-\begin{note}[The mirror-image trap, worth memorizing]
-$\exists$ pairs naturally with $\wedge$; $\forall$ pairs naturally with $\implies$. Swapping these (using $\implies$ with $\exists$, or $\wedge$ with $\forall$) is one of the most common predicate-logic errors -- always double check which connective a restricted quantifier needs.
-\end{note}
-
 \bigskip
 \begin{theorem}[De Morgan's for quantifiers, Rosen -- preview of \S\ref{sec:5-13}]
 \[
@@ -4059,14 +3231,6 @@ Consequence: negating $\forall X: R(X)\implies P(X)$ gives $\exists X: R(X)\wedg
 \]
 are, in general, four genuinely different statements.
 \end{note}
-
-\begin{example}[hasVisited$(P,C)$: person $P$ has visited country $C$]
-\[
-\exists P\,\forall C:\ \text{someone has visited every country}, \qquad
-\forall C\,\exists P:\ \text{every country has been visited by someone}.
-\]
-The first is a strong claim about one exceptional traveler; the second is far weaker (each country just needs \emph{some} visitor, possibly a different one each time).
-\end{example}
 
 \bigskip
 \begin{example}[Rosen -- classic order-matters example]
@@ -4293,27 +3457,6 @@ Read aloud: ``for every candidate limit value $L$, there is some $\epsilon>0$ su
 Each of the four inner negation steps flips $\forall\leftrightarrow\exists$ and pushes $\neg$ past exactly one quantifier, mirroring the definitions in \S\ref{sec:5-13} one at a time; only the final step differs, converting the negated implication via ordinary propositional logic rather than a quantifier law.
 \end{note}
 
-\bigskip
-\begin{example}[Negating a triple-nested quantifier statement -- Rosen, harder]
-``There is no woman who has flown on every airline in the world.'' Let $P(w,f)$: ``woman $w$ has taken flight $f$''; $Q(f,a)$: ``flight $f$ is on airline $a$.'' ``Some woman has flown on every airline'' is
-\[
-\exists w\,\forall a\,\exists f\,\big(P(w,f)\wedge Q(f,a)\big),
-\]
-so the negation is $\neg\exists w\,\forall a\,\exists f\,(P(w,f)\wedge Q(f,a))$. Pushing the negation inward, one quantifier at a time:
-\begin{align*}
-&\phantom{{}\equiv{}} \neg\exists w\,\forall a\,\exists f\,(P(w,f)\wedge Q(f,a)) \\
-&\equiv \forall w\,\neg\forall a\,\exists f\,(P(w,f)\wedge Q(f,a)) \\
-&\equiv \forall w\,\exists a\,\neg\exists f\,(P(w,f)\wedge Q(f,a)) \\
-&\equiv \forall w\,\exists a\,\forall f\,\neg(P(w,f)\wedge Q(f,a)) \\
-&\equiv \forall w\,\exists a\,\forall f\,\big(\neg P(w,f)\vee\neg Q(f,a)\big).
-\end{align*}
-Reading it back: ``for every woman, there is some airline such that, for every flight, either she hasn't taken that flight or that flight isn't on that airline.''
-\end{example}
-
-\begin{note}
-Three nested quantifiers, three applications of the same rule from \S\ref{sec:5-13} -- the pattern doesn't change with depth, only the bookkeeping does.
-\end{note}
-
 \subsection{Summary of rules for logic with quantifiers}
 \label{sec:5-14}
 % CN 5.14
@@ -4440,18 +3583,6 @@ Rosen defines a sequence identically: a function from a subset of $\Z$ (typicall
 A sequence is \emph{not} well-defined merely by listing a few terms and trusting a "pattern" -- infinitely many different formulas can match any finite initial segment (see \S\ref{sec:6-2}'s exercise on this danger, and the counterexample below).
 \end{note}
 
-\begin{example}[A pattern-guessing trap, Rosen -- harder]
-The sequence $1,2,4,8,16,\dots$ (five terms shown) matches $a_n = 2^{n-1}$ -- but it also matches
-\[
-a_n = \binom{n-1}{0}+\binom{n-1}{1}+\binom{n-1}{2}+\binom{n-1}{3}+\binom{n-1}{4},
-\]
-which equals $1,2,4,8,16$ for $n=1,\dots,5$ but gives $31$, not $32$, at $n=6$ (since the $\binom{n-1}{5}$ term, absent from this formula, would otherwise contribute). A finite list of terms never uniquely determines a sequence.
-\end{example}
-
-\begin{note}[Number sequences]
-Sequences over $\N,\Z,\Q,\R$ (\emph{number sequences}) are especially important -- not only for direct computation, but for measuring properties of computation itself: running time, memory use, input/output size, and so on.
-\end{note}
-
 \subsection{Recursive definitions of sequences}
 \label{sec:6-2}
 % CN 6.2 / Rosen 2.4, 5.3
@@ -4483,11 +3614,6 @@ f_1=1,\ f_n=nf_{n-1} \quad\Rightarrow\quad 1,2,6,24,120,\dots \text{ (factorials
 \begin{note}[Multiple base cases]
 $f_n=4f_{n-2}$ (depending on the term \emph{two} back) needs \emph{two} base cases, $f_1,f_2$, to determine the whole sequence -- one base case alone only fixes every other term. E.g.\ $f_1=2,f_2=0,\ f_n=4f_{n-2}$ gives $2,0,8,0,32,0,\dots$
 \end{note}
-
-\bigskip
-\begin{example}[Structural induction preview, Rosen \S\ref{sec:5-3} -- harder]
-Recursively-defined \emph{sets} follow the same base/recursive pattern: e.g.\ the set $S$ of "balanced parenthesis strings" is defined by (i) $\varepsilon\in S$ (base case); (ii) if $w\in S$, then $(w)\in S$ and, if $u,v\in S$, then $uv\in S$ (recursive case). Proving a property $P$ holds for every $w\in S$ then uses \emph{structural induction}: prove $P$ for the base case, and prove that the recursive case preserves $P$ (assuming it holds for the smaller pieces used to build $w$) -- the direct set-theoretic analogue of induction on sequences.
-\end{example}
 
 \subsection{Arithmetic sequences}
 \label{sec:6-3}
@@ -4576,11 +3702,6 @@ a_n = \alpha_1 r_1^n + \alpha_2 r_2^n + \cdots + \alpha_k r_k^n
 \]
 for constants $\alpha_1,\dots,\alpha_k$ determined by the initial conditions.
 \end{theorem}
-\begin{note}[Why this is really linear algebra]
-The set of all sequences satisfying this recurrence forms a vector space: if $(b_n)$ and $(c_n)$ both satisfy it, so does any combination $\beta b_n+\gamma c_n$ (the recurrence is \emph{linear}). This space has dimension $k$ -- a solution is pinned down entirely by its $k$ initial values $a_0,\dots,a_{k-1}$.
-
-Each geometric sequence $r_i^n$ is itself a solution (plugging it into the recurrence and using $r_i^k=c_1r_i^{k-1}+\cdots+c_k$ confirms it). When the $r_i$ are distinct, these $k$ solutions are \emph{linearly independent} -- this is exactly a Vandermonde-determinant fact from linear algebra: distinct roots $\Rightarrow$ nonzero Vandermonde determinant $\Rightarrow$ independence. $k$ independent vectors in a $k$-dimensional space form a \emph{basis}, so every solution is a unique linear combination of them -- which is exactly the formula above, with $\alpha_1,\dots,\alpha_k$ solved for using whatever initial conditions are given.
-\end{note}
 
 \begin{example}[Solving a second-order recurrence -- harder, worked example]
 \[
@@ -4601,66 +3722,6 @@ From the first equation, $\alpha_1=1-\alpha_2$; substituting: $2(1-\alpha_2)+3\a
 \[
 a_n = -2^n + 2\cdot3^n.
 \]
-\end{example}
-
-\begin{note}[Why this beats guess-and-check]
-The explore-conjecture-prove method above needs a pattern to be \emph{visible} in the first few terms -- it can fail entirely on recurrences with less obvious closed forms (this one, $a_n=5a_{n-1}-6a_{n-2}$, produces $1,4,14,46,\dots$, no obvious pattern by inspection). The characteristic-equation method is systematic: it always works, whenever the roots can be found. This is exactly the machinery behind the exact Fibonacci formula in \S\ref{sec:6-7-4}.
-\end{note}
-
-\bigskip
-\begin{definition}[Recursively defined set, Rosen \S\ref{sec:5-3}]
-A set $S$ is defined recursively by:
-\begin{itemize}
-    \item \textbf{Basis step}: specify an initial collection of elements in $S$.
-    \item \textbf{Recursive step}: rules that construct new elements of $S$ from existing ones.
-    \item (Implicitly) $S$ contains \emph{only} elements obtainable this way.
-\end{itemize}
-\end{definition}
-
-\begin{example}[Balanced parenthesis strings]
-Define $B$ recursively: (i) $\varepsilon\in B$ (empty string); (ii) if $w\in B$, then $(w)\in B$; (iii) if $u,v\in B$, then $uv\in B$.
-\end{example}
-
-\begin{definition}[Recursively defined function, Rosen \S\ref{sec:5-3}]
-A function $f$ on a recursively defined set $S$ is defined by: giving $f$'s value(s) on the basis elements, and giving a rule for $f$'s value on a constructed element in terms of $f$'s value(s) on the piece(s) it was built from.
-\end{definition}
-
-\begin{example}
-$n!$ on $\N$ (basis: $0!=1$; recursive: $n!=n\cdot(n-1)!$) fits this exact pattern -- a recursively defined function on the recursively defined set $\N$.
-\end{example}
-
-\begin{theorem}[Structural induction, Rosen \S\ref{sec:5-3}]
-To prove property $P$ holds for every element of a recursively defined set $S$:
-\begin{itemize}
-    \item \textbf{Basis step}: prove $P$ holds for every basis element.
-    \item \textbf{Recursive step}: prove that, if $P$ holds for the element(s) a recursive rule builds from, $P$ holds for the newly constructed element too.
-\end{itemize}
-\end{theorem}
-
-\begin{example}[Structural induction on balanced parentheses -- harder]
-Prove: every $w\in B$ has an equal number of `(' and `)'.
-\end{example}
-\begin{proof}
-\textbf{Basis step}: $\varepsilon$ has $0$ of each -- equal.
-
-\textbf{Recursive step, rule (ii)}: suppose $w\in B$ has equal counts, say $k$ each. Then $(w)$ has $k+1$ of each -- still equal.
-
-\textbf{Recursive step, rule (iii)}: suppose $u,v\in B$ have equal counts $k_u,k_v$ respectively. Then $uv$ has $k_u+k_v$ of each -- still equal.
-
-By structural induction, every $w\in B$ has equal counts of `(' and `)'.
-\end{proof}
-
-\begin{note}[Structural induction $\equiv$ ordinary induction, in disguise]
-Structural induction is not a genuinely new principle -- it is ordinary (or strong) induction on the "construction depth" of an element (how many recursive steps were used to build it), applied to the recursively defined set instead of to $\N$ directly.
-\end{note}
-
-\bigskip
-\begin{example}[Rabbit population, Rosen \S8.1 -- the origin of Fibonacci]
-A pair of rabbits produces one new pair each month starting from their second month of life; no rabbit dies. Let $f_n$ = number of pairs after $n$ months, starting from one newborn pair. Then $f_1=1,f_2=1$, and for $n\ge3$: pairs present at month $n$ = pairs already alive at month $n-1$, plus new pairs born (one per pair that was already alive and mature at month $n-2$):
-\[
-f_n = f_{n-1}+f_{n-2},
-\]
-exactly the Fibonacci recurrence (\S\ref{sec:6-7}).
 \end{example}
 
 \begin{example}[Tower of Hanoi, Rosen \S8.1]
@@ -4698,10 +3759,6 @@ where $a_n^{(p)}$ is any \emph{one} particular solution to the nonhomogeneous re
 If $a_n^{(p)}$ solves the nonhomogeneous recurrence and $(b_n)$ is \emph{any} solution to it, then $b_n-a_n^{(p)}$ satisfies the \emph{homogeneous} recurrence (subtracting the two nonhomogeneous equations cancels $F(n)$). So $b_n-a_n^{(p)} = a_n^{(h)}$ for some homogeneous solution, i.e.\ $b_n=a_n^{(p)}+a_n^{(h)}$.
 \end{proof}
 
-\begin{note}[Finding a particular solution -- trial forms]
-When $F(n)$ is a polynomial times $s^n$, try $a_n^{(p)}$ of the same shape (polynomial of the same degree times $s^n$) -- unless $s$ is itself a root of the characteristic equation, in which case multiply by $n$ (or $n^m$ for a root of multiplicity $m$).
-\end{note}
-
 \begin{example}[Worked nonhomogeneous example -- harder]
 \[
 a_n = 3a_{n-1}+2^n, \qquad a_0=1.
@@ -4720,32 +3777,6 @@ So $a_n^{(p)}=-2\cdot2^n=-2^{n+1}$.
 \textbf{Match $a_0=1$}: $\alpha-2=1\Rightarrow\alpha=3$.
 
 \textbf{Closed form}: $a_n = 3^{n+1}-2^{n+1}$.
-\end{example}
-
-\bigskip
-\begin{theorem}[General solution, distinct and repeated roots combined]
-Let the characteristic equation of a linear homogeneous recurrence with constant coefficients (Definition 6.12) factor as
-\[
-x^k-c_1x^{k-1}-\cdots-c_k = (x-r_1)^{m_1}(x-r_2)^{m_2}\cdots(x-r_t)^{m_t},
-\]
-where $r_1,\dots,r_t$ are the distinct roots with multiplicities $m_1,\dots,m_t$ and $m_1+m_2+\cdots+m_t=k$. Then every solution has the form
-\[
-a_n = \sum_{i=1}^{t}\Big(\alpha_{i,0}+\alpha_{i,1}n+\alpha_{i,2}n^2+\cdots+\alpha_{i,m_i-1}n^{m_i-1}\Big)\,r_i^{\,n},
-\]
-for constants $\alpha_{i,j}$ determined by the $k$ initial conditions $a_0,\dots,a_{k-1}$.
-\end{theorem}
-
-\begin{corollary}[\text{Single repeated root, } $t=1$]
-If the characteristic equation has a \emph{single} root $r$ of multiplicity $m=k$, the sum above collapses to one term, so the general solution is
-\[
-a_n = (\alpha_0+\alpha_1n+\alpha_2n^2+\cdots+\alpha_{m-1}n^{m-1})\,r^n
-\]
-instead of a single term $\alpha r^n$.
-\end{corollary}
-\textit{Note.} \ This statement subsumes both special cases already given: if every root is simple ($m_i=1$ for all $i$, so $t=k$), each bracket collapses to the single constant $\alpha_{i,0}$ and the formula reduces to Theorem 6.13; if $k=2$ with a single double root ($t=1$, $m_1=2$), it reduces to Theorem 6.27's $(\alpha_0+\alpha_1n)r^n$. In general each root contributes exactly $m_i$ degrees of freedom, and $\sum m_i=k$ guarantees the total matches the dimension of the solution space (see the Note after Theorem 6.13).
-
-\begin{example}
-$a_n=4a_{n-1}-4a_{n-2}$: characteristic equation $x^2-4x+4=(x-2)^2=0$, double root $r=2$. General solution: $a_n=(\alpha_0+\alpha_1n)2^n$.
 \end{example}
 
 \bigskip
@@ -4783,10 +3814,6 @@ f(n) = a^kf(1) + cn^d\sum_{i=0}^{k-1}\left(\frac{a}{b^d}\right)^i.
 The geometric sum $\sum(a/b^d)^i$ behaves differently depending on whether the ratio $a/b^d$ is $<1$, $=1$, or $>1$ -- giving the three cases (via the finite geometric series formula, \S\ref{sec:6-13}, and $a^k=a^{\log_b n}=n^{\log_b a}$).
 \end{proof}
 
-\begin{example}[Applying it to merge sort]
-$a=2,\ b=2,\ d=1$: $a=b^d$ ($2=2^1$), so $f(n)=\Theta(n\log n)$.
-\end{example}
-
 \bigskip
 \begin{definition}[Generating function, Rosen \S8.4]
 For sequence $(a_n)_{n=0}^{\infty}$, its \emph{generating function} is the formal power series
@@ -4807,19 +3834,6 @@ $(1,1,1,\dots)$: $G(x)=\sum x^n = \dfrac{1}{1-x}$ (geometric series, \S\ref{sec:
     \item Expand $G(x)$ back into a power series (e.g.\ partial fractions) to read off $a_n$ as the coefficient of $x^n$.
 \end{enumerate}
 \end{note}
-
-\begin{example}[Fibonacci via generating functions -- harder, alternate route to \S\ref{sec:6-7-4}'s formula]
-$f_0=0,f_1=1,\ f_n=f_{n-1}+f_{n-2}$ for $n\ge2$. Let $G(x)=\sum_{n\ge0}f_nx^n$.
-
-\[
-G(x) = f_0+f_1x+\sum_{n\ge2}f_nx^n = x + \sum_{n\ge2}(f_{n-1}+f_{n-2})x^n = x + x\sum_{n\ge2}f_{n-1}x^{n-1} + x^2\sum_{n\ge2}f_{n-2}x^{n-2}.
-\]
-The two sums are $G(x)$ itself (shifted indices, re-summed from $n=1$ and $n=0$ respectively, matching since $f_0=0$ doesn't affect the first):
-\[
-G(x) = x + xG(x) + x^2G(x) \ \Rightarrow\ G(x)(1-x-x^2) = x \ \Rightarrow\ G(x) = \frac{x}{1-x-x^2}.
-\]
-Partial-fraction expanding $\frac{x}{1-x-x^2}$ (using the roots of $1-x-x^2=0$, related to the golden ratio) and reading off the coefficient of $x^n$ reproduces exactly the closed form from \S\ref{sec:6-7-4}.
-\end{example}
 
 \subsection{The Fibonacci sequence}
 \label{sec:6-7}
@@ -5035,18 +4049,6 @@ Given $\varepsilon>0$, choose $N_1,N_2$ with $|a_n-\ell|<\varepsilon$ for $n\ge 
 so $|c_n-\ell|<\varepsilon$.
 \end{proof}
 
-\begin{example}[Applying the squeeze theorem -- revisits \S\ref{sec:6-7-3}]
-The bounds $r_1^{-2}\le f_n/r_1^n\le1$ established for Fibonacci (\S\ref{sec:6-7-3}) do \emph{not} by themselves give $\lim f_n/r_1^n$ -- the squeeze theorem needs \emph{both} bounding sequences to converge to the \emph{same} limit, which $r_1^{-2}$ (constant) and $1$ (constant) do not (they're different constants) -- so this only shows $f_n/r_1^n$ stays bounded, not that it converges. (It does in fact converge, to $1/\sqrt5$, by Binet's formula, \S\ref{sec:6-7-4} -- but that requires more than the squeeze theorem alone.)
-\end{example}
-
-\bigskip
-\begin{theorem}[Monotone convergence theorem]
-Every bounded, monotonic sequence converges.
-\end{theorem}
-\begin{note}[Proof idea]
-Relies on the completeness of $\R$ (every bounded set of reals has a supremum): if $(a_n)$ is increasing and bounded above, $\ell=\sup\{a_n\}$ exists, and one shows $a_n\to\ell$ directly from the definition of supremum. This is genuinely a deeper real-analysis fact (completeness of $\R$), not provable from the algebraic properties of $\R$ alone -- it fails, for instance, over $\Q$.
-\end{note}
-
 \bigskip
 \begin{definition}[Subsequence]
 Given $(a_n)_{n=1}^\infty$ and a strictly increasing sequence of indices $n_1<n_2<n_3<\cdots$, the sequence $(a_{n_k})_{k=1}^\infty$ is a \emph{subsequence} of $(a_n)$.
@@ -5093,12 +4095,6 @@ $t_n=O(2^n)$, $O(4\cdot2^n)$, $O(0.001\cdot2^n)$ are all correct -- since $2^n=O
 $t_n=O(3^n)$ is also true (looser, since $2^n\le3^n$), but $t_n=O(1.9^n)$ is \emph{false} -- no constant $c$ makes $c\cdot1.9^n$ eventually dominate $2^n$. Exponential \emph{bases} are not interchangeable, unlike constant multipliers.
 \end{note}
 
-\begin{example}[Dominant-term technique]
-\[
-\tfrac18n^3+\tfrac14n^2+\tfrac12n+1 = O(n^3), \qquad \log n+\log\log n = O(\log n), \qquad (\sqrt n+3n+9^{1/n})(17+12\log n) = O(n\log n).
-\]
-\end{example}
-
 \bigskip
 \begin{definition}[Big-Omega, Big-Theta, Rosen \S\ref{sec:3-2}]
 \[
@@ -5126,14 +4122,6 @@ Search a list of $n$ items for a target, comparing one at a time until found or 
     \item \emph{Average case} (target present, each position equally likely): $\frac{1+2+\cdots+n}{n}=\frac{n+1}{2}=\Theta(n)$ (\S\ref{sec:6-11}'s sum formula).
 \end{itemize}
 \end{example}
-
-\begin{example}[Binary search, Rosen]
-On a sorted list of $n$ items, each comparison halves the remaining search space: $T(n)=T(n/2)+O(1)$, giving $T(n)=O(\log n)$ (\S\ref{sec:6-6}/\S8.3's divide-and-conquer machinery, master theorem case $a=1,b=2,d=0$: $a=b^d$).
-\end{example}
-
-\begin{note}[Why worst-case dominates in practice]
-CN's emphasis on upper bounds (via $O$ rather than $\Theta$ or average-case analysis) matches how complexity is usually reported: a guaranteed ceiling on resource use is often more actionable for budgeting than an exact or average figure, especially when the exact behavior is too complex to pin down precisely (CN's own motivation for introducing $O$ at all).
-\end{note}
 
 \bigskip
 \begin{definition}[Polynomial-time algorithm, tractability]
@@ -5299,38 +4287,6 @@ A \emph{finite series} is the sum of a finite sequence's terms; a \emph{partial 
 \]
 \end{theorem}
 
-\begin{example}[Deriving $\sum k^2$ by telescoping, before proving it -- zhangzhusheng-style construction]
-Start from the identity
-\[
-(k+1)^3 - k^3 = 3k^2+3k+1.
-\]
-Sum both sides for $k=1,\dots,n$. The left side telescopes:
-\[
-\sum_{k=1}^n \big[(k+1)^3-k^3\big] = (n+1)^3 - 1^3,
-\]
-since every intermediate term cancels: $(2^3-1^3)+(3^3-2^3)+\cdots+((n{+}1)^3-n^3)$.
-
-The right side sums termwise:
-\[
-\sum_{k=1}^n(3k^2+3k+1) = 3\sum_{k=1}^n k^2 + 3\sum_{k=1}^n k + n = 3\sum_{k=1}^n k^2 + 3\cdot\frac{n(n+1)}{2} + n.
-\]
-
-Equating and solving for $\sum k^2$:
-\[
-(n+1)^3-1 = 3\sum_{k=1}^n k^2 + \frac{3n(n+1)}{2}+n \quad\Longrightarrow\quad \sum_{k=1}^n k^2 = \frac{(n+1)^3-1-n-\frac{3n(n+1)}{2}}{3}.
-\]
-
-Simplifying the numerator (common denominator $2$, expand $(n+1)^3=n^3+3n^2+3n+1$):
-\[
-(n+1)^3-1-n-\tfrac{3n(n+1)}{2} = n^3+3n^2+3n-n-\tfrac{3n^2+3n}{2} = \tfrac{2n^3+6n^2+4n-3n^2-3n}{2} = \tfrac{2n^3+3n^2+n}{2} = \tfrac{n(n+1)(2n+1)}{2}.
-\]
-
-Dividing by $3$:
-\[
-\sum_{k=1}^n k^2 = \frac{n(n+1)(2n+1)}{6}.
-\]
-\end{example}
-
 \begin{note}[Why this method matters]
 Unlike the induction proof below (which needs the formula \emph{guessed} first), this telescoping method \emph{derives} the formula from scratch -- the same technique, using $(k+1)^4-k^4$, derives $\sum k^3$, and in general $(k+1)^{m+1}-k^{m+1}$ derives $\sum k^m$ for any $m$, always reducing to lower-power sums already known.
 \end{note}
@@ -5464,41 +4420,6 @@ and $xq_1+yq_2\in\Z$.
 The converse fails: $2\mid(3+5)$ but $2\nmid3$ and $2\nmid5$.
 \end{note}
 
-\begin{example}[Divisibility by a product of consecutive integers -- harder]
-Prove
-\[
-6\mid n(n+1)(n+2)
-\]
-for all $n\in\Z$.
-
-\smallskip
-Among any three consecutive integers, at least one is even, so $2\mid n(n+1)(n+2)$.
-
-\smallskip
-Writing $n\equiv r\pmod 3$ with $r\in\{0,1,2\}$:
-\begin{itemize}
-\item if $r=0$ then $3\mid n$;
-\item if $r=1$ then $3\mid(n+2)$;
-\item if $r=2$ then $3\mid(n+1)$.
-\end{itemize}
-So $3\mid n(n+1)(n+2)$ in every case. Since $\gcd(2,3)=1$, Theorem~\ref{thm:coprimedivides} gives $6\mid n(n+1)(n+2)$.
-\end{example}
-
-\begin{example}[Divisibility tests, beyond CN -- Rosen \S4.1]
-Let $n$ have decimal digits $a_k\cdots a_1a_0$, i.e.
-\[
-n=\sum_{i=0}^{k}a_i10^i.
-\]
-Since $10^i\equiv0\pmod{2^j}$ for $i\ge j$, the residue $n\bmod 2^j$ depends only on the last $j$ digits:
-\[
-2^j\mid n \iff 2^j \mid \sum_{i=0}^{j-1}a_i10^i.
-\]
-This is why $4\mid n$ is decided by the last two digits and $8\mid n$ by the last three. The same argument with $5^j$ gives the tests for $5,25,125$.
-
-\smallskip
-In general, divisibility by $d$ is decidable from a bounded number of trailing decimal digits precisely when $d\mid 10^j$ for some $j$, i.e.\ when $d=2^a5^b$.
-\end{example}
-
 \subsection{Prime numbers}
 \label{sec:primes}
 
@@ -5570,21 +4491,6 @@ The Prime Number Theorem states that $\pi(x)$, the number of primes $\le x$, sat
 \]
 So primes thin out, but only logarithmically: a random integer near $x$ is prime with probability roughly $1/\ln x$. This is what makes random search for large primes (as needed in \S\ref{sec:diffiehellman}) practical.
 \end{note}
-
-\begin{example}[A composite family -- harder, Sophie Germain identity]
-Show that $n^4+4$ is composite for every integer $n>1$.
-
-\smallskip
-Complete the square twice:
-\[
-n^4+4 = (n^4+4n^2+4)-4n^2 = (n^2+2)^2-(2n)^2 = (n^2-2n+2)(n^2+2n+2).
-\]
-For $n>1$ we have
-\[
-n^2-2n+2=(n-1)^2+1\ge2, \qquad n^2+2n+2>n^2-2n+2,
-\]
-so both factors are proper. Hence $n^4+4$ is composite.
-\end{example}
 
 \subsection{Remainders and the mod operation}
 \label{sec:mod}
@@ -5659,21 +4565,6 @@ $
 
 These are exactly the truth tables of $\oplus$ (exclusive-or) and $\wedge$ (conjunction) with $0=$ False, $1=$ True. So $\Z_2$ with $+,\times$ \emph{is} propositional logic with $\oplus,\wedge$, up to renaming -- an \emph{isomorphism}. This identification underlies the use of logic gates to perform arithmetic.
 \end{note}
-
-\begin{example}[Parity argument -- harder]
-Prove $\sqrt2\notin\Q$.
-
-\smallskip
-Suppose
-\[
-\sqrt2=\frac ab, \qquad a,b\in\N,\ \gcd(a,b)=1.
-\]
-Then $a^2=2b^2$, so $a^2$ is even. Since the square of an odd number is odd, $a$ must be even; write $a=2c$. Then
-\[
-4c^2=2b^2 \quad\Longrightarrow\quad b^2=2c^2,
-\]
-and by the same argument $b$ is even. Then $2\mid\gcd(a,b)=1$, a contradiction.
-\end{example}
 
 \subsection{The greatest common divisor}
 \label{sec:gcd}
@@ -6052,33 +4943,6 @@ ac-bd = ac-bc+bc-bd = c(a-b)+b(c-d) = (ck+bl)n. \qedhere
 \begin{note}
 Theorem~\ref{thm:congarith} justifies reducing mod $n$ \emph{at every step} of a computation involving only $+,-,\times$, rather than only at the end. Division and exponentiation need separate treatment (\S\ref{sec:modinv}, \S\ref{sec:modexp}).
 \end{note}
-
-\begin{example}[Casting out nines -- harder]
-Since $10\equiv1\pmod9$, we have $10^i\equiv1\pmod9$ for all $i$, so for $n=\sum a_i10^i$,
-\[
-n\equiv\sum_i a_i = \mathrm{ds}(n) \pmod 9,
-\]
-where $\mathrm{ds}$ is the digital sum. Hence a claimed product can be checked cheaply: the alleged identity $84\times32=2678$ fails because
-\[
-(84\times32)\bmod9=(3\times5)\bmod9=15\bmod9=6, \qquad 2678\bmod9=5.
-\]
-The check is one-sided: it detects some errors, never certifies correctness -- it is blind to any error that is a multiple of $9$, e.g.\ transposed digits. The same argument with $10\equiv-1\pmod{11}$ gives $n\equiv\mathrm{ads}(n)\pmod{11}$ for the alternating digital sum.
-\end{example}
-
-\begin{example}[Large modular power without Euler -- harder]
-Find the last two decimal digits of $7^{1000}$, i.e.\ $7^{1000}\bmod100$.
-
-\smallskip
-Note
-\[
-7^2=49, \qquad 7^4=49^2=2401\equiv1\pmod{100}.
-\]
-So the powers of $7$ cycle with period $4$ mod $100$, and $1000=4\cdot250$:
-\[
-7^{1000}=(7^4)^{250}\equiv1^{250}=1 \pmod{100}.
-\]
-The last two digits are $01$.
-\end{example}
 
 \subsection{Modular inverses}
 \label{sec:modinv}
@@ -6600,10 +5464,6 @@ If $k+1$ or more objects are placed into $k$ boxes, some box contains at least $
 Suppose, for contradiction, every box has at most $1$ object. Then the total is at most $k\cdot1=k$, contradicting $k+1$ or more objects placed.
 \end{proof}
 
-\begin{example}
-Among any $13$ people, two share a birth month.
-\end{example}
-
 \bigskip
 \begin{theorem}[Generalized pigeonhole principle, Rosen]
 If $N$ objects are placed into $k$ boxes, some box contains at least $\lceil N/k \rceil$ objects.
@@ -6615,10 +5475,6 @@ N \le k\left(\lceil N/k\rceil - 1\right) < k\left(\frac{N}{k}+1-1\right) = N,
 \]
 a contradiction ($\lceil N/k\rceil - 1 < N/k$ since $\lceil N/k\rceil < N/k+1$).
 \end{proof}
-
-\begin{example}
-Among $100$ people, some birth month has $\lceil 100/12\rceil = 9$ or more people.
-\end{example}
 
 \bigskip
 \begin{example}[Ramsey number $R(3,3)$ -- Rosen, genuinely hard]
@@ -6694,21 +5550,6 @@ The first sum ranges over all size-$k$ subsets of $\{1,\dots,n\}$ (excluding $A_
 \begin{note}[Proof strategy]
 Either repeat the induction above with $\cup\leftrightarrow\cap$ swapped throughout, or apply the theorem above to $\overline{A_1},\dots,\overline{A_n}$ and De Morgan's laws (\S\ref{sec:1-11}).
 \end{note}
-
-\begin{example}[Counting integers avoiding several divisors -- Rosen, harder]
-How many integers in $\{1,\dots,1000\}$ are divisible by none of $2,3,5$?
-\end{example}
-\begin{proof}[Solution]
-Let $A_i=\{n\le1000 : i\mid n\}$ for $i=2,3,5$. Then
-\[
-|A_2|=500,\ |A_3|=333,\ |A_5|=200,\quad |A_2\cap A_3|=166,\ |A_2\cap A_5|=100,\ |A_3\cap A_5|=66,\quad |A_2\cap A_3\cap A_5|=33
-\]
-(each $=\lfloor1000/(\text{product})\rfloor$). By the three-set formula:
-\[
-|A_2\cup A_3\cup A_5| = 500+333+200-166-100-66+33 = 734.
-\]
-Divisible by none: $1000-734=266$.
-\end{proof}
 
 \subsection{Inclusion-exclusion: derangements}
 \label{sec:8-4}
@@ -6860,10 +5701,6 @@ Let $A,B$ be disjoint, $|A|=m,|B|=n$. An $r$-subset of $A\cup B$ is determined b
 Expanding $(x+y)^n = \underbrace{(x+y)(x+y)\cdots(x+y)}_{n \text{ factors}}$ by distributivity picks, from each of the $n$ factors, either $x$ or $y$; a term $x^ky^{n-k}$ arises once for every way of choosing which $k$ of the $n$ factors contribute $x$ -- exactly $\binom{n}{k}$ ways.
 \end{proof}
 
-\begin{example}[Application -- deriving $\sum\binom{n}{k}=2^n$ again, differently]
-Setting $x=y=1$: $(1+1)^n=\sum_k\binom{n}{k} = 2^n$ -- matching \S\ref{sec:1-10}'s theorem, now via the binomial theorem instead of direct combinatorial counting.
-\end{example}
-
 \subsection{Unordered selection with replacement}
 \label{sec:8-9}
 % CN 8.9 / Rosen 6.5 -- stars and bars
@@ -6901,32 +5738,6 @@ The number of distinct arrangements of $n$ objects, with $n_1$ of type $1$, $n_2
 Temporarily label identical objects as distinguishable: $n!$ orderings. Each genuinely distinct arrangement is then counted $n_1!n_2!\cdots n_k!$ times (permuting each type's labels among its own occupied slots). Divide.
 \end{proof}
 
-\begin{example}
-Arrangements of \texttt{MISSISSIPPI} ($n=11$; M:$1$, I:$4$, S:$4$, P:$2$):
-\[
-\frac{11!}{1!\,4!\,4!\,2!} = 34650.
-\]
-\end{example}
-
-\bigskip
-\begin{note}[Distributing $n$ objects into $k$ boxes -- Rosen's four cases]
-\begin{center}
-\begin{tabular}{lll}
- & \textbf{objects distinguishable} & \textbf{objects indistinguishable} \\
-\textbf{boxes distinguishable} & $k^n$ & $\binom{n+k-1}{k-1}$ \\
-\textbf{boxes indistinguishable} & Stirling numbers $S(n,k)$ & partitions of $n$ into $\le k$ parts
-\end{tabular}
-\end{center}
-\end{note}
-
-\begin{note}[Case 1: distinguishable objects, distinguishable boxes]
-Each object independently chooses one of $k$ boxes: $k^n$ (\S\ref{sec:8-6}, ordered-with-replacement in disguise).
-\end{note}
-
-\begin{note}[Case 2: indistinguishable objects, distinguishable boxes]
-Exactly \S\ref{sec:8-9}'s stars-and-bars count, $\binom{n+k-1}{k-1}$, with "box $i$ gets $x_i$ objects" playing the role of $x_i$.
-\end{note}
-
 \bigskip
 \begin{definition}[Stirling number of the second kind, Rosen -- harder]
 $S(n,k)$ = number of ways to partition an $n$-element set into exactly $k$ nonempty, unlabeled subsets.
@@ -6940,14 +5751,6 @@ S(n,k) = k\cdot S(n-1,k) + S(n-1,k-1), \qquad S(n,n)=S(n,1)=1,\ S(n,0)=0\ (n\ge1
 \begin{proof}[Proof sketch]
 Consider where the $n$-th object goes. Either it joins one of the $k$ existing groups formed by partitioning the first $n-1$ objects into $k$ groups ($k\cdot S(n-1,k)$ ways), or it forms its own new singleton group, with the first $n-1$ objects partitioned into the remaining $k-1$ groups ($S(n-1,k-1)$ ways).
 \end{proof}
-
-\begin{note}[Case 3: distinguishable objects, indistinguishable boxes]
-Distributing $n$ distinguishable objects into $k$ indistinguishable nonempty boxes is exactly $S(n,k)$; allowing empty boxes too sums $\sum_{j=1}^k S(n,j)$.
-\end{note}
-
-\begin{note}[Case 4: indistinguishable objects, indistinguishable boxes]
-Equivalent to counting integer partitions of $n$ into at most $k$ parts -- no simple closed form exists (unlike the other three cases); computed via its own recurrence or generating function, genuinely the hardest of the four.
-\end{note}
 
 \subsection{Generating permutations and combinations}
 \label{sec:8-9-3}
@@ -7116,10 +5919,6 @@ $A,B$ are \emph{independent} iff
 \]
 \end{definition}
 
-\begin{example}
-Two fair dice, $A=$ "first die is $3$," $B=$ "sum is $7$": $\Pr(A)=1/6$, $\Pr(B)=6/36=1/6$, $\Pr(A\cap B)=\Pr(\{(3,4)\})=1/36 = (1/6)(1/6)$ -- independent.
-\end{example}
-
 \bigskip
 \begin{definition}[Mutual independence, $n$ events, Rosen -- harder]
 $A_1,\dots,A_n$ are \emph{mutually independent} iff for \emph{every} subset $\{i_1,\dots,i_k\}\subseteq\{1,\dots,n\}$:
@@ -7127,18 +5926,6 @@ $A_1,\dots,A_n$ are \emph{mutually independent} iff for \emph{every} subset $\{i
 \Pr(A_{i_1}\cap\cdots\cap A_{i_k}) = \Pr(A_{i_1})\cdots\Pr(A_{i_k}).
 \]
 \end{definition}
-
-\begin{example}[Pairwise independent but not mutually independent -- classic counterexample]
-Toss two fair coins. $A=$"1st is Heads," $B=$"2nd is Heads," $C=$"the two tosses agree." Each pair:
-\[
-\Pr(A)=\Pr(B)=\Pr(C)=\tfrac12, \qquad \Pr(A\cap B)=\Pr(A\cap C)=\Pr(B\cap C)=\tfrac14,
-\]
-so every pair is independent. But
-\[
-\Pr(A\cap B\cap C) = \Pr(\{HH\}) = \tfrac14 \neq \tfrac18 = \Pr(A)\Pr(B)\Pr(C).
-\]
-Pairwise independence does not imply mutual independence.
-\end{example}
 
 \subsection{Conditional probability}
 \label{sec:9-8}
@@ -7189,20 +5976,6 @@ $A = \bigcup_i (A\cap B_i)$, mutually exclusive (since $B_i$ pairwise disjoint),
 \]
 then substitute the law of total probability for $\Pr(A)$.
 \end{proof}
-
-\bigskip
-\begin{example}[Base rate fallacy -- Rosen, harder, counterintuitive]
-A disease affects $0.1\%$ of a population. A test is $99\%$ accurate (both sensitivity and specificity). Given a positive result, what is $\Pr(\text{disease}\mid\text{positive})$?
-\end{example}
-\begin{proof}[Solution]
-Let $D=$disease, $T=$positive test. $\Pr(D)=0.001$, $\Pr(T\mid D)=0.99$, $\Pr(T\mid\overline{D})=0.01$.
-\[
-\Pr(D\mid T) = \frac{\Pr(T\mid D)\Pr(D)}{\Pr(T\mid D)\Pr(D)+\Pr(T\mid\overline D)\Pr(\overline D)} = \frac{0.99\times0.001}{0.99\times0.001+0.01\times0.999} = \frac{0.00099}{0.01098} \approx 0.090.
-\]
-\end{proof}
-\begin{note}
-Despite $99\%$ test accuracy, a positive result means only $\approx9\%$ chance of actually having the disease -- because the disease is rare, false positives from the large healthy population outnumber true positives. This is the classic argument for why screening-test results must always be combined with the base rate, not read in isolation.
-\end{note}
 
 \newpage
 \section{Discrete Probability II}
