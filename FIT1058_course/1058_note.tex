@@ -271,6 +271,17 @@ For $0 \le k \le n$, $\dbinom{n}{k}$ (``$n$ choose $k$'') is the number of $k$-e
 The binomial coefficients $\binom{n}{0}, \binom{n}{1}, \dots, \binom{n}{n}$ partition the subsets of an $n$-set by size, so they sum to the total subset count, $2^n$ (\S\ref{sec:1-8}).
 \end{proof}
 
+\begin{example}[$n=3$ -- CS70]
+Identify each subset of $\{1,2,3\}$ with its indicator vector (\S\ref{sec:1-8}):
+\begin{center}
+\begin{tabular}{c|cccccccc}
+subset & $\varnothing$ & $\{1\}$ & $\{2\}$ & $\{3\}$ & $\{1,2\}$ & $\{1,3\}$ & $\{2,3\}$ & $\{1,2,3\}$ \\ \hline
+vector & $000$ & $100$ & $010$ & $001$ & $110$ & $101$ & $011$ & $111$
+\end{tabular}
+\end{center}
+Grouped by size: $1+3+3+1=8=2^3$.
+\end{example}
+
 \begin{theorem}[Symmetry]
 \[
 \binom{n}{k} = \binom{n}{n-k}.
@@ -4623,6 +4634,68 @@ and $\min(e_i,f_i)+\max(e_i,f_i)=e_i+f_i$ for each $i$.
 \end{proof}
 
 \subsection{The Euclidean algorithm}
+
+\begin{lemma}[Divisibility of integer combinations]\label{lem:div-comb}
+Let $d,u,v \in \mathbb{Z}$. If $d \mid u$ and $d \mid v$, then
+\[
+    d \mid (su + tv) \qquad \text{for all } s,t \in \mathbb{Z}.
+\]
+\end{lemma}
+
+\begin{proof}
+Since $d \mid u$ and $d \mid v$, there exist $k_1, k_2 \in \mathbb{Z}$ such that
+$u = dk_1$ and $v = dk_2$. Hence
+\[
+    su + tv = s(dk_1) + t(dk_2) = d(sk_1 + tk_2).
+\]
+As $sk_1 + tk_2 \in \mathbb{Z}$, this shows $d \mid (su+tv)$.
+\end{proof}
+
+\begin{lemma}[Euclid's Lemma for the gcd]\label{lem:euclid-step}
+Let $a \in \mathbb{Z}$ and $b \in \mathbb{Z}^{+}$, and write
+\[
+    a = qb + r, \qquad q = \left\lfloor a/b \right\rfloor, \quad 0 \le r < b .
+\]
+Then
+\[
+    \gcd(a,b) \;=\; \gcd(b,r).
+\]
+\end{lemma}
+
+\begin{proof}
+We show $D(a,b) = D(b,r)$; the two sets then have the same greatest
+element, which is the claim.
+
+\medskip
+
+\begin{enumerate}
+    \item[($\subseteq$)] Let $d \in D(a,b)$, so $d \mid a$ and $d \mid b$.
+    Rearranging the division identity gives
+    \[
+        r = a - qb = 1 \cdot a + (-q) \cdot b .
+    \]
+    By Lemma~\ref{lem:div-comb} with $s = 1$ and $t = -q$ we obtain $d \mid r$.
+    Together with $d \mid b$ this yields $d \in D(b,r)$.
+
+    \bigskip
+
+    \item[($\supseteq$)] Let $d \in D(b,r)$, so $d \mid b$ and $d \mid r$.
+    The division identity reads
+    \[
+        a = qb + r = q \cdot b + 1 \cdot r .
+    \]
+    By Lemma~\ref{lem:div-comb} with $s = q$ and $t = 1$ we obtain $d \mid a$.
+    Together with $d \mid b$ this yields $d \in D(a,b)$.
+\end{enumerate}
+
+\medskip
+
+Both inclusions hold, so $D(a,b) = D(b,r)$. Since $b > 0$, both sets are
+non-empty and bounded above, so each has a greatest element, and
+\[
+    \gcd(a,b) \;=\; \max D(a,b) \;=\; \max D(b,r) \;=\; \gcd(b,r). \qedhere
+\]
+\end{proof}
 \label{sec:euclid}
 
 \begin{definition}[Euclidean Algorithm (EA)]
@@ -5418,7 +5491,7 @@ since $p+q=n-\varphi(n)+1$ and $pq=n$.
 \end{example}
 
 \newpage
-\section{Coungting \& Combinatoric}
+\section{Counting \& Combinatorics}
 
 \subsection{Counting by addition}
 \label{sec:8-1}
@@ -5437,6 +5510,19 @@ Already established set-theoretically at \S\ref{sec:1-12}. Combinatorially: choo
 \begin{example}
 Two disjoint lists, lengths $r,c$; concatenating and summing all entries costs $r+c$ additions.
 \end{example}
+
+\bigskip
+% CS70 Note 10 -- extension
+\begin{theorem}[Bijection rule (``Zeroth Rule of Counting''), CS70 -- extension]
+\label{thm:bijectionrule}
+If there is a bijection $f: A\to B$ between finite sets $A,B$, then
+\[
+|A| = |B|.
+\]
+\end{theorem}
+\begin{note}
+Every combinatorial argument below rests on this: to count a hard set, put it in one-to-one correspondence with an easy one. Bijections: \S\ref{sec:2-7}. Used for subsets $\leftrightarrow$ bit strings (\S\ref{sec:1-10}), derangements (\S\ref{sec:8-4}) and multisets $\leftrightarrow$ $0/1$ strings (\S\ref{sec:8-9}).
+\end{note}
 
 \subsection{Counting by multiplication}
 \label{sec:8-2}
@@ -5488,10 +5574,6 @@ If any pair among $X,Y,Z$ know each other -- say $X,Y$ -- then $\{P,X,Y\}$ mutua
 Either way, a mutually-know or mutually-don't-know triple exists.
 \end{proof}
 
-\begin{note}[This is $R(3,3)=6$]
-The Ramsey number $R(3,3)$ is the smallest $n$ guaranteeing this property among $n$ people; the proof shows $R(3,3)\le6$. That $5$ people do \emph{not} suffice (a $5$-cycle of acquaintance has neither) shows $R(3,3)>5$, so $R(3,3)=6$ exactly. Ramsey numbers grow explosively -- $R(5,5)$ is still not exactly known, only bounded between $43$ and $48$ (as of recent results), despite the problem being simply stated.
-\end{note}
-
 \subsection{Inclusion-exclusion}
 \label{sec:8-3}
 % CN 8.3 / Rosen 8.5
@@ -5542,6 +5624,34 @@ The first sum ranges over all size-$k$ subsets of $\{1,\dots,n\}$ (excluding $A_
 \]
 \end{proof}
 
+\begin{proof}[Alternative proof, CS70: per-element count]
+It suffices to show that the right-hand side counts each element $a$ exactly as the left-hand side does: once if $a$ lies in the union, and $0$ times otherwise.
+
+\medskip
+\textbf{Case $a\notin\bigcup_i A_i$.} Then $a$ lies in no $A_i$, hence in no intersection $A_{i_1}\cap\cdots\cap A_{i_k}$. It is counted $0$ times.
+
+\medskip
+\textbf{Case $a\in\bigcup_i A_i$.} Let
+\[
+M=\{\,i : a\in A_i\,\},\qquad m=|M|\ge1.
+\]
+Then $a\in A_{i_1}\cap\cdots\cap A_{i_k}$ iff $\{i_1,\dots,i_k\}\subseteq M$. For each $k\le m$, exactly $\binom{m}{k}$ of the $k$-subsets of indices lie inside $M$ (none for $k>m$), and each contributes $1$ with sign $(-1)^{k+1}$. So $a$ is counted
+\[
+\sum_{k=1}^{m}(-1)^{k+1}\binom{m}{k}
+\]
+times.
+
+\medskip
+\textbf{Evaluate the sum.} By Corollary~\ref{thm:altsum} (valid since $m\ge1$),
+\[
+0=\sum_{k=0}^{m}(-1)^k\binom{m}{k} = 1-\sum_{k=1}^{m}(-1)^{k+1}\binom{m}{k},
+\]
+so $a$ is counted exactly once.
+\end{proof}
+\begin{example}
+An element lying in all of $A,B,C$ is counted $3-3+1=1$ times by the three-set formula: the case $m=3$.
+\end{example}
+
 \begin{theorem}[Dual form -- intersection via unions, Rosen]
 \[
 \left|\bigcap_{i=1}^n A_i\right| = \sum_{k=1}^n (-1)^{k+1} \sum_{1\le i_1<\cdots<i_k\le n} |A_{i_1}\cup\cdots\cup A_{i_k}|.
@@ -5559,7 +5669,28 @@ Either repeat the induction above with $\cup\leftrightarrow\cap$ swapped through
 A \emph{derangement} of $\{1,\dots,n\}$ is a permutation $\sigma$ with $\sigma(i)\neq i$ for every $i$ (no fixed points).
 \end{definition}
 
+\begin{definition}[Fixed point]
+For a permutation $\sigma$ of $\{1,\dots,n\}$, $i$ is a \emph{fixed point} if $\sigma(i)=i$. A derangement is a permutation with no fixed points.
+\end{definition}
+
+\begin{example}[Permutations of $\{1,2,3\}$, CS70]
+Writing $\sigma$ as $(\sigma(1),\sigma(2),\sigma(3))$:
+\begin{center}
+\begin{tabular}{c|c}
+$\sigma$ & \# fixed points \\ \hline
+$(1,2,3)$ & $3$ \\
+$(1,3,2)$ & $1$ \\
+$(2,1,3)$ & $1$ \\
+$(2,3,1)$ & $0$ \\
+$(3,1,2)$ & $0$ \\
+$(3,2,1)$ & $1$
+\end{tabular}
+\end{center}
+So $D_3=2$, the derangements being $(2,3,1)$ and $(3,1,2)$.
+\end{example}
+
 \begin{theorem}[Derangement count]
+\label{thm:derangecount}
 \[
 D_n = n!\sum_{k=0}^n \frac{(-1)^k}{k!}.
 \]
@@ -5580,23 +5711,69 @@ D_n = n! - \sum_{k=1}^n (-1)^{k+1}\frac{n!}{k!} = n! + \sum_{k=1}^n (-1)^k\frac{
 (the $k=0$ term contributes $n!$ back in).
 \end{proof}
 
-\begin{theorem}[Recurrence, Rosen -- harder, alternate derivation]
+\begin{theorem}[Recurrence, Rosen / CS70 -- harder, alternate derivation]
+\label{thm:derangerec}
+For $n\ge2$,
 \[
 D_n = (n-1)\big(D_{n-1}+D_{n-2}\big), \qquad D_0=1,\ D_1=0.
 \]
 \end{theorem}
-\begin{proof}[Proof sketch]
-In a derangement of $\{1,\dots,n\}$, element $1$ maps to some $k\neq1$ -- $n-1$ choices. Split by what happens to $k$:
+\begin{proof}
+\textbf{Step 1: choose $\sigma(n)$.} In a derangement, $\sigma(n)=j$ for some $j\ne n$, giving $n-1$ choices of $j$. It remains to show that, for each fixed $j$, exactly $D_{n-1}+D_{n-2}$ derangements have $\sigma(n)=j$.
 
-\textbf{Case A}: $\sigma(k)=1$ (a $2$-cycle $1\leftrightarrow k$). The remaining $n-2$ elements must derange among themselves: $D_{n-2}$ ways.
+\medskip
+Fix $j$. Positions $1,\dots,n-1$ must be filled with the values $\{1,\dots,n\}\setminus\{j\}$, which include $n$. Split by whether position $j$ receives $n$.
 
-\textbf{Case B}: $\sigma(k)\neq1$. Treat this as deranging $\{1,\dots,n\}\setminus\{1\}$ where $k$ is forbidden from mapping to $k$ \emph{and} forbidden from mapping to... (relabelling $1$'s role onto $k$ as the "new position $k$ must avoid") -- this is exactly a derangement of $n-1$ elements: $D_{n-1}$ ways.
+\medskip
+\textbf{Case 1: $\sigma(j)=n$.} Then $j$ and $n$ are swapped. The other $n-2$ elements $\{1,\dots,n\}\setminus\{j,n\}$ must fill their own positions with no fixed point: $D_{n-2}$ ways.
 
-Summing over the $n-1$ choices of $k$, each splitting into these two cases:
+\medskip
+\textbf{Case 2: $\sigma(j)\ne n$.} The constraints on positions $1,\dots,n-1$ are
 \[
-D_n = (n-1)(D_{n-2}+D_{n-1}).
+\sigma(i)\ne i\quad (i\ne j), \qquad \sigma(j)\ne n,
 \]
+because the value $j$ is already used at position $n$, so $\sigma(j)\ne j$ holds automatically. Thus the value $n$ plays exactly the role of the value $j$: its only forbidden position is $j$. Define
+\[
+\Phi:\ (\sigma(1),\dots,\sigma(n-1)) \longmapsto \text{same sequence, with value } n \text{ replaced by } j.
+\]
+\begin{itemize}
+  \item $\Phi(\sigma)$ is a derangement of $\{1,\dots,n-1\}$: positions $i\ne j$ still avoid $i$, and position $j$ now avoids $j$ because it avoided $n$.
+  \item $\Phi$ is invertible: given a derangement $\tau$ of $\{1,\dots,n-1\}$, replace the value $j$ by $n$ and append $\sigma(n)=j$. Since $\tau(j)\ne j$, the value $n$ does not land in position $j$, so the result lies in Case 2.
+\end{itemize}
+By the bijection rule (Theorem~\ref{thm:bijectionrule}), Case 2 contains $D_{n-1}$ derangements.
+
+\medskip
+\textbf{Step 2: combine.} Cases 1 and 2 are disjoint and exhaustive, so each $j$ contributes $D_{n-1}+D_{n-2}$ (sum rule, \S\ref{sec:8-1}). Over the $n-1$ choices of $j$ (product rule, \S\ref{sec:8-2}) this gives the recurrence.
+
+\medskip
+\textbf{Boundary values.} $D_1=0$, since the only permutation $(1)$ fixes $1$. $D_0=1$, since the empty permutation has no fixed point. Check $n=2$: $D_2=1\cdot(D_1+D_0)=1$, matching the single derangement $(2,1)$.
 \end{proof}
+
+\begin{example}[The two cases for $n=4$, $j=3$ -- CS70]
+The derangements of $\{1,2,3,4\}$ with $\sigma(4)=3$ are:
+\begin{center}
+\begin{tabular}{c|c|l}
+$\sigma$ & $\sigma(3)$ & case \\ \hline
+$(2,1,4,3)$ & $4$ & Case 1: $\{1,2\}$ deranged as $(2,1)$ \\
+$(2,4,1,3)$ & $1$ & Case 2: $\Phi$ gives $(2,3,1)$ \\
+$(4,1,2,3)$ & $2$ & Case 2: $\Phi$ gives $(3,1,2)$
+\end{tabular}
+\end{center}
+Case 2 recovers exactly the $D_3=2$ derangements of $\{1,2,3\}$, so $j=3$ contributes $1+2=3$. Over the $3$ choices of $j$, $D_4=9$.
+\end{example}
+
+\begin{example}[Small values]
+\begin{center}
+\begin{tabular}{c|ccccccc}
+$n$ & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ \\ \hline
+$D_n$ & $1$ & $0$ & $1$ & $2$ & $9$ & $44$ & $265$
+\end{tabular}
+\end{center}
+With memoization, the recurrence computes $D_n$ using $O(n)$ arithmetic operations. Check against Theorem~\ref{thm:derangecount} at $n=4$:
+\[
+24\left(1-1+\frac12-\frac16+\frac1{24}\right)=9.
+\]
+\end{example}
 
 \begin{theorem}[Limiting probability, Rosen]
 \[
@@ -5674,6 +5851,32 @@ Already \S\ref{sec:1-10}; each $r$-subset corresponds to $r!$ ordered sequences 
 \end{note}
 
 \bigskip
+% CS70 Note 10 -- extension
+\begin{theorem}[Division rule (``Second Rule of Counting''), CS70 -- extension]
+\label{thm:divisionrule}
+Let $A,B$ be finite and let $f:A\to B$ be \emph{$m$-to-one}, i.e.\ every $b\in B$ has exactly $m$ preimages. Then
+\[
+|B| = \frac{|A|}{m}.
+\]
+\end{theorem}
+\begin{proof}
+Each $a\in A$ has exactly one image, so the preimage sets $f^{-1}(b)$, $b\in B$, are pairwise disjoint with union $A$. By the sum rule (\S\ref{sec:8-1}),
+\[
+|A| = \sum_{b\in B}\left|f^{-1}(b)\right| = \sum_{b\in B} m = m\,|B|.
+\]
+\end{proof}
+\begin{note}[The hypothesis is essential]
+Every $b$ must have the \emph{same} number $m$ of preimages. \S\ref{sec:8-9} shows a natural situation where this fails.
+\end{note}
+
+\begin{example}[Poker hands]
+Let $A$ be the set of ordered $5$-card deals, $B$ the set of $5$-card hands, and let $f$ send a deal to its set of cards. Each hand arises from exactly $5!$ deals, so $f$ is $5!$-to-one and
+\[
+|B| = \frac{52\cdot51\cdot50\cdot49\cdot48}{5!} = \frac{52!}{47!\,5!} = 2\,598\,960.
+\]
+\end{example}
+
+\bigskip
 \begin{theorem}[Pascal's identity, combinatorial proof, Rosen]
 \[
 \binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}.
@@ -5701,9 +5904,82 @@ Let $A,B$ be disjoint, $|A|=m,|B|=n$. An $r$-subset of $A\cup B$ is determined b
 Expanding $(x+y)^n = \underbrace{(x+y)(x+y)\cdots(x+y)}_{n \text{ factors}}$ by distributivity picks, from each of the $n$ factors, either $x$ or $y$; a term $x^ky^{n-k}$ arises once for every way of choosing which $k$ of the $n$ factors contribute $x$ -- exactly $\binom{n}{k}$ ways.
 \end{proof}
 
+\begin{example}
+$n=2$: the unsimplified expansion is $xx+xy+yx+yy$. The terms $xy$ and $yx$ merge into $2xy$, and $\binom21=2$.
+\end{example}
+
+\begin{corollary}[Alternating sum, CS70]
+\label{thm:altsum}
+For $n\ge1$,
+\[
+\sum_{k=0}^n(-1)^k\binom{n}{k}=0.
+\]
+\end{corollary}
+\begin{proof}
+Set $x=-1$, $y=1$ in the binomial theorem. The left side becomes $(-1+1)^n=0^n=0$.
+\end{proof}
+\begin{note}
+The hypothesis $n\ge1$ is needed: for $n=0$ the sum is $\binom00=1$. This corollary drives the combinatorial proof of inclusion--exclusion in \S\ref{sec:8-3}.
+\end{note}
+
+\begin{note}[Combinatorial proofs -- CS70]
+To prove an identity combinatorially, show that both sides count the same set. Either count one set in two ways (\emph{double counting}), or exhibit a bijection between the sets counted by the two sides (Theorem~\ref{thm:bijectionrule}). Pascal's and Vandermonde's identities above are double-counting proofs, and so is the next one.
+\end{note}
+
+\begin{theorem}[Hockey-stick identity, CS70 -- extension]
+\label{thm:hockeystick}
+For $0\le k<n$,
+\[
+\binom{n}{k+1}=\binom{n-1}{k}+\binom{n-2}{k}+\cdots+\binom{k}{k}=\sum_{i=1}^{n-k}\binom{n-i}{k}.
+\]
+\end{theorem}
+\begin{proof}
+\textbf{Left side.} $\binom{n}{k+1}$ counts the $(k+1)$-subsets $X\subseteq\{1,\dots,n\}$.
+
+\medskip
+\textbf{Right side: classify $X$ by its minimum.} Suppose $\min X=i$. Then $X=\{i\}\cup Y$, where $Y$ is a $k$-subset of $\{i+1,\dots,n\}$, a set with $n-i$ elements. So there are $\binom{n-i}{k}$ such $X$.
+\begin{itemize}
+  \item $Y$ needs $k$ elements, so $n-i\ge k$, i.e.\ $1\le i\le n-k$.
+  \item Every $X$ has exactly one minimum, so these cases are disjoint and exhaustive.
+\end{itemize}
+
+\medskip
+By the sum rule (\S\ref{sec:8-1}),
+\[
+\binom{n}{k+1}=\sum_{i=1}^{n-k}\binom{n-i}{k}.
+\]
+\end{proof}
+\begin{example}
+$n=5$, $k=1$: $\binom52=10$, and $\binom41+\binom31+\binom21+\binom11=4+3+2+1=10$. The $2$-subsets of $\{1,\dots,5\}$ with minimum $1,2,3,4$ number $4,3,2,1$ respectively.
+\end{example}
+\begin{note}[Name]
+In Pascal's triangle the summands lie along a diagonal, and the left-hand side sits just off the end of that diagonal, giving a hockey-stick shape.
+\end{note}
+
 \subsection{Unordered selection with replacement}
 \label{sec:8-9}
 % CN 8.9 / Rosen 6.5 -- stars and bars
+
+% CS70 Note 10 -- extension
+\begin{definition}[Multiset]
+A \emph{multiset} is a collection in which elements may repeat and order is irrelevant, e.g.\ $\{1,1,3,5\}$. A size-$r$ multiset drawn from $\{1,\dots,n\}$ is determined by its multiplicities $x_1,\dots,x_n\ge0$, where $x_1+\cdots+x_n=r$.
+\end{definition}
+\begin{note}
+Hence the number of size-$r$ multisets from an $n$-set equals the stars-and-bars count below. This is exactly ``unordered selection with replacement''.
+\end{note}
+
+\begin{example}[Why the division rule fails here -- CS70]
+Choose $r=5$ pieces of fruit from $n=3$ kinds (apple $=1$, banana $=2$, orange $=3$). There are $3^5=243$ ordered selections (\S\ref{sec:8-6}). Grouping them by the resulting multiset:
+\begin{center}
+\begin{tabular}{l|c}
+multiset & \# ordered selections \\ \hline
+$\{2,2,2,2,2\}$ & $1$ \\
+$\{1,2,2,2,2\}$ & $5$ \\
+$\{1,1,2,2,3\}$ & $\dfrac{5!}{2!\,2!\,1!}=30$ \quad (\S\ref{sec:8-9-2})
+\end{tabular}
+\end{center}
+The number of preimages is not constant, so Theorem~\ref{thm:divisionrule} does not apply. Indeed the answer turns out to be $21$, and $243/21$ is not an integer.
+\end{example}
 
 \begin{theorem}[Stars and bars]
 The number of $(x_1,\dots,x_n)$ with each $x_i\ge0$ integer and $x_1+\cdots+x_n=r$ is
@@ -5719,6 +5995,36 @@ This is exactly choosing $n-1$ of the $r+n-1$ gap-positions, without replacement
 \binom{r+n-1}{n-1}.
 \]
 \end{proof}
+
+\begin{proof}[Alternative proof, CS70: $0/1$ strings]
+Encode $(x_1,\dots,x_n)$ as the string
+\[
+\underbrace{0\cdots0}_{x_1}\;1\;\underbrace{0\cdots0}_{x_2}\;1\;\cdots\;1\;\underbrace{0\cdots0}_{x_n}:
+\]
+each unit is a $0$, and the $n-1$ separators between consecutive ``bins'' are $1$s.
+
+\medskip
+\textbf{This is a bijection} onto the strings of length $r+n-1$ with exactly $r$ zeros.
+\begin{itemize}
+  \item Every encoding has $r$ zeros and $n-1$ ones.
+  \item Conversely, the $n-1$ ones cut any such string into $n$ (possibly empty) blocks of zeros, and the block lengths recover $(x_1,\dots,x_n)$.
+  \item These two maps are mutually inverse.
+\end{itemize}
+
+\medskip
+\textbf{Count the strings.} A string is determined by which $r$ of its $r+n-1$ positions hold $0$, an unordered selection without replacement (\S\ref{sec:8-8}). By Theorem~\ref{thm:bijectionrule},
+\[
+\#\{(x_1,\dots,x_n)\} = \binom{r+n-1}{r}.
+\]
+\end{proof}
+
+\begin{example}
+$n=5$, $r=4$: the ones split $00110110$ into the blocks $00$, (empty), $0$, (empty), $0$. So $(x_1,\dots,x_5)=(2,0,1,0,1)$, i.e.\ the multiset $\{1,1,3,5\}$. The length is $8=r+n-1$.
+\end{example}
+
+\begin{example}[Fruit salad]
+$n=3$, $r=5$: there are $\binom{3+5-1}{5}=\binom75=21$ possible salads.
+\end{example}
 
 \begin{note}[Why $n^r$, $(n)_r$, $\binom nr$, $\binom{r+n-1}{r}$ are genuinely different counts]
 All four answer "choose $r$ from $n$," differing only in order-matters and replacement-allowed -- yet the formulas look structurally unrelated at first glance. The stars-and-bars bijection above is what connects the fourth case back to ordinary binomial coefficients.
@@ -5772,7 +6078,13 @@ The result is the immediate lexicographic successor of $a_1\cdots a_n$.
 \end{note}
 
 \begin{example}
-$362541 \to 363214$? Let's trace: last ascent at $j=3$ ($a_3=2<a_4=5$). Largest $k>3$ with $a_k>2$: $a_6=1$? No, $1<2$; check $a_5=4>2$: yes, and it's the last such (since $a_6=1\not>2$), so $k=5$. Swap $a_3,a_5$: $365241 \to$ wait, swap positions $3,5$: $3\,6\,4\,5\,2\,1$. Reverse suffix from position $4$: $5,2,1\to1,2,5$: result $364125$.
+Successor of $362541$:
+\begin{enumerate}[label=\arabic*.]
+  \item The ascents are $a_1<a_2$ and $a_3<a_4$; the last is at $j=3$ ($a_3=2$).
+  \item The largest $k>3$ with $a_k>2$: $a_5=4$ qualifies and $a_6=1$ does not, so $k=5$.
+  \item Swap $a_3,a_5$: $364521$.
+  \item Reverse the suffix $a_4a_5a_6=521$: $364125$.
+\end{enumerate}
 \end{example}
 
 \bigskip
