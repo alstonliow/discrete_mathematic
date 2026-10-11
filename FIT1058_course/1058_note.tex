@@ -1977,48 +1977,6 @@ A \emph{simple polygon} is a polygon whose sides do not cross. A \emph{diagonal}
 Take the leftmost vertex $v$ and its two neighbors $u,w$. If segment $uw$ lies inside the polygon, it is a diagonal. Otherwise, some vertex lies inside triangle $uvw$; take the one farthest from line $uw$ -- the segment from $v$ to that vertex is a diagonal.
 \end{proof}
 
-\bigskip
-\begin{theorem}[Triangulation of simple polygons -- Rosen, strong induction]
-Every simple polygon with $n\ge3$ sides can be triangulated into exactly $n-2$ triangles using $n-3$ non-crossing diagonals.
-\end{theorem}
-\begin{proof}
-\textbf{Base case} ($n=3$): a triangle is already $1=3-2$ triangle, using $0=3-3$ diagonals.
-
-\textbf{Inductive step}: let $k\ge3$, and suppose every simple polygon with fewer than $k+1$ sides can be triangulated as claimed. Let $P$ have $n=k+1\ge4$ sides.
-
-By the lemma, $P$ has a diagonal $d$, splitting $P$ into $P_1,P_2$ sharing edge $d$, with $n_1+n_2 = n+2$.
-
-Since $3\le n_1,n_2\le n-1$, the strong inductive hypothesis applies to both: $P_1$ triangulates into $n_1-2$ triangles, $P_2$ into $n_2-2$.
-
-Together: $(n_1-2)+(n_2-2) = n-2$ triangles, using $1+(n_1-3)+(n_2-3) = n-3$ diagonals.
-
-By strong induction, the claim holds for all $n\ge3$.
-\end{proof}
-
-\begin{center}
-\begin{tikzpicture}[scale=1.1]
-\coordinate (v1) at (90:2);
-\coordinate (v2) at (150:2);
-\coordinate (v3) at (210:2);
-\coordinate (v4) at (270:2);
-\coordinate (v5) at (330:2);
-\coordinate (v6) at (30:2);
-\draw[thick] (v1)--(v2)--(v3)--(v4)--(v5)--(v6)--cycle;
-\draw[dashed] (v1)--(v3);
-\draw[dashed] (v1)--(v4);
-\draw[dashed] (v1)--(v5);
-\foreach \p in {v1,v2,v3,v4,v5,v6} {\fill (\p) circle (1.5pt);}
-\node at ($(v1)+(0,0.35)$) {$v_1$};
-\node at ($(v2)+(-0.35,0.15)$) {$v_2$};
-\node at ($(v3)+(-0.35,-0.15)$) {$v_3$};
-\node at ($(v4)+(0,-0.35)$) {$v_4$};
-\node at ($(v5)+(0.35,-0.15)$) {$v_5$};
-\node at ($(v6)+(0.35,0.15)$) {$v_6$};
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small A hexagon triangulated by $3$ diagonals into $4$ triangles
-\end{center}
 
 \bigskip
 \begin{theorem}[Round-robin tournament ranking -- classic strong induction example]
@@ -2621,149 +2579,6 @@ If $P$ is in CNF, $\neg P$ -- negation of a conjunction of disjunctions -- becom
 Negate the output column; build DNF for $\neg P$; negate that expression; apply De Morgan's to push the negation inward into CNF form.
 \end{note}
 
-\bigskip
-\begin{note}[3-SAT, Rosen/CS -- harder, beyond CN]
-When every CNF clause has exactly $3$ literals, satisfiability is the classical \emph{3-SAT} problem -- the canonical NP-complete problem (Cook--Levin theorem). This is why CNF, not DNF, is the standard input format for SAT solvers: checking DNF satisfiability is trivial, but CNF satisfiability is computationally hard in general, which is exactly the structure that makes CNF expressive enough to encode real combinatorial problems.
-\end{note}
-
-\subsection{Satisfiability}
-% New section (not in CN ToC) -- Rosen 1.3
-
-\begin{definition}[Satisfiable, unsatisfiable]
-A compound proposition is \emph{satisfiable} if some assignment of truth values to its variables makes it true (a \emph{satisfying assignment}); otherwise it is \emph{unsatisfiable}.
-\end{definition}
-
-\begin{note}[Satisfiability and normal forms]
-In DNF (\S\ref{sec:4-16}), satisfiability is trivial to check: any one disjunct with no variable appearing both negated and unnegated gives a satisfying assignment directly. In CNF (\S\ref{sec:4-17}), determining satisfiability in general is the SAT problem -- NP-complete (\S\ref{sec:4-17}'s note on 3-SAT).
-\end{note}
-
-\bigskip
-\begin{example}[The $n$-queens problem as satisfiability -- CN Ex.\,4.8 / Rosen \S1.3]
-\label{ex:nqueens}
-Place $n$ queens on an $n\times n$ chessboard so that no two attack each other (same row, column, or diagonal). Variables $x_{i,j}$ $(1\le i,j\le n)$: true iff a queen occupies row $i$, column $j$.
-
-\medskip
-\noindent\textbf{Clause $\Leftrightarrow$ at-most-one, symbolically.} For any $x_1,\dots,x_m$,
-\[
-\bigwedge_{1\le j<k\le m}(\neg x_j\vee\neg x_k) \ \equiv\ \neg\exists j\ne k\ (x_j\wedge x_k) \ \equiv\ \text{``at most one $x_i$ is true''},
-\]
-since each pairwise clause $\neg x_j\vee\neg x_k \equiv \neg(x_j\wedge x_k)$ rules out that particular pair, and ranging over all $\binom m2$ pairs rules out every pair.
-
-\medskip
-\noindent\textbf{Exactly one queen per row $i$}:
-\[
-\underbrace{x_{i,1}\vee\cdots\vee x_{i,n}}_{\text{at least one}}
-\qquad\wedge\qquad
-\bigwedge_{1\le j<k\le n}\underbrace{(\neg x_{i,j}\vee\neg x_{i,k})}_{\text{at most one}}.
-\]
-Clause count per row: $1+\binom n2$. Over $n$ rows:
-\[
-n\binom n2 = n\cdot\frac{n(n-1)}2 = \frac{n^3-n^2}2 = \Theta(n^3).
-\]
-
-\medskip
-\noindent\textbf{At most one queen per column $j$}:
-\[
-\bigwedge_{j=1}^n\ \bigwedge_{1\le i<k\le n}(\neg x_{i,j}\vee\neg x_{k,j}), \qquad n\binom n2=\Theta(n^3)\text{ clauses}.
-\]
-
-\smallskip
-\noindent\emph{Why no "at least one" clause is needed (pigeonhole, formalised).} Let $S=\{(i,j):x_{i,j}=\mathrm{true}\}$ under any satisfying assignment. The row constraints give a bijection $\sigma:\{1,\dots,n\}\to\{1,\dots,n\}$, $\sigma(i)=j$ where $(i,j)\in S$ (well-defined and total since each row has exactly one true variable). The column constraints say $\sigma$ is injective. A total injective function on a finite set of size $n$ to itself is a bijection, so $\sigma$ is surjective too -- every column is hit exactly once, with no separate clause required.
-
-\medskip
-\noindent\textbf{At most one queen per diagonal}: for $(i,j)\ne(k,l)$ with $|i-k|=|j-l|$,
-\[
-\neg x_{i,j}\vee\neg x_{k,l}.
-\]
-Fix a diagonal direction and offset $c=i-j\in\{-(n-1),\dots,n-1\}$; the diagonal $\{(i,j):i-j=c\}$ has $n-|c|$ cells, contributing $\binom{n-|c|}2$ clauses. Summing over both directions:
-\[
-2\sum_{c=-(n-1)}^{n-1}\binom{n-|c|}2 = 2\sum_{m=1}^{n}\binom m2 = 2\binom{n+1}3 = \Theta(n^3),
-\]
-using $\sum_{m=1}^n\binom m2=\binom{n+1}3$ (hockey-stick identity).
-
-\medskip
-\noindent\textbf{Size.} $n^2$ variables, $\Theta(n^3)$ clauses total. $\Phi_n$ satisfiable $\iff$ a solution exists, with both directions computable in $O(n^2)$; checking a candidate against $\Phi_n$ is $O(n^3)$. Hence $n$-queens $\in NP$.
-\end{example}
-
-\begin{note}[Sequential at-most-one encoding -- beyond Rosen]
-Introduce $s_1,\dots,s_{n-1}$ with intended meaning $s_i\equiv\bigvee_{k\le i}x_k$, enforced by
-\[
-(\neg x_i\vee s_i), \qquad (\neg s_i\vee s_{i+1}), \qquad (\neg x_{i+1}\vee\neg s_i) \qquad (1\le i\le n-1).
-\]
-
-\smallskip
-\noindent\emph{Correctness.} By induction on $i$: the first clause gives $x_i\Rightarrow s_i$; the second propagates $s_i\Rightarrow s_{i+1}$, so by induction $s_i\Rightarrow\bigvee_{k\le i}x_k$ is forced tight (no clause forces $s_i$ true without some $x_k$, $k\le i$, true, since $s_i$ appears only positively in clauses whose other literal is $\neg x_i$ or $s_{i-1}$). The third clause gives $x_{i+1}\wedge s_i\Rightarrow\bot$, i.e.\ $x_{i+1}\Rightarrow\neg\bigvee_{k\le i}x_k$: no $x_{i+1}$ can be true while an earlier $x_k$ is. Together this is exactly "at most one $x_i$ true".
-
-\smallskip
-\noindent\emph{Cost.} $3(n-1)=\Theta(n)$ clauses and $n-1=\Theta(n)$ auxiliary variables, versus $\binom n2=\Theta(n^2)$ pairwise clauses. Applied to the row/column groups this drops their total from $\Theta(n^3)$ to $\Theta(n^2)$. The diagonal group does not benefit, since it is a union of many unequal-length "at most one" constraints on overlapping variable sets, not a single ordered list.
-\end{note}
-
-\bigskip
-\begin{example}[Sudoku as satisfiability -- symbolic derivation, cf.\ Example~\ref{ex:nqueens}]
-\label{ex:sudoku}
-A $9\times9$ grid, digits $1$--$9$, each row/column/$3\times3$ box containing every digit exactly once, some cells pre-filled. Variables $x_{i,j,k}$ $(1\le i,j,k\le9)$: true iff cell $(i,j)$ contains digit $k$.
-
-\medskip
-\noindent\textbf{Exactly one digit per cell $(i,j)$}:
-\[
-\underbrace{x_{i,j,1}\vee\cdots\vee x_{i,j,9}}_{\text{at least one}}
-\qquad\wedge\qquad
-\bigwedge_{1\le k<l\le9}\underbrace{(\neg x_{i,j,k}\vee\neg x_{i,j,l})}_{\text{at most one}}.
-\]
-Over all $81$ cells: $81$ long clauses, plus
-\[
-81\binom92 = 81\cdot\frac{9\cdot8}2 = 81\cdot36 = 2916
-\]
-short clauses.
-
-\medskip
-\noindent\textbf{Each row $i$ contains every digit $k$ at least once}:
-\[
-\bigwedge_{i=1}^9\ \bigwedge_{k=1}^9\ \Bigl(x_{i,1,k}\vee x_{i,2,k}\vee\cdots\vee x_{i,9,k}\Bigr), \qquad 9\cdot9=81\text{ clauses}.
-\]
-
-\smallskip
-\noindent\emph{Why no "at most once per row-digit" clause is needed (pigeonhole, exactly as in Example~\ref{ex:nqueens}).} Fix row $i$. The cell constraints give a total function
-\[
-\tau:\{1,\dots,9\}\to\{1,\dots,9\}, \qquad \tau(j)=k \text{ where } (i,j,k)\in S,
-\]
-well-defined since each cell $(i,j)$ has exactly one $k$ with $x_{i,j,k}$ true. The row-digit clauses just proved say: for each $k$, some $j$ has $\tau(j)=k$, i.e.\ $\tau$ is \emph{surjective}. A total surjective function between finite sets of equal size $9$ is a bijection, hence also \emph{injective}: no digit repeats in row $i$. So uniqueness in the row is a \emph{consequence} of the clauses already written, not an extra constraint.
-
-\medskip
-\noindent\textbf{Each column $j$ contains every digit $k$ at least once} (indices swapped):
-\[
-\bigwedge_{j=1}^9\ \bigwedge_{k=1}^9\ \Bigl(x_{1,j,k}\vee x_{2,j,k}\vee\cdots\vee x_{9,j,k}\Bigr), \qquad 81\text{ clauses}.
-\]
-The same bijection argument (columns in place of rows) shows no "at most once" clause is needed.
-
-\medskip
-\noindent\textbf{Each $3\times3$ box contains every digit $k$ at least once}: for box $B_{p,q}=\{(i,j): \lceil i/3\rceil=p,\ \lceil j/3\rceil=q\}$, $1\le p,q\le3$,
-\[
-\bigwedge_{p,q=1}^3\ \bigwedge_{k=1}^9\ \bigvee_{(i,j)\in B_{p,q}}x_{i,j,k}, \qquad 9\cdot9=81\text{ clauses}.
-\]
-Each box has $9$ cells and $9$ digits, so the identical bijection argument applies: at-least-one-per-digit plus cell exactly-one forces at-most-one-per-digit within the box too.
-
-\medskip
-\noindent\textbf{Given clues}: for each pre-filled cell $(i,j)=k_0$, the unit clause
-\[
-x_{i,j,k_0}, \qquad \text{at most } 81 \text{ clauses}.
-\]
-
-\medskip
-\noindent\textbf{Size.} $9^3=729$ variables. Total clauses:
-\[
-\underbrace{81}_{\text{cell, at least}} + \underbrace{2916}_{\text{cell, at most}} + \underbrace{81}_{\text{row}} + \underbrace{81}_{\text{column}} + \underbrace{81}_{\text{box}} + \underbrace{\le81}_{\text{clues}} = 3240+\text{(clues)},
-\]
-dominated by the $\Theta(n^4)$ cell at-most-one group (writing $n=9$ for the grid dimension, since $n^2\binom n2=\Theta(n^4)$).
-
-\medskip
-\noindent A satisfying assignment is exactly a solved Sudoku grid consistent with the clues: the conjunction $\Psi$ of all clause groups is satisfiable iff a solution exists, by the same two-way polynomial correspondence (assignment $\leftrightarrow$ grid) as in Example~\ref{ex:nqueens}. Checking a candidate grid against $\Psi$ is $O(n^4)$, so (the decision version of) Sudoku is in $NP$.
-\end{example}
-
-\begin{note}
-Both encodings turn a combinatorial puzzle into a pure question about propositional satisfiability -- this is exactly how modern SAT solvers are used to solve such puzzles in practice, rather than hand-coding a puzzle-specific search algorithm.
-\end{note}
-
 \subsection{Representing logical statements}
 \label{sec:4-18}
 % CN 4.18
@@ -2861,115 +2676,6 @@ Check each directly by truth table, or: $P\mid P = \neg(P\wedge P) = \neg P$; th
 \begin{note}
 This is why NAND gates alone suffice to build any digital circuit -- a genuinely important fact in computer engineering, well beyond what CN's syllabus covers here.
 \end{note}
-
-\subsection{Boolean algebra (Rosen Ch.\,12 -- new section, not in CN)}
-\subsubsection{Boolean functions}
-% Rosen 12.1
-
-\begin{definition}[Boolean algebra, axiomatic]
-A \emph{Boolean algebra} is a set $B$ with operations $+,\cdot,\overline{\phantom{x}}$ and elements $0,1$ satisfying, for all $x,y,z\in B$:
-\begin{align*}
-x+0=x,\ x\cdot1=x &\quad \text{(identity)}\\
-x+\overline{x}=1,\ x\cdot\overline{x}=0 &\quad \text{(complement)}\\
-(x+y)+z=x+(y+z),\ (x\cdot y)\cdot z=x\cdot(y\cdot z) &\quad \text{(associative)}\\
-x+y=y+x,\ x\cdot y=y\cdot x &\quad \text{(commutative)}\\
-x+(y\cdot z)=(x+y)\cdot(x+z),\ x\cdot(y+z)=(x\cdot y)+(x\cdot z) &\quad \text{(distributive)}
-\end{align*}
-\end{definition}
-
-\begin{theorem}[Duality principle]
-Every identity in a Boolean algebra remains true if $+\leftrightarrow\cdot$ and $0\leftrightarrow1$ are swapped throughout (its \emph{dual}).
-\end{theorem}
-\begin{proof}
-The axioms themselves come in $+/\cdot$-swapped pairs (identity, complement, associative, commutative, distributive each list \emph{both} versions together). So any proof built from the axioms, with every step's dual also an axiom instance, remains valid after swapping $+\leftrightarrow\cdot,\ 0\leftrightarrow1$ throughout.
-\end{proof}
-
-\begin{example}[Deriving absorption from the axioms alone -- harder]
-\[
-x+(x\cdot y) = x.
-\]
-\end{example}
-\begin{proof}
-\begin{align*}
-x+(x\cdot y) &= (x\cdot1)+(x\cdot y) && \text{(identity)}\\
-&= x\cdot(1+y) && \text{(distributive)}\\
-&= x\cdot1 && \text{(since } 1+y=1 \text{, itself provable from identity+complement laws)}\\
-&= x && \text{(identity)}.
-\end{align*}
-By duality, $x\cdot(x+y)=x$ follows immediately without a separate proof.
-\end{proof}
-
-\begin{definition}[Boolean function]
-An $n$-ary \emph{Boolean function} is $f:\{0,1\}^n \to \{0,1\}$.
-\end{definition}
-
-\begin{theorem}
-There are $2^{2^n}$ Boolean functions of $n$ variables.
-\end{theorem}
-\begin{proof}
-$\{0,1\}^n$ has $2^n$ elements (\S\ref{sec:1-14}'s power notation); a function to $\{0,1\}$ is one of $2^{|\{0,1\}^n|}=2^{2^n}$ choices (\S\ref{sec:2-12}'s counting-functions theorem, $n^m$ with $n=2$, $m=2^n$).
-\end{proof}
-
-\subsubsection{Representing Boolean functions}
-% Rosen 12.2
-
-\begin{definition}[Literal, minterm]
-A \emph{literal} is $x$ or $\overline{x}$; a \emph{minterm} of $n$ variables is a product (AND) of $n$ literals, one per variable, each chosen unnegated or negated.
-\end{definition}
-
-\begin{theorem}[Sum-of-products form always exists, Rosen -- proves what \S\ref{sec:4-16} only demonstrated]
-Every Boolean function $f\not\equiv0$ can be written as a sum (OR) of minterms.
-\end{theorem}
-\begin{proof}
-For each input $(a_1,\dots,a_n)\in\{0,1\}^n$ with $f(a_1,\dots,a_n)=1$, form the minterm $m = y_1\cdot y_2\cdots y_n$ where $y_i=x_i$ if $a_i=1$, else $y_i=\overline{x_i}$. This $m$ equals $1$ exactly at that one input (every other input disagrees with $a_i$ in some coordinate, making that literal $0$, hence the whole product $0$). Summing (OR-ing) all such minterms, one per input where $f=1$: the result is $1$ exactly at those inputs and $0$ elsewhere -- matching $f$ everywhere.
-\end{proof}
-
-\subsubsection{Logic gates}
-% Rosen 12.3
-
-\begin{definition}[Logic gate]
-A \emph{logic gate} is a physical/schematic device computing one basic Boolean operation; a \emph{circuit} wires gates together, each gate's output feeding into other gates' inputs.
-\end{definition}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.9]
-\node[and gate US, draw, logic gate inputs=nn, rotate=0] (and1) at (0,0) {};
-\node[left] at (and1.input 1) {$x$};
-\node[left] at (and1.input 2) {$y$};
-\node[right] at (and1.output) {$x\cdot y$};
-
-\node[or gate US, draw, logic gate inputs=nn] (or1) at (3.5,0) {};
-\node[left] at (or1.input 1) {$x$};
-\node[left] at (or1.input 2) {$y$};
-\node[right] at (or1.output) {$x+y$};
-
-\node[not gate US, draw] (not1) at (7,0) {};
-\node[left] at (not1.input) {$x$};
-\node[right] at (not1.output) {$\overline{x}$};
-\end{tikzpicture}
-\end{center}
-\begin{center}
-\small AND, OR, NOT gates
-\end{center}
-
-\begin{example}[Half adder]
-Adds two bits $x,y$, producing sum bit $s$ and carry bit $c$:
-\[
-s = x\oplus y, \qquad c = x\cdot y.
-\]
-\end{example}
-
-\begin{example}[Full adder -- harder, three-input circuit]
-Adds bits $x,y$ plus an incoming carry $c_{\mathrm{in}}$, producing sum $s$ and outgoing carry $c_{\mathrm{out}}$:
-\[
-s = x\oplus y\oplus c_{\mathrm{in}}, \qquad c_{\mathrm{out}} = (x\cdot y)+(c_{\mathrm{in}}\cdot(x\oplus y)).
-\]
-\end{example}
-
-\begin{note}[Chaining full adders]
-An $n$-bit adder chains $n$ full adders, feeding each one's $c_{\mathrm{out}}$ into the next's $c_{\mathrm{in}}$ (\emph{ripple-carry adder}) -- this is exactly how integer addition is implemented at the hardware level, and it is a direct physical realization of \S\ref{sec:6-6}/6.7's recursive definitions: $s_i,c_{i+1}$ each depend only on $x_i,y_i,c_i$, exactly a recurrence in $i$.
-\end{note}
-
 
 % ============================================================
 % CHAPTER 5 --- PREDICATE LOGIC  (CN Ch.5, §5.1-5.15)
@@ -3428,45 +3134,6 @@ Equivalently, using \emph{restricted} quantifiers (\S\ref{sec:5-7}, \S\ref{sec:5
 \]
 now with $\epsilon,\delta$ ranging over \emph{all} real numbers, and the restriction ``$>0$'' carried by the quantifier notation itself instead of by the choice of domain.
 \end{example}
-
-\begin{note}[Order is essential here]
-The quantifier order $\forall\epsilon\,\exists\delta\,\forall x$ matters critically: $\delta$ is allowed to depend on $\epsilon$ (chosen \emph{after} $\epsilon$ is fixed), but must work for \emph{all} $x$ satisfying the closeness condition. Swapping to $\exists\delta\,\forall\epsilon$ would wrongly demand a single $\delta$ working for every $\epsilon$ simultaneously -- a much stronger, generally false, claim.
-\end{note}
-
-\bigskip
-\begin{example}[``Limit does not exist,'' via negation of nested quantifiers -- Rosen, requires calculus]
-$\lim_{x\to a} f(x)$ does not exist means: for every real number $L$, $\lim_{x\to a}f(x)\neq L$.
-
-Using the restricted-quantifier form above, $\lim_{x\to a}f(x)\neq L$ is the negation of
-\[
-\forall\epsilon>0\,\exists\delta>0\,\forall x\,\Big(0<|x-a|<\delta \implies |f(x)-L|<\epsilon\Big),
-\]
-i.e.
-\[
-\neg\forall\epsilon>0\,\exists\delta>0\,\forall x\,\Big(0<|x-a|<\delta \implies |f(x)-L|<\epsilon\Big).
-\]
-
-Push the negation inward one quantifier at a time, using \S\ref{sec:5-13}'s De Morgan's laws for quantifiers at each step:
-\begin{align*}
-&\phantom{{}\equiv{}} \neg\forall\epsilon>0\,\exists\delta>0\,\forall x\,(0<|x-a|<\delta\implies|f(x)-L|<\epsilon) \\
-&\equiv \exists\epsilon>0\,\neg\exists\delta>0\,\forall x\,(0<|x-a|<\delta\implies|f(x)-L|<\epsilon) \\
-&\equiv \exists\epsilon>0\,\forall\delta>0\,\neg\forall x\,(0<|x-a|<\delta\implies|f(x)-L|<\epsilon) \\
-&\equiv \exists\epsilon>0\,\forall\delta>0\,\exists x\,\neg\big(0<|x-a|<\delta\implies|f(x)-L|<\epsilon\big) \\
-&\equiv \exists\epsilon>0\,\forall\delta>0\,\exists x\,\Big(0<|x-a|<\delta \ \wedge\ |f(x)-L|\ge\epsilon\Big).
-\end{align*}
-The last step uses $\neg(P\implies Q)\equiv P\wedge\neg Q$ (\S\ref{sec:4-15}), applied with $P=(0<|x-a|<\delta)$, $Q=(|f(x)-L|<\epsilon)$, and $\neg(|f(x)-L|<\epsilon) \equiv |f(x)-L|\ge\epsilon$.
-
-Since ``the limit does not exist'' means $\forall L$, $\lim_{x\to a}f(x)\neq L$, prepend $\forall L$:
-\[
-\forall L\,\exists\epsilon>0\,\forall\delta>0\,\exists x\,\Big(0<|x-a|<\delta \ \wedge\ |f(x)-L|\ge\epsilon\Big).
-\]
-
-Read aloud: ``for every candidate limit value $L$, there is some $\epsilon>0$ such that, no matter how small a $\delta>0$ is chosen, some $x$ within $\delta$ of $a$ still has $f(x)$ at least $\epsilon$ away from $L$'' -- exactly capturing that no $L$ can serve as the limit.
-\end{example}
-
-\begin{note}
-Each of the four inner negation steps flips $\forall\leftrightarrow\exists$ and pushes $\neg$ past exactly one quantifier, mirroring the definitions in \S\ref{sec:5-13} one at a time; only the final step differs, converting the negated implication via ordinary propositional logic rather than a quantifier law.
-\end{note}
 
 \subsection{Summary of rules for logic with quantifiers}
 \label{sec:5-14}
@@ -4890,6 +4557,17 @@ xm+yn=1.
 By Theorem~\ref{thm:bezout}, $\gcd(m,n)$ is the least positive element of $m\Z+n\Z$. Since no positive integer is smaller than $1$, this least element equals $1$ iff $1\in m\Z+n\Z$.
 \end{proof}
 
+\begin{lemma}[Products preserve coprimality]\label{lem:coprimeprod}
+If $\gcd(a,c)=\gcd(b,c)=1$, then $\gcd(ab,c)=1$.
+\end{lemma}
+\begin{proof}
+By Theorem~\ref{thm:coprimebezout}, write $xa+uc=1$ and $yb+vc=1$. Multiplying,
+\[
+1=(xy)\,ab+(xav+uyb+uvc)\,c,
+\]
+so $\gcd(ab,c)=1$ by Theorem~\ref{thm:coprimebezout}.
+\end{proof}
+
 \begin{theorem}[Euclid's lemma]
 \label{thm:euclidlemma}
 Let $p$ be prime and $a,b\in\Z$. Then
@@ -5089,7 +4767,7 @@ has a unique solution modulo $N$.
 \end{theorem}
 
 \begin{proof}
-Let $N_i=N/n_i$. Since the moduli are pairwise coprime, $\gcd(N_i,n_i)=1$, so by Theorem~\ref{thm:inverse} there is $M_i$ with $N_iM_i\equiv1\pmod{n_i}$. Set
+Let $N_i=N/n_i$. Since the moduli are pairwise coprime, $N_i$ is a product of factors each coprime to $n_i$, so $\gcd(N_i,n_i)=1$ by Lemma~\ref{lem:coprimeprod}; hence by Theorem~\ref{thm:inverse} there is $M_i$ with $N_iM_i\equiv1\pmod{n_i}$. Set
 \[
 x=\sum_{i=1}^{k}a_iN_iM_i.
 \]
@@ -5124,13 +4802,16 @@ Check:
 \subsection{The Euler totient function}
 \label{sec:totient}
 
-\begin{definition}[Euler totient function]
+\begin{definition}[Euler totient function]\label{def:totient}
 For $n\in\N$,
 \[
-\varphi(n)=\bigl|\{x : 0<x<n,\ \gcd(x,n)=1\}\bigr| = |\Z_n^*|,
+\varphi(n)=\bigl|\{x : 1\le x\le n,\ \gcd(x,n)=1\}\bigr|=|\Z_n^*|,
 \]
 the second equality by Theorem~\ref{thm:inverse}.
 \end{definition}
+\begin{note}
+For $n\ge2$ this agrees with CN's range $0<x<n$, since $\gcd(n,n)=n>1$. For $n=1$ it gives $\varphi(1)=1=|\Z_1^*|$, which keeps multiplicativity valid when $a=1$.
+\end{note}
 
 \begin{theorem}[Totient of a prime power]
 \label{thm:totientpp}
@@ -5142,9 +4823,9 @@ In particular $\varphi(p)=p-1$.
 \end{theorem}
 
 \begin{proof}
-An integer $x$ with $0<x<p^m$ fails to be coprime to $p^m$ exactly when $p\mid x$. The multiples of $p$ below $p^m$ are $p,2p,\dots,(p^{m-1}-1)p$, of which there are $p^{m-1}-1$. Hence
+An integer $x$ with $1\le x\le p^m$ fails to be coprime to $p^m$ exactly when $p\mid x$. The multiples of $p$ in this range are $p,2p,\dots,p^{m-1}p$, of which there are $p^{m-1}$. Hence
 \[
-\varphi(p^m)=(p^m-1)-(p^{m-1}-1)=p^m-p^{m-1}=p^{m-1}(p-1). \qedhere
+\varphi(p^m)=p^m-p^{m-1}=p^{m-1}(p-1). \qedhere
 \]
 \end{proof}
 
@@ -5203,11 +4884,11 @@ a^{2^{i+1}}=\left(a^{2^i}\right)^2.
 
 \begin{theorem}[Cost]
 \label{thm:fastexpcost}
-Binary exponentiation computes $a^m$ using at most $2\lfloor\log_2 m\rfloor$ multiplications.
+For $m\ge1$, binary exponentiation computes $a^m$ using at most $2\lfloor\log_2 m\rfloor$ multiplications.
 \end{theorem}
 
 \begin{proof}
-There are $\lfloor\log_2m\rfloor$ squarings to produce $a^2,a^4,\dots,a^{2^{\lfloor\log_2m\rfloor}}$, and at most $\lfloor\log_2m\rfloor$ further multiplications to combine those $a^{2^i}$ with $b_i=1$.
+There are $\lfloor\log_2m\rfloor$ squarings to produce $a^2,a^4,\dots,a^{2^{\lfloor\log_2m\rfloor}}$. The binary expansion of $m$ has $\lfloor\log_2m\rfloor+1$ digits, so at most $\lfloor\log_2m\rfloor+1$ ones; combining the corresponding $a^{2^i}$ takes one fewer multiplication than the number of ones, i.e.\ at most $\lfloor\log_2m\rfloor$ further multiplications.
 \end{proof}
 
 \begin{example}[Square-and-multiply -- harder]
@@ -5226,7 +4907,7 @@ and one final multiplication by $81$ yields $3^{36}$. Six multiplications, versu
 \label{sec:modexp}
 
 \begin{note}
-Modular exponentiation is exponentiation in $\Z_n$. Two independent savings apply: reduce each intermediate product mod $n$ (Theorem~\ref{thm:congarith}), and reduce the \emph{exponent} mod $\varphi(n)$ (Theorem~\ref{thm:euler} below).
+Modular exponentiation is exponentiation in $\Z_n$. Two independent savings apply: reduce each intermediate product mod $n$ (Theorem~\ref{thm:congarith}), and reduce the \emph{exponent} mod $\varphi(n)$ (when $\gcd(a,n)=1$, Corollary~\ref{cor:expred}).
 \end{note}
 
 \begin{theorem}[Euler]
@@ -5238,7 +4919,7 @@ x^{\varphi(n)}\equiv1\pmod n.
 \end{theorem}
 
 \begin{proof}
-Let $\Z_n^*=\{y_1,\dots,y_{\varphi(n)}\}$. Consider $xy_1,\dots,xy_{\varphi(n)}$. These are distinct mod $n$: if $xy_i\equiv xy_j$ then multiplying by $x^{-1}$ (which exists, by Theorem~\ref{thm:inverse}) gives $y_i\equiv y_j$, hence $y_i=y_j$. They also lie in $\Z_n^*$, since a product of elements coprime to $n$ is coprime to $n$. So multiplication by $x$ permutes $\Z_n^*$, and the two lists have equal products:
+Let $\Z_n^*=\{y_1,\dots,y_{\varphi(n)}\}$. Consider $xy_1,\dots,xy_{\varphi(n)}$. These are distinct mod $n$: if $xy_i\equiv xy_j$ then multiplying by $x^{-1}$ (which exists, by Theorem~\ref{thm:inverse}) gives $y_i\equiv y_j$, hence $y_i=y_j$. They also lie in $\Z_n^*$, since a product of elements coprime to $n$ is coprime to $n$ (Lemma~\ref{lem:coprimeprod}). So multiplication by $x$ permutes $\Z_n^*$, and the two lists have equal products:
 \[
 y_1y_2\cdots y_{\varphi(n)} \equiv (xy_1)(xy_2)\cdots(xy_{\varphi(n)}) = x^{\varphi(n)}y_1y_2\cdots y_{\varphi(n)} \pmod n.
 \]
@@ -5260,6 +4941,23 @@ x^{p-1}\equiv1\pmod p.
 Take $n=p$ in Theorem~\ref{thm:euler} and use $\varphi(p)=p-1$ (Theorem~\ref{thm:totientpp}).
 \end{proof}
 
+\begin{corollary}[Exponent reduction]\label{cor:expred}
+If $\gcd(a,n)=1$ and $x\equiv y\pmod{\varphi(n)}$ with $x,y\ge0$, then $a^x\equiv a^y\pmod n$.
+\end{corollary}
+\begin{proof}
+Write $x=y+k\varphi(n)$ (taking $x\ge y$). Then
+\[
+a^x=a^y\bigl(a^{\varphi(n)}\bigr)^k\equiv a^y\pmod n
+\]
+by Theorem~\ref{thm:euler}.
+\end{proof}
+\begin{note}
+The hypothesis $\gcd(a,n)=1$ is essential. For $n=4$, $\varphi(4)=2$ and $3\equiv1\pmod 2$, yet
+\[
+2^3=8\equiv0\not\equiv2=2^1\pmod 4.
+\]
+\end{note}
+
 \begin{note}[Group-theoretic reading, beyond CN]
 $\Z_n^*$ is a group under multiplication: it is closed, associative, has identity $1$, and every element is invertible (Theorem~\ref{thm:inverse}). Lagrange's theorem gives $g^{|G|}=e$ for any $g$ in a finite group $G$; Theorem~\ref{thm:euler} is exactly this for $G=\Z_n^*$, where $|G|=\varphi(n)$.
 \end{note}
@@ -5269,7 +4967,7 @@ Compute $3^{36}\bmod25$. First
 \[
 \varphi(25)=\varphi(5^2)=5\cdot4=20,
 \]
-and $\gcd(3,25)=1$, so by Theorem~\ref{thm:euler} the exponent may be reduced mod $20$:
+and $\gcd(3,25)=1$, so by Corollary~\ref{cor:expred} the exponent may be reduced mod $20$:
 \[
 3^{36}\equiv3^{36\bmod20}=3^{16}\pmod{25}.
 \]
@@ -5280,17 +4978,13 @@ Now square repeatedly mod $25$:
 So $3^{36}\equiv21\pmod{25}$ -- four multiplications rather than six, and no number ever exceeds $121$.
 \end{example}
 
-\begin{note}[Extra: pseudoprimes and Carmichael numbers -- Rosen \S4.4]
-The converse of Corollary~\ref{thm:flt} fails, so it gives only a \emph{probable}-primality test. A composite $n$ with $b^{n-1}\equiv1\pmod n$ is a \emph{pseudoprime to base $b$}; e.g.\ $341=11\cdot31$ is a pseudoprime to base $2$. Worse, a \emph{Carmichael number} is composite and passes for \emph{every} base coprime to it -- the smallest is $561=3\cdot11\cdot17$. There are infinitely many, so the Fermat test alone cannot certify primality; practical tests (Miller--Rabin) strengthen it.
-\end{note}
-
 \subsection{Primitive roots}
 \label{sec:primroot}
 
 \begin{definition}[Primitive root]
 Let $\gcd(x,n)=1$. Then $x$ is a \emph{primitive root} of $n$ if
 \[
-x^k\not\equiv1\pmod n \qquad\text{for all } k<\varphi(n),
+x^k\not\equiv1\pmod n \qquad\text{for all } 1\le k<\varphi(n),
 \]
 so that $\varphi(n)$ is the least positive exponent with $x^{\varphi(n)}\equiv1$. Equivalently, $x,x^2,x^3,\dots$ run through all of $\Z_n^*$; we say $x$ \emph{generates} $\Z_n^*$.
 \end{definition}
@@ -5314,19 +5008,54 @@ By contrast $2^1,2^2,2^3\equiv2,4,1$, reaching $1$ at $k=3<6$; so $2$ generates 
 $n$ has a primitive root if and only if $n\in\{1,2,4\}$ or $n=p^k$ or $n=2p^k$ for an odd prime $p$ and $k\in\N$.
 \end{theorem}
 
+\begin{lemma}[Order lemma]
+\label{lem:order}
+Let $\gcd(x,n)=1$ and let $t\ge1$ be the least positive integer with $x^t\equiv1\pmod n$ (it exists by Theorem~\ref{thm:euler}). Then for every $m\ge0$,
+\[
+x^m\equiv1\pmod n \iff t\mid m.
+\]
+\end{lemma}
+
+\begin{proof}
+$(\Leftarrow)$ If $m=qt$ then $x^m=(x^t)^q\equiv1$.
+
+\noindent$(\Rightarrow)$ Divide: $m=qt+r$ with $0\le r<t$. Then
+\[
+1\equiv x^m=(x^t)^q\,x^r\equiv x^r\pmod n.
+\]
+By minimality of $t$, $r$ cannot be positive, so $r=0$ and $t\mid m$.
+\end{proof}
+
 \begin{theorem}[How many]
 \label{thm:primrootcount}
 If $n$ has a primitive root, then it has exactly $\varphi(\varphi(n))$ of them.
 \end{theorem}
 
-\begin{note}[Why $\varphi(\varphi(n))$]
-Let $a$ be a primitive root of $n$. Every element of $\Z_n^*$ is $a^k$ for a unique $k\in\{1,\dots,\varphi(n)\}$, and $a^k$ is itself a primitive root iff $\gcd(k,\varphi(n))=1$: if $d=\gcd(k,\varphi(n))>1$ then
-\[
-(a^k)^{\varphi(n)/d}=(a^{\varphi(n)})^{k/d}\equiv1 \pmod n
-\]
-with exponent $\varphi(n)/d<\varphi(n)$, so $a^k$ falls short. Counting admissible $k$ gives $\varphi(\varphi(n))$.
+\begin{proof}
+Let $a$ be a primitive root of $n$ and write $\phi=\varphi(n)$.
 
-\smallskip
+\medskip
+\noindent\textbf{Step 1: every element of $\Z_n^*$ is $a^k$ for a unique $k\in\{1,\dots,\phi\}$.} Each $a^k$ lies in $\Z_n^*$ (Lemma~\ref{lem:coprimeprod}). If $a^k\equiv a^l$ with $1\le k<l\le\phi$, multiplying by $(a^{-1})^k$ gives $a^{l-k}\equiv1$ with $1\le l-k<\phi$, contradicting the definition of primitive root. So $a^1,\dots,a^\phi$ are $\phi=|\Z_n^*|$ distinct elements of $\Z_n^*$, i.e.\ all of it. In particular every primitive root of $n$ is $a^k$ for exactly one such $k$.
+
+\medskip
+\noindent\textbf{Step 2: if $d=\gcd(k,\phi)>1$, then $a^k$ is not a primitive root.} Here
+\[
+(a^k)^{\phi/d}=(a^{\phi})^{k/d}\equiv1 \pmod n
+\]
+with $1\le\phi/d<\phi$.
+
+\medskip
+\noindent\textbf{Step 3: if $\gcd(k,\phi)=1$, then $a^k$ is a primitive root.} Suppose $(a^k)^j=a^{kj}\equiv1$ with $j\ge1$. The least positive exponent sending $a$ to $1$ is $\phi$, so Lemma~\ref{lem:order} gives $\phi\mid kj$. By Theorem~\ref{thm:coprimebezout} write $x\phi+yk=1$; then
+\[
+j=x\phi j+y\,kj
+\]
+is a sum of multiples of $\phi$, so $\phi\mid j$ and hence $j\ge\phi$. Thus no $j$ with $1\le j<\phi$ works.
+
+\medskip
+\noindent By Steps 1--3, the primitive roots of $n$ correspond bijectively to $k\in\{1,\dots,\phi\}$ with $\gcd(k,\phi)=1$, of which there are $\varphi(\phi)=\varphi(\varphi(n))$ by Definition~\ref{def:totient}.
+\end{proof}
+
+\begin{note}
 For $n=7$:
 \[
 \varphi(\varphi(7))=\varphi(6)=\varphi(2)\varphi(3)=2,
@@ -6429,7 +6158,7 @@ Independence gives $E[XY]=E[X]E[Y]$ (sum over $r,s$ of $rs\Pr(X=r,Y=s)=rs\Pr(X=r
 \end{proof}
 
 \bigskip
-\begin{theorem}[Chebyshev's inequality, Rosen -- harder]
+\begin{theorem}[Chebyshev's inequality, upper bound of inequality]
 For $a>0$:
 \[
 \Pr\big(|X-E[X]|\ge a\big) \le \frac{\mathrm{Var}(X)}{a^2}.
